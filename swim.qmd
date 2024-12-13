@@ -1,5 +1,5 @@
 ---
-title: "Swim underwater"
+title: "Seahtrue basics - swim underwater"
 ---
 
 Now we will go for a bit more than just swimming in R code. We will go underwater and swim in shallow water to look at those seahorses. In this section we will introduce functions from the `seahtrue` package and explore the output of `seahtrue` functions.

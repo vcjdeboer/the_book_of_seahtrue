@@ -1,0 +1,7 @@
+/__wasm__/*
+ Access-Control-Allow-Origin: *
+ Content-Type: application/wasm
+
+ /*
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin

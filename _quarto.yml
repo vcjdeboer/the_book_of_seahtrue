@@ -4,7 +4,7 @@ project:
 book:
   title: "The book of seahtrue"
   author: "Vincent de Boer"
-  date: "10/4/2023"
+  date: "12/16/2024"
 
   chapters:
     - index.qmd
@@ -24,9 +24,7 @@ book:
       chapters:
       - dive_alone.qmd
       - dive_together.qmd
-    - part: surf.qmd
-      chapters:
-        - surf_seahtrue.qmd
+
 
   sidebar:
     search: true
@@ -41,11 +39,16 @@ format:
     theme: cosmo
     link-external-icon: true
     link-external-newwindow: true
+    include-in-header: _include/header.html
   pdf:
     documentclass: scrreprt
 
 editor: visual
 
+webr:
+  packages: ['base']
+
 filters:
   - webr
+
 

@@ -1,6 +1,4 @@
 [build]
   publish = "_freeze"
 
-[[plugins]]
-package = "@quarto/netlify-plugin-quarto"
 

@@ -51,3 +51,6 @@ webr:
 filters:
   - webr
 
+execute:
+  freeze: auto
+

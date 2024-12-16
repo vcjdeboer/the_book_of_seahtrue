@@ -1,7 +1,7 @@
 ---
 title: "Jumping essentials"
 webr:
-  packages: ['ggplot', 'dplyr', 'janitor']
+  packages: ['ggplot2', 'dplyr', 'janitor']
 editor: 
   mode: source  
 ---

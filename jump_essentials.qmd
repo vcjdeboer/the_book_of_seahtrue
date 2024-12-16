@@ -1,7 +1,7 @@
 ---
 title: "Jumping essentials"
 webr:
-  packages: ['tidyverse']
+  packages: ['ggplot', 'dplyr', 'janitor']
 editor: 
   mode: source  
 ---
@@ -36,7 +36,7 @@ Writing your code benefits from proper readability. Just like we layout our text
 ``` {webr-r}
 
 # NOT VERY READABLE (but runnable )
-  ggplot(data=mtcars,   mapping=aes.   (x = mpg,y   = disp,
+  ggplot(data=mtcars,   mapping=aes   (x = mpg,y   = disp,
 color = hp,shape =             as.factor(cyl))         ) +geom_point()
 
 ```
@@ -242,13 +242,24 @@ mtcars %>%
         geom_point()+
         facet_wrap(~cyl)
 
+#the tilde use in the facet_wrap is discouraged though,
+#we now use vars() instead of the tilde
+
+mtcars %>% 
+    select(mpg, cyl, disp) %>%
+    ggplot(aes(x = mpg, y = disp))+
+        geom_point()+
+        facet_wrap(vars(cyl))
+
+
+
 
   
 ```
 
 ### + (the plus)
 
-Apart from the simple arithmetic addition `+` is also used in the ggplot functions. It adds the multiple layers to each ggplot
+Apart from the simple arithmetic addition, `+` is also used in the ggplot functions. It adds the multiple layers to each ggplot
 
 ``` {webr-r}
 
@@ -355,6 +366,8 @@ Another option is to select a line of code (or more lines) and press `command or
 
 It happens that your code is not right away typed in perfectly, so you will get errors and warnings. It is good practice to break down your full code block or pipe into parts and observe after which line of code the code is not working properly.
 
+
+## ADVANCED EXERCISE
 
 ### Building your data visualisation step by step
 

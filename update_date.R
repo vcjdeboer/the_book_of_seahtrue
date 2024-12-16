@@ -1,3 +1,6 @@
+
+#when rendering run: Rscript update_date.R && quarto render
+
 # Read the _quarto.yml file
 yaml <- readLines("_quarto.yml")
 

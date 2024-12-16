@@ -2,7 +2,7 @@
 yaml <- readLines("_quarto.yml")
 
 # Format the current date
-today <- format(Sys.Date(), "%d/%m/%Y")
+today <- format(Sys.Date(), "%m/%d/%Y")
 
 # Replace the date field
 yaml <- gsub("date: \".*\"", paste0("date: \"", today, "\""), yaml)

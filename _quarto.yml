@@ -4,7 +4,7 @@ project:
 book:
   title: "The book of seahtrue"
   author: "Vincent de Boer"
-  date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+  date: "16/12/2024"
 
   chapters:
     - index.qmd

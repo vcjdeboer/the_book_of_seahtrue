@@ -1,5 +1,4 @@
 [build]
-  command = "curl -sSL https://get.quarto.org | bash && quarto render"
   publish = "_freeze"
 
 [[plugins]]

@@ -1,7 +1,7 @@
 ---
 title: "Jumping essentials"
 webr:
-  packages: ['tidyverse']
+  packages: ['ggplot2', 'dplyr', 'janitor']
 editor: 
   mode: source  
 ---
@@ -34,9 +34,10 @@ Writing your code benefits from proper readability. Just like we layout our text
 
 
 ``` {webr-r}
+library(ggplot2)
 
 # NOT VERY READABLE (but runnable )
-  ggplot(data=mtcars,   mapping=aes.   (x = mpg,y   = disp,
+  ggplot(data=mtcars,   mapping=aes   (x = mpg,y   = disp,
 color = hp,shape =             as.factor(cyl))         ) +geom_point()
 
 ```
@@ -58,7 +59,7 @@ Other good practices are:
 So here is an example on what not to do and its corrections
 
 ``` {webr-r}
-
+library(dplyr)
 #NOT GOOD
 iris %>% 
 as_tibble() %>% janitor::clean_names() %>% 
@@ -89,14 +90,17 @@ There are two ways of calling functions in R, the most straightforward and easy 
 
 #option 1
 library(janitor)
-clean_names(iris)
+clean_names(iris) %>%  
+  head()
 
 #option 2 (preferred)
-janitor::clean_names(iris)
+janitor::clean_names(iris) %>% 
+  head()
 
 #which is the same as:
 iris %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  head()
 
 
 
@@ -123,6 +127,8 @@ x <- 1
 x = 1 
 
 #but the <- is preffered
+
+print(paste0("my x = :", 1))
 
   
 ```
@@ -242,13 +248,24 @@ mtcars %>%
         geom_point()+
         facet_wrap(~cyl)
 
+#the tilde use in the facet_wrap is discouraged though,
+#we now use vars() instead of the tilde
+
+mtcars %>% 
+    select(mpg, cyl, disp) %>%
+    ggplot(aes(x = mpg, y = disp))+
+        geom_point()+
+        facet_wrap(vars(cyl))
+
+
+
 
   
 ```
 
 ### + (the plus)
 
-Apart from the simple arithmetic addition `+` is also used in the ggplot functions. It adds the multiple layers to each ggplot
+Apart from the simple arithmetic addition, `+` is also used in the ggplot functions. It adds the multiple layers to each ggplot
 
 ``` {webr-r}
 
@@ -336,7 +353,7 @@ my_groups %in% c("50.000", "100.000")
 
 #this is usefull when filtering specific elements in a tibble
 iris %>% 
-  filter(species %in% c("setosa", "virginica"))
+  filter(Species %in% c("setosa", "virginica"))
 
 ```
 
@@ -355,6 +372,8 @@ Another option is to select a line of code (or more lines) and press `command or
 
 It happens that your code is not right away typed in perfectly, so you will get errors and warnings. It is good practice to break down your full code block or pipe into parts and observe after which line of code the code is not working properly.
 
+
+## ADVANCED EXERCISE
 
 ### Building your data visualisation step by step
 
@@ -418,6 +437,9 @@ Include all these aspects step by step.
 #### Solution to Exercise x
 
 ``` {webr-r}
+
+#webr::install("forcats")
+
 USArrests %>%
   tibble::rownames_to_column(var = "states") %>% 
   janitor::clean_names() %>%

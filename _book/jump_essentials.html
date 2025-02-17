@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
   const initializeWebRTimerStart = performance.now();
 
   // Determine if we need to install R packages
-  var installRPackagesList = ['tidyverse'];
+  var installRPackagesList = ['ggplot2', 'dplyr', 'janitor'];
   // Check to see if we have an empty array, if we do set to skip the installation.
   var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
 
@@ -404,7 +404,10 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#running-your-code" id="toc-running-your-code" class="nav-link" data-scroll-target="#running-your-code"><span class="header-section-number">2.3.1</span> Running your code</a></li>
   <li><a href="#simple-troubleshooting-your-pipelines-and-ggplots" id="toc-simple-troubleshooting-your-pipelines-and-ggplots" class="nav-link" data-scroll-target="#simple-troubleshooting-your-pipelines-and-ggplots"><span class="header-section-number">2.3.2</span> Simple troubleshooting your pipelines and ggplots</a></li>
-  <li><a href="#building-your-data-visualisation-step-by-step" id="toc-building-your-data-visualisation-step-by-step" class="nav-link" data-scroll-target="#building-your-data-visualisation-step-by-step"><span class="header-section-number">2.3.3</span> Building your data visualisation step by step</a></li>
+  </ul></li>
+  <li><a href="#advanced-exercise" id="toc-advanced-exercise" class="nav-link" data-scroll-target="#advanced-exercise"><span class="header-section-number">2.4</span> ADVANCED EXERCISE</a>
+  <ul class="collapse">
+  <li><a href="#building-your-data-visualisation-step-by-step" id="toc-building-your-data-visualisation-step-by-step" class="nav-link" data-scroll-target="#building-your-data-visualisation-step-by-step"><span class="header-section-number">2.4.1</span> Building your data visualisation step by step</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -443,13 +446,15 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="the-essentials" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-essentials"><span class="header-section-number">2.1</span> The essentials</h2>
-<p>Before you jumop into the water it can be of benefit when you know more about the water. What is the temperature? Is it really cold or just nice and warm? How high is the jump? Do you need to jump first 5 meters from a diving board or can you allready feel the water with your toes. This first chapter will give some basic programming essentials that will allow you to jump easier. Also it can be used as a reference for when you need to make the jump again</p>
+<p>Before you jump into the water it can be of benefit when you know more about the water. What is the temperature? Is it really cold or just nice and warm? How high is the jump? Do you need to jump first 5 meters from a diving board or can you already feel the water with your toes?</p>
+<p>This first chapter will give some basic programming essentials that will allow you to jump easier. Also it can be used as a reference for when you need to make the jump again</p>
 <section id="find-your-info-online-and-in-documentation" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="find-your-info-online-and-in-documentation"><span class="header-section-number">2.1.1</span> Find your info online and in documentation</h3>
-<p>R has so many functions that it is impossible to know everything by heart. So documentation of functions and the internet are always your best friend.</p>
-<p><code>Stackexhange</code> is an excellent resource. Almost 90 to 99% of your questions related to how you should use your R and tidy functions has been asked before by others. THe nice thing is that the active coding community put those questions with reproducible code in Stackexchange. More importantly, almost all questions has been accurately answered in multiple ways.</p>
-<p>Other resources that come up more often in my search results are either forums on <code>POSIT community</code>, <code>Reddit</code>, or <code>Github discussions or issues</code> can also be usefull, but these are more forum-like comments, with not such a good solvability structure as stackexchange.</p>
+<p>R has so many functions that it is impossible to know everything by heart. Documentation and the internet are always your best friend.</p>
+<p><code>Stackexhange</code> is an excellent resource. 90 to 99% of your questions related to how you should use your R and tidy functions has been asked before by others. The nice thing is that, most often, the questions include a snippet of code that makes the problem reproducible. More importantly, almost all questions have been accurately answered in multiple ways.</p>
+<p>Other resources that often come up in my search results are either forums on <code>POSIT community</code>, <code>Reddit</code>, or <code>Github discussions or issues</code>. These are more forum-like comments, with not such a good solvability structure as stackexchange.</p>
 <p>Then there are many more resources that somehow scrape the internet and collect basic info. Most of the time the info is correct but too simplistic. Not real issues are tackled. These are sites like <code>geeksforgeeks</code>, <code>datanovia</code>, <code>towardsdatascience</code>, some have better info then others, but most of the time these have commercial activities and in the end want to sell you courses or get your clicks.</p>
+<p>The good news is that <strong>you don’t have to remember any of these sites by heart. Just type your question on your favorite search engine</strong>, ideally copypasting the exact error message, and your answer would very likely be found.</p>
 </section>
 <section id="r-and-tidyverse-documentation" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="r-and-tidyverse-documentation"><span class="header-section-number">2.1.2</span> R and tidyverse documentation</h3>
@@ -477,9 +482,10 @@ ul.task-list li input[type="checkbox"] {
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `
+      value: `library(ggplot2)
+
 # NOT VERY READABLE (but runnable )
-  ggplot(data=mtcars,   mapping=aes.   (x = mpg,y   = disp,
+  ggplot(data=mtcars,   mapping=aes   (x = mpg,y   = disp,
 color = hp,shape =             as.factor(cyl))         ) +geom_point()`,
       language: 'r',
       theme: 'vs-light',
@@ -687,7 +693,7 @@ color = hp,shape =             as.factor(cyl))         ) +geom_point()`,
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `
+      value: `library(dplyr)
 #NOT GOOD
 iris %>% 
 as_tibble() %>% janitor::clean_names() %>% 
@@ -895,7 +901,7 @@ iris %>%
 </section>
 <section id="calling-packages-and-functions" class="level3" data-number="2.1.4">
 <h3 data-number="2.1.4" class="anchored" data-anchor-id="calling-packages-and-functions"><span class="header-section-number">2.1.4</span> Calling packages and functions</h3>
-<p>There are two ways of calling functions in R, the most straightforward and easy is when you run a function from base R you can just call the function with its name. When you want a function from another package, you can either first load the package with <code>library(your_favorite_package)</code> and then call your function with <code>my_favorite_function(my_argument)</code>, but another way that is also preferred is to always also mention the package from which the function comes from. Sometimes packages use the same function name, but then they are actually are different. In that case, you need to be carefull with the <code>library</code> loading, because then the function might be masked by another function with the same name from another package.</p>
+<p>There are two ways of calling functions in R, the most straightforward and easy one is just to call it with its name. This works only when you run a function from base R. When you want a function from another package, you can either first load the package with <code>library(your_favorite_package)</code> and then call your function with <code>my_favorite_function(my_argument)</code>. Another, preferred way, is to always explicitly mention the package from which the function comes from. It can happen that two different packages implement a function with the same name, leading to confusion. In that case, you need to be careful with the <code>library</code> loading, because then the function might be masked by another function with the same name from another package</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-3">Loading
   webR...</button>
 <div id="webr-editor-3"></div>
@@ -918,14 +924,17 @@ iris %>%
       value: `
 #option 1
 library(janitor)
-clean_names(iris)
+clean_names(iris) %>%  
+  head()
 
 #option 2 (preferred)
-janitor::clean_names(iris)
+janitor::clean_names(iris) %>% 
+  head()
 
 #which is the same as:
 iris %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  head()
 
 `,
       language: 'r',
@@ -1150,6 +1159,8 @@ x = 1
 
 #but the <- is preffered
 
+print(paste0("my x = :", 1))
+
   `,
       language: 'r',
       theme: 'vs-light',
@@ -1338,7 +1349,7 @@ x = 1
 </section>
 <section id="vectors-and-lists" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="vectors-and-lists"><span class="header-section-number">2.2.2</span> Vectors and lists</h3>
-<p>A <code>vector</code> in R is a collectino of items (elements) of the same kind (types). A <code>list</code> is a collection of items to can also have different types. We make a vector with <code>c()</code> and a list with <code>list</code>. The <code>c</code> in <code>c()</code> apparently stands for <code>combine</code> <a href="https://stackoverflow.com/questions/11488820/why-use-c-to-define-vector">link</a></p>
+<p>A <code>vector</code> in R is a collection of items (elements) of the same kind (types). A <code>list</code> is a collection of items that can also have different types. We make a vector with <code>c()</code> and a list with <code>list</code>. The <code>c</code> in <code>c()</code> apparently stands for <code>combine</code> <a href="https://stackoverflow.com/questions/11488820/why-use-c-to-define-vector">link</a></p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-5">Loading
   webR...</button>
 <div id="webr-editor-5"></div>
@@ -1761,7 +1772,7 @@ y
     executeCode(editor.getValue());
   };
 </script>
-<p>Also, R forces that a vector is of one type. You can see that when you specifiy a vector with numbers and characters eg. <code>c(1, 2, "1", "2)</code>. It forces the vector to be of <code>character</code> type.</p>
+<p>If you try to build a vector with elements of different types, R will try to adapt all of them to a single type. You can see that when you specify a vector with numbers and characters eg. <code>c(1, 2, "1", "2)</code>. It forces the vector to be of <code>character</code> type. While it may look handy that R does this for us, it is a dangerous feature that might lead to wrong inputs going unnoticed.</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-7">Loading
   webR...</button>
 <div id="webr-editor-7"></div>
@@ -2265,6 +2276,17 @@ mtcars %>%
         geom_point()+
         facet_wrap(~cyl)
 
+#the tilde use in the facet_wrap is discouraged though,
+#we now use vars() instead of the tilde
+
+mtcars %>% 
+    select(mpg, cyl, disp) %>%
+    ggplot(aes(x = mpg, y = disp))+
+        geom_point()+
+        facet_wrap(vars(cyl))
+
+
+
 
   `,
       language: 'r',
@@ -2454,7 +2476,7 @@ mtcars %>%
 </section>
 <section id="the-plus" class="level3" data-number="2.2.5">
 <h3 data-number="2.2.5" class="anchored" data-anchor-id="the-plus"><span class="header-section-number">2.2.5</span> + (the plus)</h3>
-<p>Apart from the simple arithmetic addition <code>+</code> is also used in the ggplot functions. It adds the multiple layers to each ggplot</p>
+<p>Apart from the simple arithmetic addition, <code>+</code> is also used in the ggplot functions. It adds the multiple layers to each ggplot</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-10">Loading
   webR...</button>
 <div id="webr-editor-10"></div>
@@ -3347,7 +3369,7 @@ my_groups %in% c("50.000", "100.000")
 
 #this is usefull when filtering specific elements in a tibble
 iris %>% 
-  filter(species %in% c("setosa", "virginica"))`,
+  filter(Species %in% c("setosa", "virginica"))`,
       language: 'r',
       theme: 'vs-light',
       automaticLayout: true,           // TODO: Could be problematic for slide decks
@@ -3551,8 +3573,11 @@ iris %>%
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="simple-troubleshooting-your-pipelines-and-ggplots"><span class="header-section-number">2.3.2</span> Simple troubleshooting your pipelines and ggplots</h3>
 <p>It happens that your code is not right away typed in perfectly, so you will get errors and warnings. It is good practice to break down your full code block or pipe into parts and observe after which line of code the code is not working properly.</p>
 </section>
-<section id="building-your-data-visualisation-step-by-step" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="building-your-data-visualisation-step-by-step"><span class="header-section-number">2.3.3</span> Building your data visualisation step by step</h3>
+</section>
+<section id="advanced-exercise" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="advanced-exercise"><span class="header-section-number">2.4</span> ADVANCED EXERCISE</h2>
+<section id="building-your-data-visualisation-step-by-step" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="building-your-data-visualisation-step-by-step"><span class="header-section-number">2.4.1</span> Building your data visualisation step by step</h3>
 <p>Let’s take a built-in R dataset <code>USArrests</code>. We want to visualize how the relative number of murders in the state Massachusetts relates to the other states with the highest urban population in those state. In the dataset, the <code>murder</code> column represents the <code>number of murders per 100.000 residents</code></p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-15">Loading
   webR...</button>
@@ -4052,7 +4077,10 @@ Solution to Exercise x
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `USArrests %>%
+      value: `
+#webr::install("forcats")
+
+USArrests %>%
   tibble::rownames_to_column(var = "states") %>% 
   janitor::clean_names() %>%
   as_tibble() %>% 

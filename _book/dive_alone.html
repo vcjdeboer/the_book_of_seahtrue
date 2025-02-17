@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Single experiment – The book of seahtrue</title>
+<title>9&nbsp; Plate map – The book of seahtrue</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
   const initializeWebRTimerStart = performance.now();
 
   // Determine if we need to install R packages
-  var installRPackagesList = ['tidyverse'];
+  var installRPackagesList = ['base'];
   // Check to see if we have an empty array, if we do set to skip the installation.
   var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
 
@@ -244,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dive.html">Advanced Seahtrue - Diving deeper</a></li><li class="breadcrumb-item"><a href="./dive_alone.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Single experiment</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dive.html">Advanced Seahtrue - Diving deeper</a></li><li class="breadcrumb-item"><a href="./dive_alone.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plate map</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -360,7 +360,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dive_alone.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Single experiment</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plate map</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -381,10 +381,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#plate-map" id="toc-plate-map" class="nav-link active" data-scroll-target="#plate-map"><span class="header-section-number">9.1</span> Plate map</a></li>
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">9.2</span> Background</a></li>
-  <li><a href="#low-signals" id="toc-low-signals" class="nav-link" data-scroll-target="#low-signals"><span class="header-section-number">9.3</span> Low signals</a></li>
-  <li><a href="#plotting-basal-and-maximal-respiration" id="toc-plotting-basal-and-maximal-respiration" class="nav-link" data-scroll-target="#plotting-basal-and-maximal-respiration"><span class="header-section-number">9.4</span> Plotting basal and maximal respiration</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">9.1</span> Background</a></li>
+  <li><a href="#low-signals" id="toc-low-signals" class="nav-link" data-scroll-target="#low-signals"><span class="header-section-number">9.2</span> Low signals</a></li>
+  <li><a href="#plotting-basal-and-maximal-respiration" id="toc-plotting-basal-and-maximal-respiration" class="nav-link" data-scroll-target="#plotting-basal-and-maximal-respiration"><span class="header-section-number">9.3</span> Plotting basal and maximal respiration</a></li>
   </ul>
 </nav>
     </div>
@@ -401,9 +400,9 @@ ul.task-list li input[type="checkbox"] {
   });
 </script>
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dive.html">Advanced Seahtrue - Diving deeper</a></li><li class="breadcrumb-item"><a href="./dive_alone.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Single experiment</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dive.html">Advanced Seahtrue - Diving deeper</a></li><li class="breadcrumb-item"><a href="./dive_alone.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plate map</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Single experiment</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plate map</span></h1>
 </div>
 
 
@@ -420,8 +419,19 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="plate-map" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="plate-map"><span class="header-section-number">9.1</span> Plate map</h2>
+<!-- # --- -->
+<!-- # title: A Quarto Live Document -->
+<!-- # engine: knitr -->
+<!-- # format: live-html -->
+<!-- # --- -->
+<!-- #  -->
+<!-- # {{< include ./_extensions/r-wasm/live/_knitr.qmd >}} -->
+<!-- #  -->
+<!-- # ```{webr} -->
+<!-- # fit = lm(mpg ~ am, data = mtcars) -->
+<!-- # summary(fit) -->
+<!-- # plot(fit) -->
+<!-- # ``` -->
 <p>To dive a bit deeper into a single <code>seahtrue</code> experiment, we will first generate an overview of what the experimental set-up was.</p>
 <p>Let’s load the data first</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-1">Loading
@@ -1559,9 +1569,8 @@ seahtrue_output_donor_A %>%
     executeCode(editor.getValue());
   };
 </script>
-</section>
-<section id="background" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="background"><span class="header-section-number">9.2</span> Background</h2>
+<section id="background" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="background"><span class="header-section-number">9.1</span> Background</h2>
 <p>In Seahorse experiments the corners of the plate are by default assigned as <code>Background</code> wells, meaning that in these wells there is no sample but does have the same conditions and culture medium as your sample wells. Background wells need to be checked for outliers. This is not obvious from the Wave software interface, because the backgroung is by default substracted and users will never see the actual background data, unless they really select for it in the point-and-click software Wave. So let’s make some plots of the raw background O2 data.</p>
 <p>We will now use the <code>raw_data</code> table for plotting, and we assume you allready loaded the data file above in this session.</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-6">Loading
@@ -4953,8 +4962,8 @@ seahtrue_output_donor_A %>%
 </div>
 </div>
 </section>
-<section id="low-signals" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="low-signals"><span class="header-section-number">9.3</span> Low signals</h2>
+<section id="low-signals" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="low-signals"><span class="header-section-number">9.2</span> Low signals</h2>
 <p>Sometimes we don’t have much sample. In most cases the sample is cells, and with low cell number the O2 consumption and extracellular acidification can be low. Seahorse defines an pretty arbitrary cut-off for basal respiration at 20 pmol/min. Below this value OCR becomes less reliable.</p>
 <p>In the loaded experiment <code>seahtrue_output_donor_A</code>, we have a group labeled with <code>50.000</code>. In these wells we only have 50.000 cells in each well, which makes its signal difficult to detect.</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-21">Loading
@@ -6234,8 +6243,8 @@ fileName <- "well D04"
 </div>
 </div>
 </section>
-<section id="plotting-basal-and-maximal-respiration" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="plotting-basal-and-maximal-respiration"><span class="header-section-number">9.4</span> Plotting basal and maximal respiration</h2>
+<section id="plotting-basal-and-maximal-respiration" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="plotting-basal-and-maximal-respiration"><span class="header-section-number">9.3</span> Plotting basal and maximal respiration</h2>
 <p>Pluck the <code>injection_info</code> table from the <code>seahtrue_output_donor_A</code> dataset to see what how the injections were defined in the experimental set-up before running the seahorse.</p>
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-26">Loading
   webR...</button>

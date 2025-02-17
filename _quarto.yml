@@ -39,7 +39,7 @@ format:
     theme: cosmo
     link-external-icon: true
     link-external-newwindow: true
-    include-in-header: _include/header.html
+
   pdf:
     documentclass: scrreprt
 
@@ -48,7 +48,7 @@ editor: visual
 webr:
   packages: ['base']
 
-filters:
-  - webr
+execute:
+  engine: webr
 
 

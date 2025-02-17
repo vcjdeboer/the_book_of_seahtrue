@@ -18,7 +18,7 @@ To dive a bit deeper into a single `seahtrue` experiment, we will first generate
 
 Let's load the data first
 
-``` {webr-r}
+``` {webr}
 
 library(tidyverse)
 
@@ -41,7 +41,7 @@ load("seahtrue_output_donor_A.rda")
 
 Next, we make a theme that we can use for the heatmap
 
-``` {webr-r}
+``` {webr}
 theme_htmp <- function(){
     theme_bw(base_size = 15) %+replace% 
       theme(panel.grid.minor.x = element_blank(),
@@ -68,7 +68,7 @@ theme_htmp <- function(){
 
 Then we make a nice default heatmap with the `geom_tile` function.
 
-``` {webr-r}
+``` {webr}
 seahtrue_output_donor_A %>% 
     pluck("rate_data", 1)%>%
     separate(well, 
@@ -93,7 +93,7 @@ seahtrue_output_donor_A %>%
 
 The default ggplot colors are quite colorfull, but might hurt your eyes... If we want colors that are different than the default ggplot colors, and we want the legend to be nicely in order we need to add some additional code.
 
-``` {webr-r}
+``` {webr}
 
 #first get number of groups 
   number_of_groups <- 
@@ -135,7 +135,7 @@ The default ggplot colors are quite colorfull, but might hurt your eyes... If we
 
 Another option would be to manually arrange the factors in a way that suits you best. 
 
-``` {webr-r}
+``` {webr}
 
 group_order <- seahtrue_output_donor_A %>% 
     pluck("rate_data",1) %>%
@@ -169,7 +169,7 @@ In Seahorse experiments the corners of the plate are by default assigned as `Bac
 
 We will now use the `raw_data` table for plotting, and we assume you allready loaded the data file above in this session.
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>%
@@ -189,7 +189,7 @@ To make an even better visual representation of the background and to account fo
 
 We have a plotting function that automates this.
 
-``` {webr-r}
+``` {webr}
 plot_raw_BKGD <- function(total_df, var, flnme){
   
   theme_maxTick <- function(){
@@ -266,7 +266,7 @@ plot_raw_BKGD <- function(total_df, var, flnme){
 
 We can use this function when we provide the right arguments. The argument option for the `var` are: `O2_em_corr`, `pH_em_corr` and `O2_mmHg`.
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>%
@@ -286,7 +286,7 @@ To calculate O2 from emission, Seahorse uses the Stern-Volmer equation. Find out
 
 You can also use the Gerenscer et al. paper that describes the calculations. The method and algorithms described in this Analytical Chemistry paper from 2009 are still used today. [Gerencser et al. Anal Chem 2009](10.1021/ac900881z)
 
-``` {webr-r}
+``` {webr}
 
 # stern_volmer <- function(x, KSV, F0){
 
@@ -298,7 +298,7 @@ You can also use the Gerenscer et al. paper that describes the calculations. The
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 1
 
-``` {webr-r}
+``` {webr}
 
 stern_volmer <- function(x, KSV, F0){
 
@@ -317,7 +317,7 @@ Where `x` is the emission (`O2_em_corr`), `KSV` is a constant, the stern-volmer 
 
 The `KSV` and `F0` are provided in the assay configuration sheet of the excel output. Seahtrue puts that information in the `assay_info` table. You can access it using the `pluck` function. In this case you have to use `pluck` two times, first to get to the `assay_info` and next to the `KSV` or `F0`
 
-``` {webr-r}
+``` {webr}
 
 #seahtrue_output_donor_A %>% 
 
@@ -329,7 +329,7 @@ The `KSV` and `F0` are provided in the assay configuration sheet of the excel ou
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 2
 
-``` {webr-r}
+``` {webr}
 
 KSV <- seahtrue_output_donor_A %>% 
   pluck("assay_info", 1) %>%
@@ -350,7 +350,7 @@ F0 <- seahtrue_output_donor_A %>%
 
 Now use the two constants `KSV` and `F0`, and the function `stern_volmer` to calculate the `O2` from `O2_em_corr`. Also use `select(well, measurement, tick, O2_mmHg, O2)` to compare the `O2` with the `O2_mmHg` in the output.
 
-``` {webr-r}
+``` {webr}
 
 #seahtrue_output_donor_A %>% 
 #  pluck("raw_data", 1) %>%
@@ -363,7 +363,7 @@ Now use the two constants `KSV` and `F0`, and the function `stern_volmer` to cal
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 3
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>%
@@ -381,7 +381,7 @@ seahtrue_output_donor_A %>%
 
 Plot the `O2` background values that you just calculated using the `plot_raw_BKGD` function. Compare the plot to when plotting the `O2_mmHg` that was derived from the Seahorse output xlsx.
 
-``` {webr-r}
+``` {webr}
 
 #seahtrue_output_donor_A %>% 
 #  pluck("raw_data", 1) %>%
@@ -394,7 +394,7 @@ Plot the `O2` background values that you just calculated using the `plot_raw_BKG
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 4
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>%
@@ -416,7 +416,7 @@ Apparently the `O2_mmHg` is different from our own calculated `O2` concentration
 
 Seahorse Wave substracts the mean background from all samples. So the mean `O2_mmHg` of the "`Background` group is substracted from all samples wells (and background wells apparently). We can also do that with our `seahtrue` data. We should take care of what we need to `summarize` here, each `tick` is a unique measurement in the `raw_data`, do let's take `tick` as the `.by` parameter 
 
-``` {webr-r}
+``` {webr}
 
 O2_bkgd <- 
   seahtrue_output_donor_A %>% 
@@ -437,7 +437,7 @@ Now we need to substract the background O2 from all other wells and the backgrou
 
 The way this is done in the Seahorse algorithm is to take into account the ambient O2 levels. Basically what Seahorse calculates is the following:
 
-``` {webr-r}
+``` {webr}
 
 correct_O2_for_background <-function(O2, O2_bkgd){
   O2_0_mmHg = 151.6900241
@@ -462,7 +462,7 @@ Now compare the `O2_corrected` with the original `O2_mmHg`. Do this in two ways.
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 5
 
-``` {webr-r}
+``` {webr}
 
 #solution 1
 seahtrue_output_donor_A %>% 
@@ -479,7 +479,7 @@ seahtrue_output_donor_A %>%
 
 ```
 
-``` {webr-r}
+``` {webr}
 
 #solution 2
 seahtrue_output_donor_A %>% 
@@ -504,7 +504,7 @@ Sometimes we don't have much sample. In most cases the sample is cells, and with
 
 In the loaded experiment `seahtrue_output_donor_A`, we have a group labeled with `50.000`. In these wells we only have 50.000 cells in each well, which makes its signal difficult to detect.
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("rate_data", 1) %>%
@@ -532,7 +532,7 @@ We can make use of the `raw_data` again and plot the `background` O2 signal with
 
 Also, we will use quite a big plotting function for this. It offers some flexibility on whether we want to plot means and/or scale the data. Also we can select specific wells and which measurements. 
 
-``` {webr-r}
+``` {webr}
 plot_raw_whichGroup_dots <- 
   function(var, total_df, flnme, groupString, 
           plot_the_mean, y_label, measurementString, 
@@ -684,7 +684,7 @@ plot_raw_whichGroup_dots <-
 
 Let's explore this huge function (with not so tidy coding in it....), by using it:
 
-``` {webr-r}
+``` {webr}
 #define the df to plot
   #don't forget to have the stern_volmer function
   #and the KSV and F0 loaded for this
@@ -741,7 +741,7 @@ Although the O2 levels of backgrounds increase, it can be seen that the O2 level
 
 Change the inputs for the `plot_raw_whichGroup_dots` (in a meaningful way), to plot the 1) `O2_em_corr`, 2) plot another well `D04` (please note that you also have change the group name because it is from the `100.000` group)
 
-``` {webr-r}
+``` {webr}
 
 #set the inputs for the plot_raw_whichGroup_dots function
 
@@ -753,7 +753,7 @@ Change the inputs for the `plot_raw_whichGroup_dots` (in a meaningful way), to p
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 6
 
-``` {webr-r}
+``` {webr}
 
 #changing to O2 emission
 raw_em_corr <- c("O2_em_corr")
@@ -782,7 +782,7 @@ fileName <- "well D04"
 
 Pluck the `injection_info` table from the `seahtrue_output_donor_A` dataset to see what how the injections were defined in the experimental set-up before running the seahorse.
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("injection_info",1)
@@ -821,7 +821,7 @@ Let's now put that into R code. We call the type of experiment we did in this da
 We also injected monensin, which can maximize ECAR, but we don't need it for OCR calculations.
 
 
-``` {webr-r}
+``` {webr}
 
 # first define which timepoints are what
 param_set_maxcap_ocr <- c(init_ocr = "m3",
@@ -845,7 +845,7 @@ Now for each well we have the parameters related to the phases that we defined i
 
 Next we want to calculate the respiration parameters and indices.
 
-``` {webr-r}
+``` {webr}
 
 seahtrue_output_donor_A %>% 
   pluck("rate_data",1) %>% 
@@ -867,7 +867,7 @@ seahtrue_output_donor_A %>%
 
 With this data we can plot our typical basal and maximal bar/scatter plots that we see in our lovely papers, presentations and theses.
 
-``` {webr-r}
+``` {webr}
 
 webr::install("ggdist")
 
@@ -929,7 +929,7 @@ seahtrue_output_donor_A %>%
 
 The plot above shows `maximal ocr`. Now make your own plot with 1) `basal_ocr` and 2) all groups except background. Make sure to order the group legend tidyly and have reable x-axis labels.
 
-``` {webr-r}
+``` {webr}
 
 #use the code block above and change that code
 
@@ -940,7 +940,7 @@ The plot above shows `maximal ocr`. Now make your own plot with 1) `basal_ocr` a
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 7
 
-``` {webr-r}
+``` {webr}
 
 #solution 1 and 2 together
 #lines with changes marked with #VB

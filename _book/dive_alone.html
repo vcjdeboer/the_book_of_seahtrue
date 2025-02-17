@@ -419,21 +419,20 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- # --- -->
-<!-- # title: A Quarto Live Document -->
-<!-- # engine: knitr -->
-<!-- # format: live-html -->
-<!-- # --- -->
-<!-- #  -->
-<!-- # {{< include ./_extensions/r-wasm/live/_knitr.qmd >}} -->
-<!-- #  -->
-<!-- # ```{webr} -->
-<!-- # fit = lm(mpg ~ am, data = mtcars) -->
-<!-- # summary(fit) -->
-<!-- # plot(fit) -->
-<!-- # ``` -->
-<p>To dive a bit deeper into a single <code>seahtrue</code> experiment, we will first generate an overview of what the experimental set-up was.</p>
-<p>Let’s load the data first</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>title: A Quarto Live Document</td>
+</tr>
+<tr class="even">
+<td>engine: knitr</td>
+</tr>
+<tr class="odd">
+<td>format: live-html</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
 <button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-1">Loading
   webR...</button>
 <div id="webr-editor-1"></div>
@@ -445,6 +444,215 @@ ul.task-list li input[type="checkbox"] {
   const runButton = document.getElementById("webr-run-button-1");
   const outputDiv = document.getElementById("webr-code-output-1");
   const editorDiv = document.getElementById("webr-editor-1");
+
+  // Add a light grey outline around the code editor
+  editorDiv.style.border = "1px solid #eee";
+
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: ` fit = lm(mpg ~ am, data = mtcars)
+ summary(fit)
+ plot(fit)`,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // TODO: Could be problematic for slide decks
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5rem',               // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        executeCode(editor.getValue());
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          executeCode(currentLine);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          executeCode(selectedText);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+  });
+
+  // Function to execute the code (accepts code as an argument)
+  async function executeCode(codeToRun) {
+    // Disable run button for code cell active
+    runButton.disabled = true;
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Initialize webR
+    await globalThis.webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid("webr::canvas(width=504, height=360)");
+
+    // Capture output data from evaluating the code
+    const result = await webRCodeShelter.captureR(codeToRun, {
+      withAutoprint: true,
+      captureStreams: true,
+      captureConditions: false//,
+      // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // Start attempting to parse the result data
+    try {
+
+      // Stop creating images
+      await webR.evalRVoid("dev.off()");
+
+      // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+      const out = result.output.filter(
+        evt => evt.type == "stdout" || evt.type == "stderr"
+      ).map((evt) => evt.data).join("\n");
+
+      // Clean the state
+      const msgs = await webR.flush();
+
+      // Output each image stored
+      msgs.forEach(msg => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+          // Add image to the current canvas
+          if (msg.data.event === 'canvasImage') {
+            canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+          } else if (msg.data.event === 'canvasNewPage') {
+            // Generate a new canvas element
+            canvas = document.createElement("canvas");
+            canvas.setAttribute("width", 2 * 504);
+            canvas.setAttribute("height", 2 * 360);
+            canvas.style.width = "700px";
+            canvas.style.display = "block";
+            canvas.style.margin = "auto";
+          }
+        }
+      });
+
+      // Nullify the outputDiv of content
+      outputDiv.innerHTML = "";
+
+      // Design an output object for messages
+      const pre = document.createElement("pre");
+      if (/\S/.test(out)) {
+        // Display results as text
+        const code = document.createElement("code");
+        code.innerText = out;
+        pre.appendChild(code);
+      } else {
+        // If nothing is present, hide the element.
+        pre.style.visibility = "hidden";
+      }
+      outputDiv.appendChild(pre);
+
+      // Place the graphics on the canvas
+      if (canvas) {
+        const p = document.createElement("p");
+        p.appendChild(canvas);
+        outputDiv.appendChild(p);
+      }
+    } finally {
+      // Clean up the remaining code
+      webRCodeShelter.purge();
+      runButton.disabled = false;
+    }
+  }
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    executeCode(editor.getValue());
+  };
+</script>
+</div>
+<p>To dive a bit deeper into a single <code>seahtrue</code> experiment, we will first generate an overview of what the experimental set-up was.</p>
+<p>Let’s load the data first</p>
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-2">Loading
+  webR...</button>
+<div id="webr-editor-2"></div>
+<div id="webr-code-output-2" aria-live="assertive">
+  <pre style="visibility: hidden"></pre>
+</div>
+<script type="module">
+  // Retrieve webR code cell information
+  const runButton = document.getElementById("webr-run-button-2");
+  const outputDiv = document.getElementById("webr-code-output-2");
+  const editorDiv = document.getElementById("webr-editor-2");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -655,17 +863,17 @@ load("seahtrue_output_donor_A.rda")
   };
 </script>
 <p>Next, we make a theme that we can use for the heatmap</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-2">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-3">Loading
   webR...</button>
-<div id="webr-editor-2"></div>
-<div id="webr-code-output-2" aria-live="assertive">
+<div id="webr-editor-3"></div>
+<div id="webr-code-output-3" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-2");
-  const outputDiv = document.getElementById("webr-code-output-2");
-  const editorDiv = document.getElementById("webr-editor-2");
+  const runButton = document.getElementById("webr-run-button-3");
+  const outputDiv = document.getElementById("webr-code-output-3");
+  const editorDiv = document.getElementById("webr-editor-3");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -879,17 +1087,17 @@ load("seahtrue_output_donor_A.rda")
   };
 </script>
 <p>Then we make a nice default heatmap with the <code>geom_tile</code> function.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-3">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-4">Loading
   webR...</button>
-<div id="webr-editor-3"></div>
-<div id="webr-code-output-3" aria-live="assertive">
+<div id="webr-editor-4"></div>
+<div id="webr-code-output-4" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-3");
-  const outputDiv = document.getElementById("webr-code-output-3");
-  const editorDiv = document.getElementById("webr-editor-3");
+  const runButton = document.getElementById("webr-run-button-4");
+  const outputDiv = document.getElementById("webr-code-output-4");
+  const editorDiv = document.getElementById("webr-editor-4");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -1101,17 +1309,17 @@ load("seahtrue_output_donor_A.rda")
   };
 </script>
 <p>The default ggplot colors are quite colorfull, but might hurt your eyes… If we want colors that are different than the default ggplot colors, and we want the legend to be nicely in order we need to add some additional code.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-4">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-5">Loading
   webR...</button>
-<div id="webr-editor-4"></div>
-<div id="webr-code-output-4" aria-live="assertive">
+<div id="webr-editor-5"></div>
+<div id="webr-code-output-5" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-4");
-  const outputDiv = document.getElementById("webr-code-output-4");
-  const editorDiv = document.getElementById("webr-editor-4");
+  const runButton = document.getElementById("webr-run-button-5");
+  const outputDiv = document.getElementById("webr-code-output-5");
+  const editorDiv = document.getElementById("webr-editor-5");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -1341,17 +1549,17 @@ load("seahtrue_output_donor_A.rda")
   };
 </script>
 <p>Another option would be to manually arrange the factors in a way that suits you best.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-5">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-6">Loading
   webR...</button>
-<div id="webr-editor-5"></div>
-<div id="webr-code-output-5" aria-live="assertive">
+<div id="webr-editor-6"></div>
+<div id="webr-code-output-6" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-5");
-  const outputDiv = document.getElementById("webr-code-output-5");
-  const editorDiv = document.getElementById("webr-editor-5");
+  const runButton = document.getElementById("webr-run-button-6");
+  const outputDiv = document.getElementById("webr-code-output-6");
+  const editorDiv = document.getElementById("webr-editor-6");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -1573,17 +1781,17 @@ seahtrue_output_donor_A %>%
 <h2 data-number="9.1" class="anchored" data-anchor-id="background"><span class="header-section-number">9.1</span> Background</h2>
 <p>In Seahorse experiments the corners of the plate are by default assigned as <code>Background</code> wells, meaning that in these wells there is no sample but does have the same conditions and culture medium as your sample wells. Background wells need to be checked for outliers. This is not obvious from the Wave software interface, because the backgroung is by default substracted and users will never see the actual background data, unless they really select for it in the point-and-click software Wave. So let’s make some plots of the raw background O2 data.</p>
 <p>We will now use the <code>raw_data</code> table for plotting, and we assume you allready loaded the data file above in this session.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-6">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-7">Loading
   webR...</button>
-<div id="webr-editor-6"></div>
-<div id="webr-code-output-6" aria-live="assertive">
+<div id="webr-editor-7"></div>
+<div id="webr-code-output-7" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-6");
-  const outputDiv = document.getElementById("webr-code-output-6");
-  const editorDiv = document.getElementById("webr-editor-6");
+  const runButton = document.getElementById("webr-run-button-7");
+  const outputDiv = document.getElementById("webr-code-output-7");
+  const editorDiv = document.getElementById("webr-editor-7");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -1789,17 +1997,17 @@ seahtrue_output_donor_A %>%
 <p>This is a nice plot of the background O2 readings. It does look weird, especailly beause there is one well <code>H01</code> which has a comppletely different trend then the other wells. This might be suspected as a technical outlier. Possibly in this well there was not enough culture medium or the sensor was damaged. The lab details and observations should be aligned with the outlier calling to make sure to not erroneously flag a well as an outlier.</p>
 <p>To make an even better visual representation of the background and to account for the different aspects how the background well data behaves we can plot only the first ticks of each measurement. We will also shift here now to the fluorescence readings of the Seahorse. Since the O2 is derived from fluorescence values in our experiments it would be good to really look at the most raw data that we get out of our experiment. The fluorescence is given as the parameter <code>O2_em_corr</code></p>
 <p>We have a plotting function that automates this.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-7">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-8">Loading
   webR...</button>
-<div id="webr-editor-7"></div>
-<div id="webr-code-output-7" aria-live="assertive">
+<div id="webr-editor-8"></div>
+<div id="webr-code-output-8" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-7");
-  const outputDiv = document.getElementById("webr-code-output-7");
-  const editorDiv = document.getElementById("webr-editor-7");
+  const runButton = document.getElementById("webr-run-button-8");
+  const outputDiv = document.getElementById("webr-code-output-8");
+  const editorDiv = document.getElementById("webr-editor-8");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -2064,17 +2272,17 @@ seahtrue_output_donor_A %>%
   };
 </script>
 <p>We can use this function when we provide the right arguments. The argument option for the <code>var</code> are: <code>O2_em_corr</code>, <code>pH_em_corr</code> and <code>O2_mmHg</code>.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-8">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-9">Loading
   webR...</button>
-<div id="webr-editor-8"></div>
-<div id="webr-code-output-8" aria-live="assertive">
+<div id="webr-editor-9"></div>
+<div id="webr-code-output-9" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-8");
-  const outputDiv = document.getElementById("webr-code-output-8");
-  const editorDiv = document.getElementById("webr-editor-8");
+  const runButton = document.getElementById("webr-run-button-9");
+  const outputDiv = document.getElementById("webr-code-output-9");
+  const editorDiv = document.getElementById("webr-editor-9");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -2288,17 +2496,17 @@ Exercise 1
 <div class="callout-body-container callout-body">
 <p>To calculate O2 from emission, Seahorse uses the Stern-Volmer equation. Find out (using google or chatGPT) what the stern-volmer equation is and write it in the form of a function. Use the arguments <code>x</code>, <code>KSV</code>, and <code>F0</code>.</p>
 <p>You can also use the Gerenscer et al.&nbsp;paper that describes the calculations. The method and algorithms described in this Analytical Chemistry paper from 2009 are still used today. <a href="10.1021/ac900881z">Gerencser et al.&nbsp;Anal Chem 2009</a></p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-9">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-10">Loading
   webR...</button>
-<div id="webr-editor-9"></div>
-<div id="webr-code-output-9" aria-live="assertive">
+<div id="webr-editor-10"></div>
+<div id="webr-code-output-10" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-9");
-  const outputDiv = document.getElementById("webr-code-output-9");
-  const editorDiv = document.getElementById("webr-editor-9");
+  const runButton = document.getElementById("webr-run-button-10");
+  const outputDiv = document.getElementById("webr-code-output-10");
+  const editorDiv = document.getElementById("webr-editor-10");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -2510,17 +2718,17 @@ Solution to Exercise 1
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-10">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-11">Loading
   webR...</button>
-<div id="webr-editor-10"></div>
-<div id="webr-code-output-10" aria-live="assertive">
+<div id="webr-editor-11"></div>
+<div id="webr-code-output-11" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-10");
-  const outputDiv = document.getElementById("webr-code-output-10");
-  const editorDiv = document.getElementById("webr-editor-10");
+  const runButton = document.getElementById("webr-run-button-11");
+  const outputDiv = document.getElementById("webr-code-output-11");
+  const editorDiv = document.getElementById("webr-editor-11");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -2734,17 +2942,17 @@ Exercise 2
 </div>
 <div class="callout-body-container callout-body">
 <p>The <code>KSV</code> and <code>F0</code> are provided in the assay configuration sheet of the excel output. Seahtrue puts that information in the <code>assay_info</code> table. You can access it using the <code>pluck</code> function. In this case you have to use <code>pluck</code> two times, first to get to the <code>assay_info</code> and next to the <code>KSV</code> or <code>F0</code></p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-11">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-12">Loading
   webR...</button>
-<div id="webr-editor-11"></div>
-<div id="webr-code-output-11" aria-live="assertive">
+<div id="webr-editor-12"></div>
+<div id="webr-code-output-12" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-11");
-  const outputDiv = document.getElementById("webr-code-output-11");
-  const editorDiv = document.getElementById("webr-editor-11");
+  const runButton = document.getElementById("webr-run-button-12");
+  const outputDiv = document.getElementById("webr-code-output-12");
+  const editorDiv = document.getElementById("webr-editor-12");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -2955,17 +3163,17 @@ Solution to Exercise 2
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-12">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-13">Loading
   webR...</button>
-<div id="webr-editor-12"></div>
-<div id="webr-code-output-12" aria-live="assertive">
+<div id="webr-editor-13"></div>
+<div id="webr-code-output-13" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-12");
-  const outputDiv = document.getElementById("webr-code-output-12");
-  const editorDiv = document.getElementById("webr-editor-12");
+  const runButton = document.getElementById("webr-run-button-13");
+  const outputDiv = document.getElementById("webr-code-output-13");
+  const editorDiv = document.getElementById("webr-editor-13");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -3181,17 +3389,17 @@ Exercise 3
 </div>
 <div class="callout-body-container callout-body">
 <p>Now use the two constants <code>KSV</code> and <code>F0</code>, and the function <code>stern_volmer</code> to calculate the <code>O2</code> from <code>O2_em_corr</code>. Also use <code>select(well, measurement, tick, O2_mmHg, O2)</code> to compare the <code>O2</code> with the <code>O2_mmHg</code> in the output.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-13">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-14">Loading
   webR...</button>
-<div id="webr-editor-13"></div>
-<div id="webr-code-output-13" aria-live="assertive">
+<div id="webr-editor-14"></div>
+<div id="webr-code-output-14" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-13");
-  const outputDiv = document.getElementById("webr-code-output-13");
-  const editorDiv = document.getElementById("webr-editor-13");
+  const runButton = document.getElementById("webr-run-button-14");
+  const outputDiv = document.getElementById("webr-code-output-14");
+  const editorDiv = document.getElementById("webr-editor-14");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -3403,17 +3611,17 @@ Solution to Exercise 3
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-14">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-15">Loading
   webR...</button>
-<div id="webr-editor-14"></div>
-<div id="webr-code-output-14" aria-live="assertive">
+<div id="webr-editor-15"></div>
+<div id="webr-code-output-15" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-14");
-  const outputDiv = document.getElementById("webr-code-output-14");
-  const editorDiv = document.getElementById("webr-editor-14");
+  const runButton = document.getElementById("webr-run-button-15");
+  const outputDiv = document.getElementById("webr-code-output-15");
+  const editorDiv = document.getElementById("webr-editor-15");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -3627,17 +3835,17 @@ Exercise 4
 </div>
 <div class="callout-body-container callout-body">
 <p>Plot the <code>O2</code> background values that you just calculated using the <code>plot_raw_BKGD</code> function. Compare the plot to when plotting the <code>O2_mmHg</code> that was derived from the Seahorse output xlsx.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-15">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-16">Loading
   webR...</button>
-<div id="webr-editor-15"></div>
-<div id="webr-code-output-15" aria-live="assertive">
+<div id="webr-editor-16"></div>
+<div id="webr-code-output-16" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-15");
-  const outputDiv = document.getElementById("webr-code-output-15");
-  const editorDiv = document.getElementById("webr-editor-15");
+  const runButton = document.getElementById("webr-run-button-16");
+  const outputDiv = document.getElementById("webr-code-output-16");
+  const editorDiv = document.getElementById("webr-editor-16");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -3849,17 +4057,17 @@ Solution to Exercise 4
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-16">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-17">Loading
   webR...</button>
-<div id="webr-editor-16"></div>
-<div id="webr-code-output-16" aria-live="assertive">
+<div id="webr-editor-17"></div>
+<div id="webr-code-output-17" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-16");
-  const outputDiv = document.getElementById("webr-code-output-16");
-  const editorDiv = document.getElementById("webr-editor-16");
+  const runButton = document.getElementById("webr-run-button-17");
+  const outputDiv = document.getElementById("webr-code-output-17");
+  const editorDiv = document.getElementById("webr-editor-17");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -4076,17 +4284,17 @@ Exercise 5
 <div class="callout-body-container callout-body">
 <p>Apparently the <code>O2_mmHg</code> is different from our own calculated <code>O2</code> concentrations. When looking at the <code>O2_mmHg</code> background plot it looks like that these O2 values are also corrected for a background. Let’s see if that is indeed the case.</p>
 <p>Seahorse Wave substracts the mean background from all samples. So the mean <code>O2_mmHg</code> of the “<code>Background</code> group is substracted from all samples wells (and background wells apparently). We can also do that with our <code>seahtrue</code> data. We should take care of what we need to <code>summarize</code> here, each <code>tick</code> is a unique measurement in the <code>raw_data</code>, do let’s take <code>tick</code> as the <code>.by</code> parameter</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-17">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-18">Loading
   webR...</button>
-<div id="webr-editor-17"></div>
-<div id="webr-code-output-17" aria-live="assertive">
+<div id="webr-editor-18"></div>
+<div id="webr-code-output-18" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-17");
-  const outputDiv = document.getElementById("webr-code-output-17");
-  const editorDiv = document.getElementById("webr-editor-17");
+  const runButton = document.getElementById("webr-run-button-18");
+  const outputDiv = document.getElementById("webr-code-output-18");
+  const editorDiv = document.getElementById("webr-editor-18");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -4295,17 +4503,17 @@ seahtrue_output_donor_A %>%
 </script>
 <p>Now we need to substract the background O2 from all other wells and the backgrounds wells themselves.</p>
 <p>The way this is done in the Seahorse algorithm is to take into account the ambient O2 levels. Basically what Seahorse calculates is the following:</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-18">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-19">Loading
   webR...</button>
-<div id="webr-editor-18"></div>
-<div id="webr-code-output-18" aria-live="assertive">
+<div id="webr-editor-19"></div>
+<div id="webr-code-output-19" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-18");
-  const outputDiv = document.getElementById("webr-code-output-18");
-  const editorDiv = document.getElementById("webr-editor-18");
+  const runButton = document.getElementById("webr-run-button-19");
+  const outputDiv = document.getElementById("webr-code-output-19");
+  const editorDiv = document.getElementById("webr-editor-19");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -4526,17 +4734,17 @@ Solution to Exercise 5
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-19">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-20">Loading
   webR...</button>
-<div id="webr-editor-19"></div>
-<div id="webr-code-output-19" aria-live="assertive">
+<div id="webr-editor-20"></div>
+<div id="webr-code-output-20" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-19");
-  const outputDiv = document.getElementById("webr-code-output-19");
-  const editorDiv = document.getElementById("webr-editor-19");
+  const runButton = document.getElementById("webr-run-button-20");
+  const outputDiv = document.getElementById("webr-code-output-20");
+  const editorDiv = document.getElementById("webr-editor-20");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -4742,17 +4950,17 @@ seahtrue_output_donor_A %>%
     executeCode(editor.getValue());
   };
 </script>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-20">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-21">Loading
   webR...</button>
-<div id="webr-editor-20"></div>
-<div id="webr-code-output-20" aria-live="assertive">
+<div id="webr-editor-21"></div>
+<div id="webr-code-output-21" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-20");
-  const outputDiv = document.getElementById("webr-code-output-20");
-  const editorDiv = document.getElementById("webr-editor-20");
+  const runButton = document.getElementById("webr-run-button-21");
+  const outputDiv = document.getElementById("webr-code-output-21");
+  const editorDiv = document.getElementById("webr-editor-21");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -4966,17 +5174,17 @@ seahtrue_output_donor_A %>%
 <h2 data-number="9.2" class="anchored" data-anchor-id="low-signals"><span class="header-section-number">9.2</span> Low signals</h2>
 <p>Sometimes we don’t have much sample. In most cases the sample is cells, and with low cell number the O2 consumption and extracellular acidification can be low. Seahorse defines an pretty arbitrary cut-off for basal respiration at 20 pmol/min. Below this value OCR becomes less reliable.</p>
 <p>In the loaded experiment <code>seahtrue_output_donor_A</code>, we have a group labeled with <code>50.000</code>. In these wells we only have 50.000 cells in each well, which makes its signal difficult to detect.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-21">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-22">Loading
   webR...</button>
-<div id="webr-editor-21"></div>
-<div id="webr-code-output-21" aria-live="assertive">
+<div id="webr-editor-22"></div>
+<div id="webr-code-output-22" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-21");
-  const outputDiv = document.getElementById("webr-code-output-21");
-  const editorDiv = document.getElementById("webr-editor-21");
+  const runButton = document.getElementById("webr-run-button-22");
+  const outputDiv = document.getElementById("webr-code-output-22");
+  const editorDiv = document.getElementById("webr-editor-22");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -5189,17 +5397,17 @@ seahtrue_output_donor_A %>%
 <p>What if we want to investigate in more detail how our signals are for our samples with this low respiration?</p>
 <p>We can make use of the <code>raw_data</code> again and plot the <code>background</code> O2 signal with the <code>sample</code> O2 signal in one plot. Since in the previous section we saw that O2 signals for the background wells were also corrected for background (?!), we will work with our own calculated O2 levels using the <code>stern_volmer</code> function we wrote in the previous section.</p>
 <p>Also, we will use quite a big plotting function for this. It offers some flexibility on whether we want to plot means and/or scale the data. Also we can select specific wells and which measurements.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-22">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-23">Loading
   webR...</button>
-<div id="webr-editor-22"></div>
-<div id="webr-code-output-22" aria-live="assertive">
+<div id="webr-editor-23"></div>
+<div id="webr-code-output-23" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-22");
-  const outputDiv = document.getElementById("webr-code-output-22");
-  const editorDiv = document.getElementById("webr-editor-22");
+  const runButton = document.getElementById("webr-run-button-23");
+  const outputDiv = document.getElementById("webr-code-output-23");
+  const editorDiv = document.getElementById("webr-editor-23");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -5539,17 +5747,17 @@ seahtrue_output_donor_A %>%
   };
 </script>
 <p>Let’s explore this huge function (with not so tidy coding in it….), by using it:</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-23">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-24">Loading
   webR...</button>
-<div id="webr-editor-23"></div>
-<div id="webr-code-output-23" aria-live="assertive">
+<div id="webr-editor-24"></div>
+<div id="webr-code-output-24" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-23");
-  const outputDiv = document.getElementById("webr-code-output-23");
-  const editorDiv = document.getElementById("webr-editor-23");
+  const runButton = document.getElementById("webr-run-button-24");
+  const outputDiv = document.getElementById("webr-code-output-24");
+  const editorDiv = document.getElementById("webr-editor-24");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -5798,17 +6006,17 @@ Exercise 6
 </div>
 <div class="callout-body-container callout-body">
 <p>Change the inputs for the <code>plot_raw_whichGroup_dots</code> (in a meaningful way), to plot the 1) <code>O2_em_corr</code>, 2) plot another well <code>D04</code> (please note that you also have change the group name because it is from the <code>100.000</code> group)</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-24">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-25">Loading
   webR...</button>
-<div id="webr-editor-24"></div>
-<div id="webr-code-output-24" aria-live="assertive">
+<div id="webr-editor-25"></div>
+<div id="webr-code-output-25" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-24");
-  const outputDiv = document.getElementById("webr-code-output-24");
-  const editorDiv = document.getElementById("webr-editor-24");
+  const runButton = document.getElementById("webr-run-button-25");
+  const outputDiv = document.getElementById("webr-code-output-25");
+  const editorDiv = document.getElementById("webr-editor-25");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -6019,17 +6227,17 @@ Solution to Exercise 6
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-25">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-26">Loading
   webR...</button>
-<div id="webr-editor-25"></div>
-<div id="webr-code-output-25" aria-live="assertive">
+<div id="webr-editor-26"></div>
+<div id="webr-code-output-26" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-25");
-  const outputDiv = document.getElementById("webr-code-output-25");
-  const editorDiv = document.getElementById("webr-editor-25");
+  const runButton = document.getElementById("webr-run-button-26");
+  const outputDiv = document.getElementById("webr-code-output-26");
+  const editorDiv = document.getElementById("webr-editor-26");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -6246,17 +6454,17 @@ fileName <- "well D04"
 <section id="plotting-basal-and-maximal-respiration" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="plotting-basal-and-maximal-respiration"><span class="header-section-number">9.3</span> Plotting basal and maximal respiration</h2>
 <p>Pluck the <code>injection_info</code> table from the <code>seahtrue_output_donor_A</code> dataset to see what how the injections were defined in the experimental set-up before running the seahorse.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-26">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-27">Loading
   webR...</button>
-<div id="webr-editor-26"></div>
-<div id="webr-code-output-26" aria-live="assertive">
+<div id="webr-editor-27"></div>
+<div id="webr-code-output-27" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-26");
-  const outputDiv = document.getElementById("webr-code-output-26");
-  const editorDiv = document.getElementById("webr-editor-26");
+  const runButton = document.getElementById("webr-run-button-27");
+  const outputDiv = document.getElementById("webr-code-output-27");
+  const editorDiv = document.getElementById("webr-editor-27");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -6477,17 +6685,17 @@ seahtrue_output_donor_A %>%
 </blockquote>
 <p>Let’s now put that into R code. We call the type of experiment we did in this dataset a <code>maximal capacity</code> (<code>maxcap</code>) test.</p>
 <p>We also injected monensin, which can maximize ECAR, but we don’t need it for OCR calculations.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-27">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-28">Loading
   webR...</button>
-<div id="webr-editor-27"></div>
-<div id="webr-code-output-27" aria-live="assertive">
+<div id="webr-editor-28"></div>
+<div id="webr-code-output-28" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-27");
-  const outputDiv = document.getElementById("webr-code-output-27");
-  const editorDiv = document.getElementById("webr-editor-27");
+  const runButton = document.getElementById("webr-run-button-28");
+  const outputDiv = document.getElementById("webr-code-output-28");
+  const editorDiv = document.getElementById("webr-editor-28");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -6697,17 +6905,17 @@ seahtrue_output_donor_A %>%
 </script>
 <p>Now for each well we have the parameters related to the phases that we defined in the parameter set.</p>
 <p>Next we want to calculate the respiration parameters and indices.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-28">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-29">Loading
   webR...</button>
-<div id="webr-editor-28"></div>
-<div id="webr-code-output-28" aria-live="assertive">
+<div id="webr-editor-29"></div>
+<div id="webr-code-output-29" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-28");
-  const outputDiv = document.getElementById("webr-code-output-28");
-  const editorDiv = document.getElementById("webr-editor-28");
+  const runButton = document.getElementById("webr-run-button-29");
+  const outputDiv = document.getElementById("webr-code-output-29");
+  const editorDiv = document.getElementById("webr-editor-29");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -6917,17 +7125,17 @@ seahtrue_output_donor_A %>%
   };
 </script>
 <p>With this data we can plot our typical basal and maximal bar/scatter plots that we see in our lovely papers, presentations and theses.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-29">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-30">Loading
   webR...</button>
-<div id="webr-editor-29"></div>
-<div id="webr-code-output-29" aria-live="assertive">
+<div id="webr-editor-30"></div>
+<div id="webr-code-output-30" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-29");
-  const outputDiv = document.getElementById("webr-code-output-29");
-  const editorDiv = document.getElementById("webr-editor-29");
+  const runButton = document.getElementById("webr-run-button-30");
+  const outputDiv = document.getElementById("webr-code-output-30");
+  const editorDiv = document.getElementById("webr-editor-30");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -7184,17 +7392,17 @@ Exercise 7
 </div>
 <div class="callout-body-container callout-body">
 <p>The plot above shows <code>maximal ocr</code>. Now make your own plot with 1) <code>basal_ocr</code> and 2) all groups except background. Make sure to order the group legend tidyly and have reable x-axis labels.</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-30">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-31">Loading
   webR...</button>
-<div id="webr-editor-30"></div>
-<div id="webr-code-output-30" aria-live="assertive">
+<div id="webr-editor-31"></div>
+<div id="webr-code-output-31" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-30");
-  const outputDiv = document.getElementById("webr-code-output-30");
-  const editorDiv = document.getElementById("webr-editor-30");
+  const runButton = document.getElementById("webr-run-button-31");
+  const outputDiv = document.getElementById("webr-code-output-31");
+  const editorDiv = document.getElementById("webr-editor-31");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";
@@ -7404,17 +7612,17 @@ Solution to Exercise 7
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-31">Loading
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-32">Loading
   webR...</button>
-<div id="webr-editor-31"></div>
-<div id="webr-code-output-31" aria-live="assertive">
+<div id="webr-editor-32"></div>
+<div id="webr-code-output-32" aria-live="assertive">
   <pre style="visibility: hidden"></pre>
 </div>
 <script type="module">
   // Retrieve webR code cell information
-  const runButton = document.getElementById("webr-run-button-31");
-  const outputDiv = document.getElementById("webr-code-output-31");
-  const editorDiv = document.getElementById("webr-editor-31");
+  const runButton = document.getElementById("webr-run-button-32");
+  const outputDiv = document.getElementById("webr-code-output-32");
+  const editorDiv = document.getElementById("webr-editor-32");
 
   // Add a light grey outline around the code editor
   editorDiv.style.border = "1px solid #eee";

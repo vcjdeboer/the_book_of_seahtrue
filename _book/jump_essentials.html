@@ -482,7 +482,8 @@ ul.task-list li input[type="checkbox"] {
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `
+      value: `library(ggplot2)
+
 # NOT VERY READABLE (but runnable )
   ggplot(data=mtcars,   mapping=aes   (x = mpg,y   = disp,
 color = hp,shape =             as.factor(cyl))         ) +geom_point()`,
@@ -692,7 +693,7 @@ color = hp,shape =             as.factor(cyl))         ) +geom_point()`,
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `
+      value: `library(dplyr)
 #NOT GOOD
 iris %>% 
 as_tibble() %>% janitor::clean_names() %>% 
@@ -923,14 +924,17 @@ iris %>%
       value: `
 #option 1
 library(janitor)
-clean_names(iris)
+clean_names(iris) %>%  
+  head()
 
 #option 2 (preferred)
-janitor::clean_names(iris)
+janitor::clean_names(iris) %>% 
+  head()
 
 #which is the same as:
 iris %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  head()
 
 `,
       language: 'r',
@@ -1154,6 +1158,8 @@ x <- 1
 x = 1 
 
 #but the <- is preffered
+
+print(paste0("my x = :", 1))
 
   `,
       language: 'r',
@@ -3363,7 +3369,7 @@ my_groups %in% c("50.000", "100.000")
 
 #this is usefull when filtering specific elements in a tibble
 iris %>% 
-  filter(species %in% c("setosa", "virginica"))`,
+  filter(Species %in% c("setosa", "virginica"))`,
       language: 'r',
       theme: 'vs-light',
       automaticLayout: true,           // TODO: Could be problematic for slide decks
@@ -4071,7 +4077,10 @@ Solution to Exercise x
   let editor;
   require(['vs/editor/editor.main'], function () {
     editor = monaco.editor.create(editorDiv, {
-      value: `USArrests %>%
+      value: `
+#webr::install("forcats")
+
+USArrests %>%
   tibble::rownames_to_column(var = "states") %>% 
   janitor::clean_names() %>%
   as_tibble() %>% 

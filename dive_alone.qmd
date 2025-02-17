@@ -1,16 +1,16 @@
----
-title: A Quarto Live Document
-engine: knitr
-format: live-html
----
-
-{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
-
-```{webr}
-fit = lm(mpg ~ am, data = mtcars)
-summary(fit)
-plot(fit)
-```
+<!-- # --- -->
+<!-- # title: A Quarto Live Document -->
+<!-- # engine: knitr -->
+<!-- # format: live-html -->
+<!-- # --- -->
+<!-- #  -->
+<!-- # {{< include ./_extensions/r-wasm/live/_knitr.qmd >}} -->
+<!-- #  -->
+<!-- # ```{webr} -->
+<!-- # fit = lm(mpg ~ am, data = mtcars) -->
+<!-- # summary(fit) -->
+<!-- # plot(fit) -->
+<!-- # ``` -->
 
 ## Plate map
 

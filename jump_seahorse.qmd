@@ -6,7 +6,7 @@ editor:
   mode: source  
 ---
 
-Now, lets plot some Seahorse data. For this we need to import some of it into this session .The data is available from [github](https://github.com/vcjdeboer/seahtrue/tree/main/inst/extdata). 
+Now, lets plot some Seahorse data. For this we need to import some of it into this session .The data is available from [github](https://github.com/vcjdeboer/seahtrue/tree/develop-gerwin/inst/extdata). 
 
 It is data from PBMCs where we followed OCR and ECAR using Extracellular Flux analysis with the XFe96 over time and during that time we injected after three measurement phases FCCP, and after six measurement phases we injected Antimycin/Rotenone (AM/Rot). Much more context can be found in Scientific Reports [Janssen et al.](https://www.nature.com/articles/s41598-021-81217-4){target="_blank"}.
 

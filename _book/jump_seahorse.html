@@ -75,6 +75,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-7580570a2e354cd56757c689413fca0c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -102,6 +104,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 </head>
@@ -231,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dive_alone.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plate map</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Single Experiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -274,37 +278,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>Now, lets plot some Seahorse data. For this we need to import some of it into this session .The data is available from <a href="https://github.com/vcjdeboer/seahtrue/tree/main/inst/extdata">github</a>.</p>
 <p>It is data from PBMCs where we followed OCR and ECAR using Extracellular Flux analysis with the XFe96 over time and during that time we injected after three measurement phases FCCP, and after six measurement phases we injected Antimycin/Rotenone (AM/Rot). Much more context can be found in Scientific Reports <a href="https://www.nature.com/articles/s41598-021-81217-4">Janssen et al.</a>.</p>
-<pre class="{webr-r}"><code>library(tidyverse)
+<div>
+<div id="webr-1" class="exercise-cell">
 
-#set file source
-root_srcfile &lt;- 
-  "https://raw.githubusercontent.com/vcjdeboer/"
-repository_srcfile &lt;-
-  "seahtrue/main/inst/extdata/"
-
-#download file and rename to "VB.xlsx"
-download.file(
-  paste0(
-    root_srcfile,
-    repository_srcfile,
-    "20191219 SciRep PBMCs donor A.xlsx"), 
-  "VB.xlsx")
-
-#read xlsx file
-xf&lt;-readxl::read_xlsx("VB.xlsx", sheet = "Rate")
-
-xf %&gt;% glimpse()</code></pre>
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeSh0aWR5dmVyc2UpXG5cbiNzZXQgZmlsZSBzb3VyY2VcbnJvb3Rfc3JjZmlsZSA8LSBcbiAgXCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vdmNqZGVib2VyL1wiXG5yZXBvc2l0b3J5X3NyY2ZpbGUgPC1cbiAgXCJzZWFodHJ1ZS9tYWluL2luc3QvZXh0ZGF0YS9cIlxuXG4jZG93bmxvYWQgZmlsZSBhbmQgcmVuYW1lIHRvIFwiVkIueGxzeFwiXG5kb3dubG9hZC5maWxlKFxuICBwYXN0ZTAoXG4gICAgcm9vdF9zcmNmaWxlLFxuICAgIHJlcG9zaXRvcnlfc3JjZmlsZSxcbiAgICBcIjIwMTkxMjE5IFNjaVJlcCBQQk1DcyBkb25vciBBLnhsc3hcIiksIFxuICBcIlZCLnhsc3hcIilcblxuI3JlYWQgeGxzeCBmaWxlXG54ZjwtcmVhZHhsOjpyZWFkX3hsc3goXCJWQi54bHN4XCIsIHNoZWV0ID0gXCJSYXRlXCIpXG5cbnhmICU+JSBnbGltcHNlKCkifQ==
+</script>
+</div>
 <p>As you can see from the <code>glimpse</code>, the data table that we have now (called a <code>tibble</code> in tidy language), contains 7 columns; <code>Measurement</code>, <code>Well</code>, <code>Group</code>, <code>Time</code>, <code>OCR</code>, <code>ECAR</code>, <code>PER</code>. The data is allready nice and tidyly organized in the Rate sheet of the excel file that we have loaded. The file was generated in the Wave Agilent software and directly comes from exporting the Seahorse data to xlsx.</p>
 <p>I prefer to use lower case column names without any spaces, so for these column names we have to turn them into lower case first. We use some easy functions from the <code>janitor</code> package for this.</p>
-<pre class="{webr-r}"><code>webr::install("janitor")
-xf %&gt;% janitor::clean_names()</code></pre>
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoid2Vicjo6aW5zdGFsbChcImphbml0b3JcIilcbnhmICU+JSBqYW5pdG9yOjpjbGVhbl9uYW1lcygpIn0=
+</script>
+</div>
 <p>Next, we can start plotting data using <code>ggplot.</code> Let’s introduce the <code>filter</code> command from <code>dplyr</code>. Whereas <code>select</code> selects columns, <code>filter</code> selects rows. So let’s filter the rows for the group which is labeled “200.000” (200.000 cells/per well) and the “Background” group.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  glimpse()
-  </code></pre>
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnbGltcHNlKClcbiAgIn0=
+</script>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -319,124 +319,91 @@ The filter command
 <div class="callout-body-container callout-body">
 <p>Filtering data is selecting the rows based on some arguments. You need some to understand some semantics here. For filtering based on multiple conditions we use <code>group %in% c("200.000", "Background")</code>, for filtering based on a single condition we can use <code>group == "200.000"</code>. The <code>%in%</code> operator is used to match two or more items.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="co">#is TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="co">#is TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># just like</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">==</span> <span class="dv">1</span> <span class="co">#is TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># just like</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">==</span> <span class="dv">1</span> <span class="co">#is TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the reverse is also possible</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>) <span class="sc">%in%</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the reverse is also possible</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>) <span class="sc">%in%</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE FALSE FALSE FALSE FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#is TRUE FALSE FALSE FALSE FALSE FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#is TRUE FALSE FALSE FALSE FALSE FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<pre class="{webr-r}"><code>#Try the 1 = 1 here as well
+<div>
+<div id="webr-4" class="exercise-cell">
 
-1 = 1
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiI1RyeSB0aGUgMSA9IDEgaGVyZSBhcyB3ZWxsXG5cbjEgPSAxXG5cbiNSZW1lbWJlcjpcbiN0aGUgPSBvcGVyYXRvciBpcyByZXNlcnZlZCBmb3IgYXNzaWdubWVudFxuI2p1c3QgbGlrZSB0aGUgPC0gb3BlcmF0b3JcbiMgPT0gaXMgdXNlZCBmb3IgY29tcGFyaXNvbiJ9
+</script>
+</div>
+<div>
+<div id="webr-5" class="exercise-cell">
 
-#Remember:
-#the = operator is reserved for assignment
-#just like the &lt;- operator
-# == is used for comparison</code></pre>
-<pre class="{webr-r}"><code>
-#say that we have the following vector 
-#( = groups in experiment)
-group &lt;- c("Background", "50.0000", 
-           "100.000", "150.000",
-           "200.000", "250.000", 
-           "300.000")
-
-#we can do the same without typing the
-#names by hand like this:
-group &lt;- xf %&gt;% 
-          pull(Group) %&gt;% 
-          unique()
-
-#then
-
-c("200.000", "Background") %in% group
-
-#generates TRUE TRUE
-
-group %in% c("200.000", "Background")
-
-#generates:
-#TRUE FALSE FALSE FALSE TRUE FALSE FALSE</code></pre>
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG4jc2F5IHRoYXQgd2UgaGF2ZSB0aGUgZm9sbG93aW5nIHZlY3RvciBcbiMoID0gZ3JvdXBzIGluIGV4cGVyaW1lbnQpXG5ncm91cCA8LSBjKFwiQmFja2dyb3VuZFwiLCBcIjUwLjAwMDBcIiwgXG4gICAgICAgICAgIFwiMTAwLjAwMFwiLCBcIjE1MC4wMDBcIixcbiAgICAgICAgICAgXCIyMDAuMDAwXCIsIFwiMjUwLjAwMFwiLCBcbiAgICAgICAgICAgXCIzMDAuMDAwXCIpXG5cbiN3ZSBjYW4gZG8gdGhlIHNhbWUgd2l0aG91dCB0eXBpbmcgdGhlXG4jbmFtZXMgYnkgaGFuZCBsaWtlIHRoaXM6XG5ncm91cCA8LSB4ZiAlPiUgXG4gICAgICAgICAgcHVsbChHcm91cCkgJT4lIFxuICAgICAgICAgIHVuaXF1ZSgpXG5cbiN0aGVuXG5cbmMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSAlaW4lIGdyb3VwXG5cbiNnZW5lcmF0ZXMgVFJVRSBUUlVFXG5cbmdyb3VwICVpbiUgYyhcIjIwMC4wMDBcIiwgXCJCYWNrZ3JvdW5kXCIpXG5cbiNnZW5lcmF0ZXM6XG4jVFJVRSBGQUxTRSBGQUxTRSBGQUxTRSBUUlVFIEZBTFNFIEZBTFNFIn0=
+</script>
+</div>
 <p>Thus the <code>group %in% c("200.000", "Background")</code> statement in the filter function above tells which group items to use. For <code>200.000</code> there is match (<code>TRUE</code>), but for <code>100.000</code> there is not a match (it is <code>FALSE</code>).</p>
 </div>
 </div>
 </div>
 <p>Now that we know how to filter we can use the filtered data to make the ggplot.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr))+
-  geom_point()
-  </code></pre>
+<div>
+<div id="webr-6" class="exercise-cell">
+
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyKSkrXG4gIGdlb21fcG9pbnQoKVxuICAifQ==
+</script>
+</div>
 <p>That plot is not very informative. Let’s make it prettier. First, add a line plot:</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-  #the group command in aes is important for lines
-  #ggplot wants to know how to connect dots
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line()
-  </code></pre>
+<div>
+<div id="webr-7" class="exercise-cell">
+
+</div>
+<script type="webr-7-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAjdGhlIGdyb3VwIGNvbW1hbmQgaW4gYWVzIGlzIGltcG9ydGFudCBmb3IgbGluZXNcbiAgI2dncGxvdCB3YW50cyB0byBrbm93IGhvdyB0byBjb25uZWN0IGRvdHNcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZ3JvdXApKStcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKClcbiAgIn0=
+</script>
+</div>
 <p>Next, change colors:</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    scale_color_brewer(palette = "Set1")
-  </code></pre>
+<div>
+<div id="webr-8" class="exercise-cell">
+
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDFcIilcbiAgIn0=
+</script>
+</div>
 <p>Change theme and text size:</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    scale_color_brewer(palette = "Set1")+
-    theme_bw(base_size = 16)
-  </code></pre>
+<div>
+<div id="webr-9" class="exercise-cell">
+
+</div>
+<script type="webr-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDFcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpXG4gICJ9
+</script>
+</div>
 <p>Add titles:</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    scale_color_brewer(palette = "Set1")+
-    labs(subtitle = "200.000 cells per well vs Background",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)
-  </code></pre>
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDFcIikrXG4gICAgbGFicyhzdWJ0aXRsZSA9IFwiMjAwLjAwMCBjZWxscyBwZXIgd2VsbCB2cyBCYWNrZ3JvdW5kXCIsXG4gICAgICAgICB4ID0gXCJ0aW1lIChtaW51dGVzKVwiLFxuICAgICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpXG4gICJ9
+</script>
+</div>
 <p>This is a very nice plot now! It shows all OCR curves for each well for the <code>200.000</code> and the <code>background</code> groups. The information that is now not in the plot is which line matches to which well.</p>
 <p>We could consider coloring each line, but there are too many wells so it will not look nice! *TODO: Change this in the above code <code>color = well</code> instead of <code>color = group</code>. * You will notice that there are not enough colors in the <code>brewer</code> palette <code>Set1</code>, so you go back to the default coloring by deleting the <code>scale_color_brewer</code> line as well. Use th <code>#</code> to comment out the line. * Now notice that the legend is huge and not completely visible, againg indicating that this is not the way to go</p>
 <p>Instead, we can try to label the lines. We’ll use the <code>geom_text</code> or <code>annotate</code> commands from <code>ggplot</code>.</p>
@@ -456,36 +423,14 @@ xf %&gt;%
 </div>
 </div>
 </div>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-          # here are the labels using geom_text
-     geom_text(data = . %&gt;%
-                    filter(time == 
-                              max(time)) %&gt;%
-                    filter(ocr  == 
-                              min(ocr)),
-               aes(label = well),
-               vjust = 2,
-               hjust = 1)+
-     geom_text(data = . %&gt;%
-                    filter(between(time, 15, 20))%&gt;%
-                    filter(ocr  == max(ocr)),
-               aes(label = well),
-               vjust = -0.3,
-               hjust = 1)+
-    geom_point()+
-    geom_line() +
-    scale_color_brewer(palette = "Set1")+
-    labs(subtitle = "200.000 cells per well vs Background",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)
-  </code></pre>
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgICAgICAgICMgaGVyZSBhcmUgdGhlIGxhYmVscyB1c2luZyBnZW9tX3RleHRcbiAgICAgZ2VvbV90ZXh0KGRhdGEgPSAuICU+JVxuICAgICAgICAgICAgICAgICAgICBmaWx0ZXIodGltZSA9PSBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1heCh0aW1lKSkgJT4lXG4gICAgICAgICAgICAgICAgICAgIGZpbHRlcihvY3IgID09IFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWluKG9jcikpLFxuICAgICAgICAgICAgICAgYWVzKGxhYmVsID0gd2VsbCksXG4gICAgICAgICAgICAgICB2anVzdCA9IDIsXG4gICAgICAgICAgICAgICBoanVzdCA9IDEpK1xuICAgICBnZW9tX3RleHQoZGF0YSA9IC4gJT4lXG4gICAgICAgICAgICAgICAgICAgIGZpbHRlcihiZXR3ZWVuKHRpbWUsIDE1LCAyMCkpJT4lXG4gICAgICAgICAgICAgICAgICAgIGZpbHRlcihvY3IgID09IG1heChvY3IpKSxcbiAgICAgICAgICAgICAgIGFlcyhsYWJlbCA9IHdlbGwpLFxuICAgICAgICAgICAgICAgdmp1c3QgPSAtMC4zLFxuICAgICAgICAgICAgICAgaGp1c3QgPSAxKStcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQxXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIjIwMC4wMDAgY2VsbHMgcGVyIHdlbGwgdnMgQmFja2dyb3VuZFwiLFxuICAgICAgICAgeCA9IFwidGltZSAobWludXRlcylcIixcbiAgICAgICAgIHkgPSBcIk9DUiAocG1vbC9taW4pXCIpK1xuICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDE2KVxuICAifQ==
+</script>
+</div>
 <p>Although we now labeled lines that are at the minimum and maximum OCR, this is only useful for this one plot in these conditions. The position of the label is tweaked based on this specific plot, making this not such a quick solution to our problem.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -500,74 +445,47 @@ Subsetting of data within the ggplot commands
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>In the above ggplot commands, we included the <code>geom_text</code>, but we only used a subset of the full data for this geom. We use the <code>.</code> (dot) operator to get the original data (so in our case the filtered data that went into the ggplot), and piped that into another two filters. Basically we do the following, but then within one layer of the ggplot:</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  filter(time ==  max(time)) %&gt;%
-  filter(ocr  == min(ocr))
+<div>
+<div id="webr-12" class="exercise-cell">
 
-#and we also use the between function from dplyr
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  filter(between(time, 15, 20)) %&gt;%
-  filter(ocr  == max(ocr))
-</code></pre>
+</div>
+<script type="webr-12-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBmaWx0ZXIodGltZSA9PSAgbWF4KHRpbWUpKSAlPiVcbiAgZmlsdGVyKG9jciAgPT0gbWluKG9jcikpXG5cbiNhbmQgd2UgYWxzbyB1c2UgdGhlIGJldHdlZW4gZnVuY3Rpb24gZnJvbSBkcGx5clxueGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JSBcbiAgZmlsdGVyKGJldHdlZW4odGltZSwgMTUsIDIwKSkgJT4lXG4gIGZpbHRlcihvY3IgID09IG1heChvY3IpKSJ9
+</script>
+</div>
 <p>Thus here we are filtering all the way to getting only one row of the full dataset. The <code>well</code> name “C08” or “B08” is then given to the <code>label</code> argument of <code>geom_text</code>.</p>
 </div>
 </div>
 </div>
 <p>Let’s do some more layout adjustments. Although the <code>theme_bw</code> gives a basic plotting layout, we often want to change the formatting. There are again great resources for this, for example this one: <a href="https://ggplot2.tidyverse.org/articles/faq-customising.html" class="uri">https://ggplot2.tidyverse.org/articles/faq-customising.html</a>, but we explain the basics here. By giving options to the <code>theme</code> function we can change specific elements of a ggplot.</p>
 <p>For example, if we want to change the text size of the axis title (or leave it blank), we give arguments to the <code>axis.title</code> options. Also please note the <code>rel(1.2)</code> argument which means <code>relative 1.2 times higher than base_size</code>. I think it is good practice to use the <code>rel</code> here instead of absolute numbers.</p>
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr))+
-  geom_point()+
-  labs(x = "time (min)",
-      y = "OCR (pmol/min)")+
-  theme_bw(base_size= 16)+
-  theme(
-    axis.title.x = element_blank(),
-    axis.title.y = element_text(size = rel(1.2))
-    
-  )
-</code></pre>
+<div>
+<div id="webr-13" class="exercise-cell">
+
+</div>
+<script type="webr-13-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcikpK1xuICBnZW9tX3BvaW50KCkrXG4gIGxhYnMoeCA9IFwidGltZSAobWluKVwiLFxuICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gIHRoZW1lX2J3KGJhc2Vfc2l6ZT0gMTYpK1xuICB0aGVtZShcbiAgICBheGlzLnRpdGxlLnggPSBlbGVtZW50X2JsYW5rKCksXG4gICAgYXhpcy50aXRsZS55ID0gZWxlbWVudF90ZXh0KHNpemUgPSByZWwoMS4yKSlcbiAgICBcbiAgKSJ9
+</script>
+</div>
 <p>Change the rel <code>1.2</code> to <code>0.5</code> in the above code and see what happens.</p>
 <p>Next, we change the grid lines:</p>
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr))+
-  geom_point()+
-  labs(x = "time (min)",
-      y = "OCR (pmol/min)")+
-  theme_bw(base_size= 16)+
-  theme(
-    
-   panel.grid.minor = element_line(color  = "red"), 
-   panel.grid.major.x = element_line(color  = "blue"),
+<div>
+<div id="webr-14" class="exercise-cell">
 
-  )
-</code></pre>
+</div>
+<script type="webr-14-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcikpK1xuICBnZW9tX3BvaW50KCkrXG4gIGxhYnMoeCA9IFwidGltZSAobWluKVwiLFxuICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gIHRoZW1lX2J3KGJhc2Vfc2l6ZT0gMTYpK1xuICB0aGVtZShcbiAgICBcbiAgIHBhbmVsLmdyaWQubWlub3IgPSBlbGVtZW50X2xpbmUoY29sb3IgID0gXCJyZWRcIiksIFxuICAgcGFuZWwuZ3JpZC5tYWpvci54ID0gZWxlbWVudF9saW5lKGNvbG9yICA9IFwiYmx1ZVwiKSxcblxuICApIn0=
+</script>
+</div>
 <p>Next, we change the orientation of the x axis labels.</p>
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;%
-  ggplot(aes(x = time, y = ocr))+
-  geom_point()+
-  labs(x = "time (min)",
-      y = "OCR (pmol/min)")+
-  theme_bw(base_size= 16)+
-  theme(
-    axis.text.x = element_text(
-      angle = 45, 
-      vjust = 1, # vertical alignment
-      hjust = 1, # horizontal alignment
-      size = rel(2))
-  )
-</code></pre>
+<div>
+<div id="webr-15" class="exercise-cell">
+
+</div>
+<script type="webr-15-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JVxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyKSkrXG4gIGdlb21fcG9pbnQoKStcbiAgbGFicyh4ID0gXCJ0aW1lIChtaW4pXCIsXG4gICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgdGhlbWVfYncoYmFzZV9zaXplPSAxNikrXG4gIHRoZW1lKFxuICAgIGF4aXMudGV4dC54ID0gZWxlbWVudF90ZXh0KFxuICAgICAgYW5nbGUgPSA0NSwgXG4gICAgICB2anVzdCA9IDEsICMgdmVydGljYWwgYWxpZ25tZW50XG4gICAgICBoanVzdCA9IDEsICMgaG9yaXpvbnRhbCBhbGlnbm1lbnRcbiAgICAgIHNpemUgPSByZWwoMikpXG4gICkifQ==
+</script>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -595,23 +513,14 @@ Exercise 1
 </div>
 <div class="callout-body-container callout-body">
 <p>Add three vertical lines to the plot. You can use the <code>geom_vline</code> command with xintercepts set at 15, 33 and 48; so that the the line is approximately at the injection time point. Also give it a shade of grey, eg. <code>grey40</code>.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    # add code here
-  
-  
-    scale_color_brewer(palette = "Set1")+
-    labs(subtitle = "200.000 cells per well vs Background",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)</code></pre>
+<div>
+<div id="webr-16" class="exercise-cell">
+
+</div>
+<script type="webr-16-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgIyBhZGQgY29kZSBoZXJlXG4gIFxuICBcbiAgICBzY2FsZV9jb2xvcl9icmV3ZXIocGFsZXR0ZSA9IFwiU2V0MVwiKStcbiAgICBsYWJzKHN1YnRpdGxlID0gXCIyMDAuMDAwIGNlbGxzIHBlciB3ZWxsIHZzIEJhY2tncm91bmRcIixcbiAgICAgICAgIHggPSBcInRpbWUgKG1pbnV0ZXMpXCIsXG4gICAgICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAxNikifQ==
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -626,21 +535,14 @@ Solution to Exercise 1
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set1")+
-    labs(subtitle = "200.000 cells per well vs Background",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)</code></pre>
+<div>
+<div id="webr-17" class="exercise-cell">
+
+</div>
+<script type="webr-17-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcixcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZ3JvdXApKStcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IGMoMTUsMzMsNDgpICxcbiAgICAgICAgICAgICAgIGNvbG9yID0gXCJncmV5NDBcIikrIFxuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQxXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIjIwMC4wMDAgY2VsbHMgcGVyIHdlbGwgdnMgQmFja2dyb3VuZFwiLFxuICAgICAgICAgeCA9IFwidGltZSAobWludXRlcylcIixcbiAgICAgICAgIHkgPSBcIk9DUiAocG1vbC9taW4pXCIpK1xuICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDE2KSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -655,28 +557,14 @@ Exercise 2
 </div>
 <div class="callout-body-container callout-body">
 <p>Now add the injection labels. Use the <code>annotate</code> command and *TODO: something seems to be missing here*</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    # example annotate
-    annotate("text", x = 0, y = 155, 
-              label = "init", color = "grey40", 
-              hjust = 1, vjust = -0.1,size = 4, angle = 90)+
-    # add other annotates here
-  
-    scale_color_brewer(palette = "Set1")+
-    labs(subtitle = "200.000 cells per well vs Background",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)</code></pre>
+<div>
+<div id="webr-18" class="exercise-cell">
+
+</div>
+<script type="webr-18-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAlaW4lIGMoXCIyMDAuMDAwXCIsIFwiQmFja2dyb3VuZFwiKSkgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgZ2VvbV92bGluZSh4aW50ZXJjZXB0ID0gYygxNSwzMyw0OCkgLFxuICAgICAgICAgICAgICAgY29sb3IgPSBcImdyZXk0MFwiKSsgXG4gICAgIyBleGFtcGxlIGFubm90YXRlXG4gICAgYW5ub3RhdGUoXCJ0ZXh0XCIsIHggPSAwLCB5ID0gMTU1LCBcbiAgICAgICAgICAgICAgbGFiZWwgPSBcImluaXRcIiwgY29sb3IgPSBcImdyZXk0MFwiLCBcbiAgICAgICAgICAgICAgaGp1c3QgPSAxLCB2anVzdCA9IC0wLjEsc2l6ZSA9IDQsIGFuZ2xlID0gOTApK1xuICAgICMgYWRkIG90aGVyIGFubm90YXRlcyBoZXJlXG4gIFxuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQxXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIjIwMC4wMDAgY2VsbHMgcGVyIHdlbGwgdnMgQmFja2dyb3VuZFwiLFxuICAgICAgICAgeCA9IFwidGltZSAobWludXRlcylcIixcbiAgICAgICAgIHkgPSBcIk9DUiAocG1vbC9taW4pXCIpK1xuICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDE2KSJ9
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -691,33 +579,14 @@ Solution to Exercise 2
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group %in% c("200.000", "Background")) %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(0,15,33,48),
-               color = "grey40")+
-    annotate("text", x = 0, y = 155, 
-              label = "init", color = "grey40", 
-             hjust = 1, vjust = -0.1,size = 4, angle = 90)+
-    annotate("text", x = 15, y = 155, 
-              label = "fccp", color = "grey40", 
-             hjust = 1, vjust = -0.1,size = 4, angle = 90)+
-    annotate("text", x = 33, y = 155, 
-              label = "am/rot", color = "grey40", 
-             hjust = 1, vjust = -0.1,size = 4, angle = 90)+
-    annotate("text", x = 48, y = 155, 
-              label = "monensin", color = "grey40", 
-             hjust = 1, vjust = -0.1,size = 4, angle = 90)+
-    scale_color_brewer(palette = "Set1")+
-    labs(subtitle = "200.000 cells per well vs Background",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)</code></pre>
+<div>
+<div id="webr-19" class="exercise-cell">
+
+</div>
+<script type="webr-19-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcixcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZ3JvdXApKStcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IGMoMCwxNSwzMyw0OCksXG4gICAgICAgICAgICAgICBjb2xvciA9IFwiZ3JleTQwXCIpK1xuICAgIGFubm90YXRlKFwidGV4dFwiLCB4ID0gMCwgeSA9IDE1NSwgXG4gICAgICAgICAgICAgIGxhYmVsID0gXCJpbml0XCIsIGNvbG9yID0gXCJncmV5NDBcIiwgXG4gICAgICAgICAgICAgaGp1c3QgPSAxLCB2anVzdCA9IC0wLjEsc2l6ZSA9IDQsIGFuZ2xlID0gOTApK1xuICAgIGFubm90YXRlKFwidGV4dFwiLCB4ID0gMTUsIHkgPSAxNTUsIFxuICAgICAgICAgICAgICBsYWJlbCA9IFwiZmNjcFwiLCBjb2xvciA9IFwiZ3JleTQwXCIsIFxuICAgICAgICAgICAgIGhqdXN0ID0gMSwgdmp1c3QgPSAtMC4xLHNpemUgPSA0LCBhbmdsZSA9IDkwKStcbiAgICBhbm5vdGF0ZShcInRleHRcIiwgeCA9IDMzLCB5ID0gMTU1LCBcbiAgICAgICAgICAgICAgbGFiZWwgPSBcImFtL3JvdFwiLCBjb2xvciA9IFwiZ3JleTQwXCIsIFxuICAgICAgICAgICAgIGhqdXN0ID0gMSwgdmp1c3QgPSAtMC4xLHNpemUgPSA0LCBhbmdsZSA9IDkwKStcbiAgICBhbm5vdGF0ZShcInRleHRcIiwgeCA9IDQ4LCB5ID0gMTU1LCBcbiAgICAgICAgICAgICAgbGFiZWwgPSBcIm1vbmVuc2luXCIsIGNvbG9yID0gXCJncmV5NDBcIiwgXG4gICAgICAgICAgICAgaGp1c3QgPSAxLCB2anVzdCA9IC0wLjEsc2l6ZSA9IDQsIGFuZ2xlID0gOTApK1xuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQxXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIjIwMC4wMDAgY2VsbHMgcGVyIHdlbGwgdnMgQmFja2dyb3VuZFwiLFxuICAgICAgICAgeCA9IFwidGltZSAobWludXRlcylcIixcbiAgICAgICAgIHkgPSBcIk9DUiAocG1vbC9taW4pXCIpK1xuICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDE2KSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -733,25 +602,14 @@ Exercise 3
 <div class="callout-body-container callout-body">
 <p>Use the <code>facet_wrap</code> command to plot all groups (except background) in separate plots and in each plot show the wells. First, we will need to filter away the background data. Instead of selecting all groups we need it is better and easier to this filter our the background data using <code>filter(group != "Background")</code>. The <code>!=</code> means “is not”, and it is the inverse of the <code>==</code> operator.</p>
 <p>Next, add the <code>facet_wrap</code> command to the ggplot. I prefer to do that always at the bottom, so that I can easily see if a plot is wrapped.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  #change this line:
-  filter(group %in% c("200.000", "Background")) %&gt;%
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set2")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)
-    #add facet wrap here 
-    #and do not forgot to add a "+" in previous line</code></pre>
+<div>
+<div id="webr-20" class="exercise-cell">
+
+</div>
+<script type="webr-20-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gICNjaGFuZ2UgdGhpcyBsaW5lOlxuICBmaWx0ZXIoZ3JvdXAgJWluJSBjKFwiMjAwLjAwMFwiLCBcIkJhY2tncm91bmRcIikpICU+JVxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgZ2VvbV92bGluZSh4aW50ZXJjZXB0ID0gYygxNSwzMyw0OCkgLFxuICAgICAgICAgICAgICAgY29sb3IgPSBcImdyZXk0MFwiKSsgXG4gICAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDJcIikrXG4gICAgbGFicyhzdWJ0aXRsZSA9IFwiT0NSIG9mIGluY3JlYXNpbmcgY2VsbCBkZW5zaXRpZXNcIixcbiAgICAgICAgIHggPSBcInRpbWUgKG1pbnV0ZXMpXCIsXG4gICAgICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAxNilcbiAgICAjYWRkIGZhY2V0IHdyYXAgaGVyZSBcbiAgICAjYW5kIGRvIG5vdCBmb3Jnb3QgdG8gYWRkIGEgXCIrXCIgaW4gcHJldmlvdXMgbGluZSJ9
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -766,22 +624,14 @@ Solution to Exercise 3
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(0,15,33,48),
-               color = "grey40")+
-    scale_color_brewer(palette = "Set2")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)+
-    facet_wrap(~group)</code></pre>
+<div>
+<div id="webr-21" class="exercise-cell">
+
+</div>
+<script type="webr-21-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcixcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZ3JvdXApKStcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IGMoMCwxNSwzMyw0OCksXG4gICAgICAgICAgICAgICBjb2xvciA9IFwiZ3JleTQwXCIpK1xuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQyXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIk9DUiBvZiBpbmNyZWFzaW5nIGNlbGwgZGVuc2l0aWVzXCIsXG4gICAgICAgICB4ID0gXCJ0aW1lIChtaW51dGVzKVwiLFxuICAgICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpK1xuICAgIGZhY2V0X3dyYXAofmdyb3VwKSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -798,25 +648,14 @@ Exercise 4
 <p>The plot in exercise 3 looks great already, but the order of the plots is important! We would like to see it go from low to high OCR. We can fix that using the <code>forcats</code> package commands. A nice and quick way to sort is based on the name of the group. It is important to realize that the <code>Group</code> column in the <code>XF</code> data are characters and not numbers. That is also the reason why it doesn’t get sorted in the most natural way. It is sorted based on the first character, thus the “50.000” group comes last. If we would change the “group” column to <code>double</code> (that is a number format), it would sort better, but also your group name will change because it will recognize the <code>.</code> as a decimal operator. So it is better to leave the group names as they are and do it differently.</p>
 <p>In comes <code>forcats</code>, you can re-level and reorder the crap out of your data in the ggplot! We often do the releveling at the point where you use your parameter, without making any changes the type of the columns. So that means you can use <code>~fct_reorder(group, group)</code> in the <code>facet_wrap</code> instead of only <code>~group</code>.</p>
 <p>Please note that <code>fct_reorder</code> first argument is the parameter that you plot or need, and the second argument is the parameter that is used for sorting the data. In our case now that is the same, both are “group”, but we also need to add something else. If we would do it like this there will be no difference from when ggplot takes facet_wrap only takes <code>~group</code>. Thus we can make the second argument into a number by using <code>as.double</code>.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set2")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)+
-    facet_wrap(~group)
-    #change the facet_wrap to 
-    #sort by number using fct_reorder and as.double</code></pre>
+<div>
+<div id="webr-22" class="exercise-cell">
+
+</div>
+<script type="webr-22-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAhPSBcIkJhY2tncm91bmRcIikgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpK1xuICAgIGdlb21fcG9pbnQoKStcbiAgICBnZW9tX2xpbmUoKSArXG4gICAgZ2VvbV92bGluZSh4aW50ZXJjZXB0ID0gYygxNSwzMyw0OCkgLFxuICAgICAgICAgICAgICAgY29sb3IgPSBcImdyZXk0MFwiKSsgXG4gICAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDJcIikrXG4gICAgbGFicyhzdWJ0aXRsZSA9IFwiT0NSIG9mIGluY3JlYXNpbmcgY2VsbCBkZW5zaXRpZXNcIixcbiAgICAgICAgIHggPSBcInRpbWUgKG1pbnV0ZXMpXCIsXG4gICAgICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAxNikrXG4gICAgZmFjZXRfd3JhcCh+Z3JvdXApXG4gICAgI2NoYW5nZSB0aGUgZmFjZXRfd3JhcCB0byBcbiAgICAjc29ydCBieSBudW1iZXIgdXNpbmcgZmN0X3Jlb3JkZXIgYW5kIGFzLmRvdWJsZSJ9
+</script>
+</div>
 <p>Also, try what happens in the above code if you:</p>
 <ul>
 <li>only use <code>as.double</code> in the facet_wrap</li>
@@ -836,23 +675,14 @@ Solution to Exercise 4
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(0,15,33,48),
-               color = "grey40")+
-    scale_color_brewer(palette = "Set2")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)+
-    facet_wrap(~fct_reorder(group, as.double(group)))
-</code></pre>
+<div>
+<div id="webr-23" class="exercise-cell">
+
+</div>
+<script type="webr-23-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcixcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZ3JvdXApKStcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IGMoMCwxNSwzMyw0OCksXG4gICAgICAgICAgICAgICBjb2xvciA9IFwiZ3JleTQwXCIpK1xuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQyXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIk9DUiBvZiBpbmNyZWFzaW5nIGNlbGwgZGVuc2l0aWVzXCIsXG4gICAgICAgICB4ID0gXCJ0aW1lIChtaW51dGVzKVwiLFxuICAgICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpK1xuICAgIGZhY2V0X3dyYXAofmZjdF9yZW9yZGVyKGdyb3VwLCBhcy5kb3VibGUoZ3JvdXApKSkifQ==
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -867,25 +697,14 @@ Exercise 5
 </div>
 <div class="callout-body-container callout-body">
 <p>Now that the <code>facet_wrap</code> is sorted nicely, we would also like to have the legend sorted nicely. Use the same <code>fct_reorder</code> trick to reorder the color legend.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+ #change here
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set2")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)
-    #take solution from previous exercise
-    #to have facet_wrap sorted here
-</code></pre>
+<div>
+<div id="webr-24" class="exercise-cell">
+
+</div>
+<script type="webr-24-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAhPSBcIkJhY2tncm91bmRcIikgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpKyAjY2hhbmdlIGhlcmVcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IGMoMTUsMzMsNDgpICxcbiAgICAgICAgICAgICAgIGNvbG9yID0gXCJncmV5NDBcIikrIFxuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQyXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIk9DUiBvZiBpbmNyZWFzaW5nIGNlbGwgZGVuc2l0aWVzXCIsXG4gICAgICAgICB4ID0gXCJ0aW1lIChtaW51dGVzKVwiLFxuICAgICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpXG4gICAgI3Rha2Ugc29sdXRpb24gZnJvbSBwcmV2aW91cyBleGVyY2lzZVxuICAgICN0byBoYXZlIGZhY2V0X3dyYXAgc29ydGVkIGhlcmUifQ==
+</script>
+</div>
 <p>If you didn’t already change the title of the legend, do that as well. You can specify the name of the legend manually using the <code>name</code> argument in the <code>scale_color_brewer</code> command.</p>
 </div>
 </div>
@@ -901,24 +720,14 @@ Solution to Exercise 5
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = fct_reorder(group, as.double(group))))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set2",
-                        name = "group")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)+
-    facet_wrap(~fct_reorder(group, as.double(group)))
-</code></pre>
+<div>
+<div id="webr-25" class="exercise-cell">
+
+</div>
+<script type="webr-25-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcixcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZmN0X3Jlb3JkZXIoZ3JvdXAsIGFzLmRvdWJsZShncm91cCkpKSkrXG4gICAgZ2VvbV9wb2ludCgpK1xuICAgIGdlb21fbGluZSgpICtcbiAgICBnZW9tX3ZsaW5lKHhpbnRlcmNlcHQgPSBjKDE1LDMzLDQ4KSAsXG4gICAgICAgICAgICAgICBjb2xvciA9IFwiZ3JleTQwXCIpKyBcbiAgICBzY2FsZV9jb2xvcl9icmV3ZXIocGFsZXR0ZSA9IFwiU2V0MlwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiZ3JvdXBcIikrXG4gICAgbGFicyhzdWJ0aXRsZSA9IFwiT0NSIG9mIGluY3JlYXNpbmcgY2VsbCBkZW5zaXRpZXNcIixcbiAgICAgICAgIHggPSBcInRpbWUgKG1pbnV0ZXMpXCIsXG4gICAgICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAxNikrXG4gICAgZmFjZXRfd3JhcCh+ZmN0X3Jlb3JkZXIoZ3JvdXAsIGFzLmRvdWJsZShncm91cCkpKSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -933,25 +742,14 @@ Exercise 6
 </div>
 <div class="callout-body-container callout-body">
 <p>Please change the <code>facet_wrap</code> command so that the y-axis is not fixed for all groups. Make the output so that each individual plot has its own y-axis scale.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = group))+ 
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set2")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16) 
-    #take solution from previous
-    #and adjust that facet_wrap
-</code></pre>
+<div>
+<div id="webr-26" class="exercise-cell">
+
+</div>
+<script type="webr-26-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGZpbHRlcihncm91cCAhPSBcIkJhY2tncm91bmRcIikgJT4lIFxuICBnZ3Bsb3QoYWVzKHggPSB0aW1lLCB5ID0gb2NyLFxuICAgICAgICAgICAgIGdyb3VwID0gd2VsbCwgXG4gICAgICAgICAgICAgY29sb3IgPSBncm91cCkpKyBcbiAgICBnZW9tX3BvaW50KCkrXG4gICAgZ2VvbV9saW5lKCkgK1xuICAgIGdlb21fdmxpbmUoeGludGVyY2VwdCA9IGMoMTUsMzMsNDgpICxcbiAgICAgICAgICAgICAgIGNvbG9yID0gXCJncmV5NDBcIikrIFxuICAgIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQyXCIpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcIk9DUiBvZiBpbmNyZWFzaW5nIGNlbGwgZGVuc2l0aWVzXCIsXG4gICAgICAgICB4ID0gXCJ0aW1lIChtaW51dGVzKVwiLFxuICAgICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpIFxuICAgICN0YWtlIHNvbHV0aW9uIGZyb20gcHJldmlvdXNcbiAgICAjYW5kIGFkanVzdCB0aGF0IGZhY2V0X3dyYXAifQ==
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -966,25 +764,14 @@ Solution to Exercise 6
 </div>
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  ggplot(aes(x = time, y = ocr,
-             group = well, 
-             color = fct_reorder(group, as.double(group))))+
-    geom_point()+
-    geom_line() +
-    geom_vline(xintercept = c(15,33,48) ,
-               color = "grey40")+ 
-    scale_color_brewer(palette = "Set2",
-                        name = "group")+
-    labs(subtitle = "OCR of increasing cell densities",
-         x = "time (minutes)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)+
-    facet_wrap(~fct_reorder(group, as.double(group)),
-               scales = "free_y")
-</code></pre>
+<div>
+<div id="webr-27" class="exercise-cell">
+
+</div>
+<script type="webr-27-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gdGltZSwgeSA9IG9jcixcbiAgICAgICAgICAgICBncm91cCA9IHdlbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gZmN0X3Jlb3JkZXIoZ3JvdXAsIGFzLmRvdWJsZShncm91cCkpKSkrXG4gICAgZ2VvbV9wb2ludCgpK1xuICAgIGdlb21fbGluZSgpICtcbiAgICBnZW9tX3ZsaW5lKHhpbnRlcmNlcHQgPSBjKDE1LDMzLDQ4KSAsXG4gICAgICAgICAgICAgICBjb2xvciA9IFwiZ3JleTQwXCIpKyBcbiAgICBzY2FsZV9jb2xvcl9icmV3ZXIocGFsZXR0ZSA9IFwiU2V0MlwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiZ3JvdXBcIikrXG4gICAgbGFicyhzdWJ0aXRsZSA9IFwiT0NSIG9mIGluY3JlYXNpbmcgY2VsbCBkZW5zaXRpZXNcIixcbiAgICAgICAgIHggPSBcInRpbWUgKG1pbnV0ZXMpXCIsXG4gICAgICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAxNikrXG4gICAgZmFjZXRfd3JhcCh+ZmN0X3Jlb3JkZXIoZ3JvdXAsIGFzLmRvdWJsZShncm91cCkpLFxuICAgICAgICAgICAgICAgc2NhbGVzID0gXCJmcmVlX3lcIikifQ==
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -1005,11 +792,14 @@ Exercise 7
 <li>we should convert the group names to numbers</li>
 <li>we can also add the mean of all wells for each group by using: <code>stat_summary()</code></li>
 </ol>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names()
-  #filters and ggplot here
-</code></pre>
+<div>
+<div id="webr-28" class="exercise-cell">
+
+</div>
+<script type="webr-28-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKClcbiAgI2ZpbHRlcnMgYW5kIGdncGxvdCBoZXJlIn0=
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -1024,29 +814,14 @@ Solution to Exercise 7
 </div>
 <div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  filter(measurement == 4) %&gt;% 
-  ggplot(aes(x = as.double(group)*1000, y = ocr))+
-    geom_point()+
-    stat_summary(fun = "median", 
-      colour = "red", 
-        size = 16, 
-        shape = "-",
-      geom = "point")+
-    scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-    scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-    labs(subtitle = 
-           "Maximal capacity at different cell densities",
-         x = "cell density (#cells)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)
-</code></pre>
+<div>
+<div id="webr-29" class="exercise-cell">
+
+</div>
+<script type="webr-29-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZmlsdGVyKG1lYXN1cmVtZW50ID09IDQpICU+JSBcbiAgZ2dwbG90KGFlcyh4ID0gYXMuZG91YmxlKGdyb3VwKSoxMDAwLCB5ID0gb2NyKSkrXG4gICAgZ2VvbV9wb2ludCgpK1xuICAgIHN0YXRfc3VtbWFyeShmdW4gPSBcIm1lZGlhblwiLCBcbiAgICAgIGNvbG91ciA9IFwicmVkXCIsIFxuICAgICAgICBzaXplID0gMTYsIFxuICAgICAgICBzaGFwZSA9IFwiLVwiLFxuICAgICAgZ2VvbSA9IFwicG9pbnRcIikrXG4gICAgc2NhbGVfeF9jb250aW51b3VzKFxuICAgICAgICAgICAgICBsaW1pdHMgPSBjKDAsIE5BKSxcbiAgICAgICAgICAgICAgZXhwYW5kID0gZXhwYW5zaW9uKG11bHQgPSBjKDAsIDAuMSkpKStcbiAgICBzY2FsZV95X2NvbnRpbnVvdXMoXG4gICAgICAgICAgICAgIGxpbWl0cyA9IGMoMCwgTkEpLFxuICAgICAgICAgICAgICBleHBhbmQgPSBleHBhbnNpb24obXVsdCA9IGMoMCwgMC4xKSkpK1xuICAgIGxhYnMoc3VidGl0bGUgPSBcbiAgICAgICAgICAgXCJNYXhpbWFsIGNhcGFjaXR5IGF0IGRpZmZlcmVudCBjZWxsIGRlbnNpdGllc1wiLFxuICAgICAgICAgeCA9IFwiY2VsbCBkZW5zaXR5ICgjY2VsbHMpXCIsXG4gICAgICAgICB5ID0gXCJPQ1IgKHBtb2wvbWluKVwiKStcbiAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAxNikifQ==
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -1061,11 +836,14 @@ Exercise 8
 </div>
 <div class="callout-body-container callout-body">
 <p>The previous plot showed the data from individual wells as well as the median for that group. You can also calculate the <code>median</code> before plotting using the <code>dplyr</code> <code>summarize</code> command. You can find <code>summarize</code> info here: <a href="https://dplyr.tidyverse.org/reference/summarise.html" class="uri">https://dplyr.tidyverse.org/reference/summarise.html</a></p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names()
-  
-</code></pre>
+<div>
+<div id="webr-30" class="exercise-cell">
+
+</div>
+<script type="webr-30-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKClcbiAgIn0=
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -1080,18 +858,14 @@ Solution to Exercise 8
 </div>
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  filter(measurement == 4) %&gt;% 
-  summarize(median = median(ocr), .by = group)%&gt;%
-  ggplot(aes(x = as.double(group)*1000, y = median))+
-  geom_point()+
-  geom_line()+
-  labs(x = "cell density",
-        y = "OCR (pmol/min")+
-  theme_bw(base_size = 16)
-</code></pre>
+<div>
+<div id="webr-31" class="exercise-cell">
+
+</div>
+<script type="webr-31-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZmlsdGVyKG1lYXN1cmVtZW50ID09IDQpICU+JSBcbiAgc3VtbWFyaXplKG1lZGlhbiA9IG1lZGlhbihvY3IpLCAuYnkgPSBncm91cCklPiVcbiAgZ2dwbG90KGFlcyh4ID0gYXMuZG91YmxlKGdyb3VwKSoxMDAwLCB5ID0gbWVkaWFuKSkrXG4gIGdlb21fcG9pbnQoKStcbiAgZ2VvbV9saW5lKCkrXG4gIGxhYnMoeCA9IFwiY2VsbCBkZW5zaXR5XCIsXG4gICAgICAgIHkgPSBcIk9DUiAocG1vbC9taW5cIikrXG4gIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDE2KSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -1106,11 +880,14 @@ Exercise 9
 </div>
 <div class="callout-body-container callout-body">
 <p>We can also perform a linear regression on the maximal capacity at different densities. For this we can use the <code>geom_smooth</code> command. The arguments should be <code>method = "lm"</code> and <code>formula = y~x</code>.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names()
-  #use your code from exercise 7
-</code></pre>
+<div>
+<div id="webr-32" class="exercise-cell">
+
+</div>
+<script type="webr-32-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKClcbiAgI3VzZSB5b3VyIGNvZGUgZnJvbSBleGVyY2lzZSA3In0=
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -1125,32 +902,14 @@ Solution to Exercise 9
 </div>
 <div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  filter(group != "Background") %&gt;% 
-  filter(measurement == 4) %&gt;% 
-  #filter(str_detect(well, "A|H")) %&gt;%
-  ggplot(aes(x = as.double(group)*1000, y = ocr))+
-    geom_point()+
-    stat_summary(fun = "median", 
-      colour = "red", 
-        size = 16, 
-        shape = "-",
-      geom = "point")+
-    geom_smooth(method = "lm",
-                formula = y~x)+
-    scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-    scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-    labs(subtitle = 
-           "Maximal capacity at different cell densities",
-         x = "cell density (#cells per well)",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 16)
-</code></pre>
+<div>
+<div id="webr-33" class="exercise-cell">
+
+</div>
+<script type="webr-33-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieGYgJT4lIFxuICBqYW5pdG9yOjpjbGVhbl9uYW1lcygpICU+JVxuICBmaWx0ZXIoZ3JvdXAgIT0gXCJCYWNrZ3JvdW5kXCIpICU+JSBcbiAgZmlsdGVyKG1lYXN1cmVtZW50ID09IDQpICU+JSBcbiAgI2ZpbHRlcihzdHJfZGV0ZWN0KHdlbGwsIFwiQXxIXCIpKSAlPiVcbiAgZ2dwbG90KGFlcyh4ID0gYXMuZG91YmxlKGdyb3VwKSoxMDAwLCB5ID0gb2NyKSkrXG4gICAgZ2VvbV9wb2ludCgpK1xuICAgIHN0YXRfc3VtbWFyeShmdW4gPSBcIm1lZGlhblwiLCBcbiAgICAgIGNvbG91ciA9IFwicmVkXCIsIFxuICAgICAgICBzaXplID0gMTYsIFxuICAgICAgICBzaGFwZSA9IFwiLVwiLFxuICAgICAgZ2VvbSA9IFwicG9pbnRcIikrXG4gICAgZ2VvbV9zbW9vdGgobWV0aG9kID0gXCJsbVwiLFxuICAgICAgICAgICAgICAgIGZvcm11bGEgPSB5fngpK1xuICAgIHNjYWxlX3hfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgc2NhbGVfeV9jb250aW51b3VzKFxuICAgICAgICAgICAgICBsaW1pdHMgPSBjKDAsIE5BKSxcbiAgICAgICAgICAgICAgZXhwYW5kID0gZXhwYW5zaW9uKG11bHQgPSBjKDAsIDAuMSkpKStcbiAgICBsYWJzKHN1YnRpdGxlID0gXG4gICAgICAgICAgIFwiTWF4aW1hbCBjYXBhY2l0eSBhdCBkaWZmZXJlbnQgY2VsbCBkZW5zaXRpZXNcIixcbiAgICAgICAgIHggPSBcImNlbGwgZGVuc2l0eSAoI2NlbGxzIHBlciB3ZWxsKVwiLFxuICAgICAgICAgeSA9IFwiT0NSIChwbW9sL21pbilcIikrXG4gICAgdGhlbWVfYncoYmFzZV9zaXplID0gMTYpIn0=
+</script>
+</div>
 <p>Observe also what the difference is when only using the data from rows A and H. You can uncomment the line in the above code. Please note I use the very useful <code>str_detect</code> function for this from the <code>stringr</code> package that is also part of the <code>tidyverse</code>.</p>
 </div>
 </div>
@@ -1166,20 +925,48 @@ Exercise 10
 </div>
 <div class="callout-body-container callout-body">
 <p>Next, you can decide yourself what you want to plot. Have a <code>glimpse</code> at the data and think of another important visualisation that you want to make using all the tools that you have learned so far, or the tools that you found on the internet.</p>
-<pre class="{webr-r}"><code>
-xf %&gt;% 
-  janitor::clean_names() %&gt;%
-  glimpse()
+<div>
+<div id="webr-34" class="exercise-cell">
 
-xf %&gt;% 
-  janitor::clean_names() 
-</code></pre>
+</div>
+<script type="webr-34-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgJT4lXG4gIGdsaW1wc2UoKVxuXG54ZiAlPiUgXG4gIGphbml0b3I6OmNsZWFuX25hbWVzKCkgIn0=
+</script>
 </div>
 </div>
+</div>
 
 
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjIvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsInRpZHl2ZXJzZSJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM0ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMxID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjk7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI5ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yOSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI4ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI3ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjY7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI2ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI1ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI0ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIxID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTk7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE5ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xOSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE4ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE3ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTY7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE2ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE1ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE0ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV85ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl85LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfODtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItOC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTgtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici03IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNyA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici03LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzcgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV82ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl82LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici00LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzQgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8zLCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIsIENoYW5uZWxUeXBlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gVXNlIFBvc3RNZXNzYWdlIGNoYW5uZWwgZm9yIGFzeW5jIGNvbW11bmljYXRpb25cbiAgLy8gV2UgZG8gbm90IGV4cGVjdCB0byB0YWtlIG5lc3RlZCBwcm9tcHQgaW5wdXQgaW4gUXVhcnRvIExpdmUgY2VsbHNcbiAgZGF0YS5vcHRpb25zLmNoYW5uZWxUeXBlID0gQ2hhbm5lbFR5cGUuUG9zdE1lc3NhZ2U7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICB0cnkge1xuICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICBpZiAoIWUubWVzc2FnZS5pbmNsdWRlcyhcIkZTIGVycm9yXCIpKSB7XG4gICAgICAgICAgICB0aHJvdyBlO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn1dfQ==
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -46,8 +46,12 @@ format:
 
 editor: visual
 
+execute:
+  engine: knitr
+
 webr:
   packages: ['base']
+
 
 
 

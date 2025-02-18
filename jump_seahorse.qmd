@@ -1,7 +1,8 @@
 ---
 title: "Plotting seahorse"
 webr:
-  packages: ['tidyverse']
+  packages: ['tidyverse', 'janitor']
+  
 editor: 
   mode: source  
 ---
@@ -38,7 +39,6 @@ As you can see from the `glimpse`, the data table that we have now (called a `ti
 I prefer to use lower case column names without any spaces, so for these column names we have to turn them into lower case first. We use some easy functions from the `janitor` package for this.
 
 ``` {webr-r}
-webr::install("janitor")
 xf %>% janitor::clean_names()
 ```
 

@@ -17,10 +17,11 @@ For now we will first have a look at how the output looks like. We load the thre
 
 library(tidyverse)
 
+#set file source
 root_srcfile <- 
   "https://raw.githubusercontent.com/vcjdeboer/"
 repository_srcfile <-
-  "seahtrue/renv-sync_issue_2/data/"
+  "seahtrue/main/inst/extdata/"
 
 download.file(
   paste0(

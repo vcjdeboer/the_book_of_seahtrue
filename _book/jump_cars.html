@@ -41,6 +41,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-7580570a2e354cd56757c689413fca0c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -68,6 +70,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 </head>
@@ -197,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dive_alone.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Plate map</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Single Experiment</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,153 +257,142 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="3.1" class="anchored" data-anchor-id="learn-and-code"><span class="header-section-number">3.1</span> Learn and code</h2>
 <p>First, let’s make a simple scatter plot. We’ll use a famous dataset that is used in R a lot for educational purposes. This is the <code>mtcars</code> dataset. It stands for <em>“Motor Trend Car Road Tests”</em>. See <a href="https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html">parameter overview</a> and <a href="https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/mtcars">documentation</a> for info about the <code>mtcars</code> dataset. It is one of many datasets available from base R or tidyverse packages, so we can always call it without having to load it.</p>
 <p>First, we will inspect the dataset. For this we will load the tidyverse:</p>
-<pre class="{webr-r}"><code>
-library(tidyverse)</code></pre>
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5saWJyYXJ5KHRpZHl2ZXJzZSkifQ==
+</script>
+</div>
 <p>Once tidyverse is loaded via the <code>library</code> call, it is available in your current session in your browser, so you do not have to load it each time. Let’s have a look at the full dataset:</p>
-<pre class="{webr-r}"><code>
-mtcars</code></pre>
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMifQ==
+</script>
+</div>
 <p>or</p>
-<pre class="{webr-r}"><code>
-#if you get an error here, 
-# please load the library call to tidyverse
-mtcars %&gt;% glimpse()</code></pre>
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG4jaWYgeW91IGdldCBhbiBlcnJvciBoZXJlLCBcbiMgcGxlYXNlIGxvYWQgdGhlIGxpYnJhcnkgY2FsbCB0byB0aWR5dmVyc2Vcbm10Y2FycyAlPiUgZ2xpbXBzZSgpIn0=
+</script>
+</div>
 <p>or</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% head()</code></pre>
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIGhlYWQoKSJ9
+</script>
+</div>
 <p>or</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% tail()</code></pre>
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIHRhaWwoKSJ9
+</script>
+</div>
 <p>Let’s select a small part of the data using <code>select</code> from the <code>dplyr</code> package:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, disp)
-  </code></pre>
+<div>
+<div id="webr-6" class="exercise-cell">
+
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGRpc3ApXG4gICJ9
+</script>
+</div>
 <p>Next, make a simple plot with the miles per gallon (<code>mpg</code>) and displacement parameters (<code>disp</code>) in the <code>mtcars</code> dataset.</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp))+
-        geom_point(size = 4)
-  </code></pre>
+<div>
+<div id="webr-7" class="exercise-cell">
+
+</div>
+<script type="webr-7-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3ApKStcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNClcbiAgIn0=
+</script>
+</div>
 <p>This is a very basic plot, without much formatting. Let’s make it prettier!</p>
 <p>Add color and bring in a third parameter:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    #added cyl to the selection here
-    select(mpg, disp, cyl) %&gt;% 
-    ggplot(aes(x = mpg, 
-               y = disp,
-               color = cyl) #added color to the aesthetics here
-               ) + 
-               geom_point(size = 4)
-  </code></pre>
+<div>
+<div id="webr-8" class="exercise-cell">
+
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgICNhZGRlZCBjeWwgdG8gdGhlIHNlbGVjdGlvbiBoZXJlXG4gICAgc2VsZWN0KG1wZywgZGlzcCwgY3lsKSAlPiUgXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCBcbiAgICAgICAgICAgICAgIHkgPSBkaXNwLFxuICAgICAgICAgICAgICAgY29sb3IgPSBjeWwpICNhZGRlZCBjb2xvciB0byB0aGUgYWVzdGhldGljcyBoZXJlXG4gICAgICAgICAgICAgICApICsgXG4gICAgICAgICAgICAgICBnZW9tX3BvaW50KHNpemUgPSA0KVxuICAifQ==
+</script>
+</div>
 <p>Here we need to have a look at data-types. The <code>cyl</code> parameter is numerical. <code>ggplot</code> automatically assumes we want a continuous scale for this. Instead the <code>cyl</code> is more of a categorical data type (there are either 4, 6 or 8 cylinders in each car) so we can explicitly make the <code>cyl</code> parameter categorical like this:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp,
-               color = as.factor(cyl))) +
-        geom_point(size = 4)
-  </code></pre>
+<div>
+<div id="webr-9" class="exercise-cell">
+
+</div>
+<script type="webr-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCxcbiAgICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCkpKSArXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpXG4gICJ9
+</script>
+</div>
 <p>If you want to have different colors you can use one of the many color palettes available:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp,
-               color = as.factor(cyl)))+
-        geom_point(size = 4)+
-  #I also manually changed the name of the legend here
-        scale_color_brewer(name = "cylinders", 
-                            palette = "Set2")
-  </code></pre>
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCxcbiAgICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCkpKStcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNCkrXG4gICNJIGFsc28gbWFudWFsbHkgY2hhbmdlZCB0aGUgbmFtZSBvZiB0aGUgbGVnZW5kIGhlcmVcbiAgICAgICAgc2NhbGVfY29sb3JfYnJld2VyKG5hbWUgPSBcImN5bGluZGVyc1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYWxldHRlID0gXCJTZXQyXCIpXG4gICJ9
+</script>
+</div>
 <p>Apart from color you can change the shape of the datapoints:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp,
-               color = as.factor(cyl),
-#please note to also add shape to the aesthetics here
-               shape = as.factor(cyl))) + 
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                            name = "cylinders")
-  </code></pre>
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCxcbiAgICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCksXG4jcGxlYXNlIG5vdGUgdG8gYWxzbyBhZGQgc2hhcGUgdG8gdGhlIGFlc3RoZXRpY3MgaGVyZVxuICAgICAgICAgICAgICAgc2hhcGUgPSBhcy5mYWN0b3IoY3lsKSkpICsgXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWUgPSBcImN5bGluZGVyc1wiKVxuICAifQ==
+</script>
+</div>
 <p><code>ggplot</code> can use different themes for your plots, and there are many many options to tweak your plots to the way you like. You can see some examples below:</p>
 <p>Let’s change titles:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-                color = as.factor(cyl),
-                shape = as.factor(cyl)))+
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                        name = "cylinders")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")</code></pre>
+<div>
+<div id="webr-12" class="exercise-cell">
+
+</div>
+<script type="webr-12-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCwgXG4gICAgICAgICAgICAgICAgY29sb3IgPSBhcy5mYWN0b3IoY3lsKSxcbiAgICAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkrXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiY3lsaW5kZXJzXCIpK1xuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikifQ==
+</script>
+</div>
 <p>Change the plotting theme and base size of the elements:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-                color = as.factor(cyl),
-                shape = as.factor(cyl)))+
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                        name = "cylinders")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        theme_bw(base_size = 20)</code></pre>
+<div>
+<div id="webr-13" class="exercise-cell">
+
+</div>
+<script type="webr-13-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCwgXG4gICAgICAgICAgICAgICAgY29sb3IgPSBhcy5mYWN0b3IoY3lsKSxcbiAgICAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkrXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiY3lsaW5kZXJzXCIpK1xuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKSJ9
+</script>
+</div>
 <p>Change the scaling of the axes. It is good practice to plot graphs from zero:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-                color = as.factor(cyl),
-                shape = as.factor(cyl)))+
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                        name = "cylinders")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(limits = c(0, NA),
-                           expand = c(0,NA))+
-        scale_y_continuous(limits = c(0, NA),
-                            expand = c(0,NA))+
-        theme_bw(base_size = 20)</code></pre>
+<div>
+<div id="webr-14" class="exercise-cell">
+
+</div>
+<script type="webr-14-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCwgXG4gICAgICAgICAgICAgICAgY29sb3IgPSBhcy5mYWN0b3IoY3lsKSxcbiAgICAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkrXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiY3lsaW5kZXJzXCIpK1xuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHNjYWxlX3hfY29udGludW91cyhsaW1pdHMgPSBjKDAsIE5BKSxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgIGV4cGFuZCA9IGMoMCxOQSkpK1xuICAgICAgICBzY2FsZV95X2NvbnRpbnVvdXMobGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgZXhwYW5kID0gYygwLE5BKSkrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKSJ9
+</script>
+</div>
 <p>Now the datapoints at the maxima of the axis are not completely visible so it would be nice that we have some more space:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-                color = as.factor(cyl),
-                shape = as.factor(cyl)))+
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                        name = "cylinders")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)</code></pre>
+<div>
+<div id="webr-15" class="exercise-cell">
+
+</div>
+<script type="webr-15-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCwgXG4gICAgICAgICAgICAgICAgY29sb3IgPSBhcy5mYWN0b3IoY3lsKSxcbiAgICAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkrXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiY3lsaW5kZXJzXCIpK1xuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHNjYWxlX3hfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHNjYWxlX3lfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKSJ9
+</script>
+</div>
 <p>Now we have generated a nice visualisation of our data using <code>ggplot</code>. Please note that <code>ggplot</code> uses layers and we added each time a different layer of information to the ggplot. If you want you can go wild with <code>ggplot.</code> Please find a nice <a href="https://www.cedricscherer.com/2019/12/30/best-tidytuesday-2019/">overview</a> of visualisations using ggplot, tidy and R from Cedric Scherer. Also the underlying R code is available for those plots.</p>
 </section>
 <section id="exercises" class="level2" data-number="3.2">
@@ -417,30 +410,14 @@ Exercise 1
 </div>
 <div class="callout-body-container callout-body">
 <p>Give the points in the ggplot some transparency (or opacity), so that individual points are better visible. TIP: use the <code>alpha</code> argument it should be a number from 0 to 1.</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-                color = as.factor(cyl),
-                shape = as.factor(cyl)))+
-        geom_point(size = 4,
-                   #type your extra code here:
+<div>
+<div id="webr-16" class="exercise-cell">
 
-                    )+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                        name = "cylinders")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)</code></pre>
+</div>
+<script type="webr-16-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCwgXG4gICAgICAgICAgICAgICAgY29sb3IgPSBhcy5mYWN0b3IoY3lsKSxcbiAgICAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkrXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQsXG4gICAgICAgICAgICAgICAgICAgI3R5cGUgeW91ciBleHRyYSBjb2RlIGhlcmU6XG5cbiAgICAgICAgICAgICAgICAgICAgKStcbiAgICAgICAgc2NhbGVfY29sb3JfYnJld2VyKG5hbWUgPSBcImN5bGluZGVyc1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBhbGV0dGUgPSBcIlNldDJcIikrXG4gICAgICAgIHNjYWxlX3NoYXBlKHNvbGlkID0gVFJVRSxcbiAgICAgICAgICAgICAgICAgICAgICAgIG5hbWUgPSBcImN5bGluZGVyc1wiKStcbiAgICAgICAgbGFicyh0aXRsZSA9IFwiTXkgY29vbCBNVENBUlMgcGxvdFwiLFxuICAgICAgICAgICAgICAgIHggPSBcIm1pbGVzIHBlciBnYWxsb25cIixcbiAgICAgICAgICAgICAgICB5ID0gXCJkaXNwZW5zaW9uXCIpK1xuICAgICAgICBzY2FsZV94X2NvbnRpbnVvdXMoXG4gICAgICAgICAgICAgIGxpbWl0cyA9IGMoMCwgTkEpLFxuICAgICAgICAgICAgICBleHBhbmQgPSBleHBhbnNpb24obXVsdCA9IGMoMCwgMC4xKSkpK1xuICAgICAgICBzY2FsZV95X2NvbnRpbnVvdXMoXG4gICAgICAgICAgICAgIGxpbWl0cyA9IGMoMCwgTkEpLFxuICAgICAgICAgICAgICBleHBhbmQgPSBleHBhbnNpb24obXVsdCA9IGMoMCwgMC4xKSkpK1xuICAgICAgICB0aGVtZV9idyhiYXNlX3NpemUgPSAyMCkifQ==
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -456,29 +433,14 @@ Solution to Exercise 1
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Please note that the alpha we added is not part of an aesthetics (<code>aes</code>), meaning that the value of the alpha is not linked with a parameter in our data.</p>
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-                color = as.factor(cyl),
-                shape = as.factor(cyl)))+
-        geom_point(size = 4,
-                   #type your extra code here:
-                    alpha = 0.7
-                    )+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                        name = "cylinders")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)</code></pre>
+<div>
+<div id="webr-17" class="exercise-cell">
+
+</div>
+<script type="webr-17-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsIFxuICAgICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCksXG4gICAgICAgICAgICAgICAgc2hhcGUgPSBhcy5mYWN0b3IoY3lsKSkpK1xuICAgICAgICBnZW9tX3BvaW50KHNpemUgPSA0LFxuICAgICAgICAgICAgICAgICAgICN0eXBlIHlvdXIgZXh0cmEgY29kZSBoZXJlOlxuICAgICAgICAgICAgICAgICAgICBhbHBoYSA9IDAuN1xuICAgICAgICAgICAgICAgICAgICApK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiY3lsaW5kZXJzXCIpK1xuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHNjYWxlX3hfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHNjYWxlX3lfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -493,24 +455,14 @@ Exercise 2
 </div>
 <div class="callout-body-container callout-body">
 <p>Add a layer that will generate a smooth linear regression line that shows the relation between <code>mpg</code> and <code>disp</code>. Use the <code>stat_smooth</code> command for this.</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp))+
-        geom_point(size = 4,
-                    alpha = 0.7)+
-        # enter code here
-        
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)</code></pre>
+<div>
+<div id="webr-18" class="exercise-cell">
+
+</div>
+<script type="webr-18-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCkpK1xuICAgICAgICBnZW9tX3BvaW50KHNpemUgPSA0LFxuICAgICAgICAgICAgICAgICAgICBhbHBoYSA9IDAuNykrXG4gICAgICAgICMgZW50ZXIgY29kZSBoZXJlXG4gICAgICAgIFxuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHNjYWxlX3hfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHNjYWxlX3lfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKSJ9
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -526,25 +478,14 @@ Solution to Exercise 2
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Please make sure that the ggplot is not separated into groups. If the data is grouped by <code>color</code> or <code>shape</code> a different regression line for each group will be generated.</p>
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp))+
-        geom_point(size = 4,
-                    alpha = 0.7)+
-        # enter code here
-        stat_smooth(geom = "line",
-                    method = "lm",
-                    formula = "y ~ x")+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)</code></pre>
+<div>
+<div id="webr-19" class="exercise-cell">
+
+</div>
+<script type="webr-19-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3ApKStcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNCxcbiAgICAgICAgICAgICAgICAgICAgYWxwaGEgPSAwLjcpK1xuICAgICAgICAjIGVudGVyIGNvZGUgaGVyZVxuICAgICAgICBzdGF0X3Ntb290aChnZW9tID0gXCJsaW5lXCIsXG4gICAgICAgICAgICAgICAgICAgIG1ldGhvZCA9IFwibG1cIixcbiAgICAgICAgICAgICAgICAgICAgZm9ybXVsYSA9IFwieSB+IHhcIikrXG4gICAgICAgIGxhYnModGl0bGUgPSBcIk15IGNvb2wgTVRDQVJTIHBsb3RcIixcbiAgICAgICAgICAgICAgICB4ID0gXCJtaWxlcyBwZXIgZ2FsbG9uXCIsXG4gICAgICAgICAgICAgICAgeSA9IFwiZGlzcGVuc2lvblwiKStcbiAgICAgICAgc2NhbGVfeF9jb250aW51b3VzKFxuICAgICAgICAgICAgICBsaW1pdHMgPSBjKDAsIE5BKSxcbiAgICAgICAgICAgICAgZXhwYW5kID0gZXhwYW5zaW9uKG11bHQgPSBjKDAsIDAuMSkpKStcbiAgICAgICAgc2NhbGVfeV9jb250aW51b3VzKFxuICAgICAgICAgICAgICBsaW1pdHMgPSBjKDAsIE5BKSxcbiAgICAgICAgICAgICAgZXhwYW5kID0gZXhwYW5zaW9uKG11bHQgPSBjKDAsIDAuMSkpKStcbiAgICAgICAgdGhlbWVfYncoYmFzZV9zaXplID0gMjApIn0=
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -559,25 +500,14 @@ Exercise 3
 </div>
 <div class="callout-body-container callout-body">
 <p>Use the <code>facet_wrap</code> command to make three separate plots for each cylinder.</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp))+
-        geom_point(size = 4,
-                    alpha = 0.7)+
-        
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)
-        # enter code here 
-        #(and don't forget to at a plus to the last line)</code></pre>
+<div>
+<div id="webr-20" class="exercise-cell">
+
+</div>
+<script type="webr-20-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCkpK1xuICAgICAgICBnZW9tX3BvaW50KHNpemUgPSA0LFxuICAgICAgICAgICAgICAgICAgICBhbHBoYSA9IDAuNykrXG4gICAgICAgIFxuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHNjYWxlX3hfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHNjYWxlX3lfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKVxuICAgICAgICAjIGVudGVyIGNvZGUgaGVyZSBcbiAgICAgICAgIyhhbmQgZG9uJ3QgZm9yZ2V0IHRvIGF0IGEgcGx1cyB0byB0aGUgbGFzdCBsaW5lKSJ9
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -592,22 +522,14 @@ Solution to Exercise 3
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp))+
-        geom_point(size = 4,
-                    alpha = 0.7)+
-        labs(title = "My cool MTCARS plot",
-                x = "miles per gallon",
-                y = "dispension")+
-        scale_x_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        scale_y_continuous(
-              limits = c(0, NA),
-              expand = expansion(mult = c(0, 0.1)))+
-        theme_bw(base_size = 20)+
-        facet_wrap(~cyl)</code></pre>
+<div>
+<div id="webr-21" class="exercise-cell">
+
+</div>
+<script type="webr-21-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3ApKStcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNCxcbiAgICAgICAgICAgICAgICAgICAgYWxwaGEgPSAwLjcpK1xuICAgICAgICBsYWJzKHRpdGxlID0gXCJNeSBjb29sIE1UQ0FSUyBwbG90XCIsXG4gICAgICAgICAgICAgICAgeCA9IFwibWlsZXMgcGVyIGdhbGxvblwiLFxuICAgICAgICAgICAgICAgIHkgPSBcImRpc3BlbnNpb25cIikrXG4gICAgICAgIHNjYWxlX3hfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHNjYWxlX3lfY29udGludW91cyhcbiAgICAgICAgICAgICAgbGltaXRzID0gYygwLCBOQSksXG4gICAgICAgICAgICAgIGV4cGFuZCA9IGV4cGFuc2lvbihtdWx0ID0gYygwLCAwLjEpKSkrXG4gICAgICAgIHRoZW1lX2J3KGJhc2Vfc2l6ZSA9IDIwKStcbiAgICAgICAgZmFjZXRfd3JhcCh+Y3lsKSJ9
+</script>
+</div>
 </div>
 </div>
 </div>
@@ -625,12 +547,14 @@ Fix error 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp
-               color = cyl))+
-        geom_point(size = 4)</code></pre>
+<div>
+<div id="webr-22" class="exercise-cell">
+
+</div>
+<script type="webr-22-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcFxuICAgICAgICAgICAgICAgY29sb3IgPSBjeWwpKStcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNCkifQ==
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -645,11 +569,14 @@ Solution to Error 1
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, #the error was here
-               color = cyl))+
-        geom_point(size = 4)</code></pre>
+<div>
+<div id="webr-23" class="exercise-cell">
+
+</div>
+<script type="webr-23-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsICN0aGUgZXJyb3Igd2FzIGhlcmVcbiAgICAgICAgICAgICAgIGNvbG9yID0gY3lsKSkrXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpIn0=
+</script>
+</div>
 <p>Commas are often forgotten, but easily fixed. Within brackets arguments are separated with commas. R also generates an error that is helpful and can point you to the missing <code>,</code>.</p>
 </div>
 </div>
@@ -664,12 +591,14 @@ Fix error 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-               color = cyl)) %&gt;% 
-        geom_point(size = 4)</code></pre>
+<div>
+<div id="webr-24" class="exercise-cell">
+
+</div>
+<script type="webr-24-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCwgXG4gICAgICAgICAgICAgICBjb2xvciA9IGN5bCkpICU+JSBcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNCkifQ==
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -684,11 +613,14 @@ Solution to Error 2
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp, 
-               color = cyl))+ #the error was in this line
-        geom_point(size = 4)</code></pre>
+<div>
+<div id="webr-25" class="exercise-cell">
+
+</div>
+<script type="webr-25-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsIFxuICAgICAgICAgICAgICAgY29sb3IgPSBjeWwpKSsgI3RoZSBlcnJvciB3YXMgaW4gdGhpcyBsaW5lXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpIn0=
+</script>
+</div>
 <p><code>ggplot</code> layers are added with a <code>+</code> not with the <code>pipe</code> term.</p>
 </div>
 </div>
@@ -703,12 +635,14 @@ Fix error 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp
-               color = cyl)) +
-        geom_point(size = 4) +</code></pre>
+<div>
+<div id="webr-26" class="exercise-cell">
+
+</div>
+<script type="webr-26-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcFxuICAgICAgICAgICAgICAgY29sb3IgPSBjeWwpKSArXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpICsifQ==
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -723,11 +657,14 @@ Solution to Error 3
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp,
-               color = cyl))+
-        geom_point(size = 4) #the error was in this line</code></pre>
+<div>
+<div id="webr-27" class="exercise-cell">
+
+</div>
+<script type="webr-27-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsXG4gICAgICAgICAgICAgICBjb2xvciA9IGN5bCkpK1xuICAgICAgICBnZW9tX3BvaW50KHNpemUgPSA0KSAjdGhlIGVycm9yIHdhcyBpbiB0aGlzIGxpbmUifQ==
+</script>
+</div>
 <p>Make sure that the end of a layer or line of code is not followed up with a <code>+</code> or <code>%&gt;%</code>.</p>
 </div>
 </div>
@@ -743,17 +680,14 @@ Fix error 4
 </div>
 <div class="callout-body-container callout-body">
 <p>Although R doesn’t show you an error message, the code does not give you what you want. The plot should show the <code>cyl</code> parameter in different shapes, just like there are three different colors for each level of the <code>cyl</code> parameter.</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp,
-               color = as.factor(cyl)),
-                shape = as.factor(cyl))+ 
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                            name = "cylinders")</code></pre>
+<div>
+<div id="webr-28" class="exercise-cell">
+
+</div>
+<script type="webr-28-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lIFxuICAgIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gICAgZ2dwbG90KGFlcyh4ID0gbXBnLCB5ID0gZGlzcCxcbiAgICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCkpLFxuICAgICAgICAgICAgICAgIHNoYXBlID0gYXMuZmFjdG9yKGN5bCkpKyBcbiAgICAgICAgZ2VvbV9wb2ludChzaXplID0gNCkrXG4gICAgICAgIHNjYWxlX2NvbG9yX2JyZXdlcihuYW1lID0gXCJjeWxpbmRlcnNcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBwYWxldHRlID0gXCJTZXQyXCIpK1xuICAgICAgICBzY2FsZV9zaGFwZShzb2xpZCA9IFRSVUUsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgbmFtZSA9IFwiY3lsaW5kZXJzXCIpIn0=
+</script>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -768,16 +702,14 @@ Solution to Error 4
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<pre class="{webr-r}"><code>mtcars %&gt;% 
-    select(mpg, cyl, disp) %&gt;%
-    ggplot(aes(x = mpg, y = disp,
-               color = as.factor(cyl), #parenthesis error
-               shape = as.factor(cyl)))+ 
-        geom_point(size = 4)+
-        scale_color_brewer(name = "cylinders",
-                            palette = "Set2")+
-        scale_shape(solid = TRUE,
-                            name = "cylinders")</code></pre>
+<div>
+<div id="webr-29" class="exercise-cell">
+
+</div>
+<script type="webr-29-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JSBcbiAgICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICAgIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsXG4gICAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpLCAjcGFyZW50aGVzaXMgZXJyb3JcbiAgICAgICAgICAgICAgIHNoYXBlID0gYXMuZmFjdG9yKGN5bCkpKSsgXG4gICAgICAgIGdlb21fcG9pbnQoc2l6ZSA9IDQpK1xuICAgICAgICBzY2FsZV9jb2xvcl9icmV3ZXIobmFtZSA9IFwiY3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFsZXR0ZSA9IFwiU2V0MlwiKStcbiAgICAgICAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWUgPSBcImN5bGluZGVyc1wiKSJ9
+</script>
+</div>
 <p>The <code>shape</code> argument should be included in the aesthetics (<code>aes</code>) part of the ggplot</p>
 </div>
 </div>
@@ -795,166 +727,99 @@ Solution to Error 4 using chatGPT
 <div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Since chatGPT can also solve basic programming problems <a href="https://doi.org/10.1371/journal.pcbi.1011511" class="uri">https://doi.org/10.1371/journal.pcbi.1011511</a>, I tried solving Error 4 also with chatGPT. In my chatGPT session, the following solution was given:</p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             color = as.factor(cyl), 
-             shape = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(name = "Cylinders", palette = "Set2") +
-  scale_shape_manual(
-    name = "Cylinders",
-    values = c(1, 2, 3), # Customize shape values as needed
-    labels = c("4", "6", "8")
-  )
-</code></pre>
+<div>
+<div id="webr-30" class="exercise-cell">
+
+</div>
+<script type="webr-30-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkgK1xuICBnZW9tX3BvaW50KHNpemUgPSA0KSArXG4gIHNjYWxlX2NvbG9yX2JyZXdlcihuYW1lID0gXCJDeWxpbmRlcnNcIiwgcGFsZXR0ZSA9IFwiU2V0MlwiKSArXG4gIHNjYWxlX3NoYXBlX21hbnVhbChcbiAgICBuYW1lID0gXCJDeWxpbmRlcnNcIixcbiAgICB2YWx1ZXMgPSBjKDEsIDIsIDMpLCAjIEN1c3RvbWl6ZSBzaGFwZSB2YWx1ZXMgYXMgbmVlZGVkXG4gICAgbGFiZWxzID0gYyhcIjRcIiwgXCI2XCIsIFwiOFwiKVxuICApIn0=
+</script>
+</div>
 <p>chatGPT indeed put the <code>shape</code> in the <code>aes</code>, but also started making other changes. The remark that chatGPT made was: <em>“you should correct the syntax error and use scale_shape_manual() instead of scale_shape().”</em>… <em>“to customize the shape values and labels.”</em>. I didn’t really ask for that, and from there it went all downhill. Let’s call that the “chatGPT loop of death”. Let’s see what happened.</p>
 <p>Running the “improved” code showed that there was still no <code>fill</code>, so it did not improve in a way that I wanted.</p>
 <p>Next I said <em>“but now the shapes don’t have a fill”</em> and chatGPT replied:</p>
 <p><em>“I see your concern. If you want to have both color and fill for the shapes, you can achieve this by mapping fill within the aes() call and using scale_fill_brewer() for the fill scale. Here’s the modified code to achieve that:”</em></p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             color = as.factor(cyl), 
-             shape = as.factor(cyl), 
-             fill = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(name = "Cylinders", palette = "Set2") +
-  scale_fill_brewer(name = "Cylinders", palette = "Set2") +
-  scale_shape_manual(
-    name = "Cylinders",
-    values = c(1, 2, 3), # Customize shape values as needed
-    labels = c("4", "6", "8")
-  )</code></pre>
+<div>
+<div id="webr-31" class="exercise-cell">
+
+</div>
+<script type="webr-31-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBmaWxsID0gYXMuZmFjdG9yKGN5bCkpKSArXG4gIGdlb21fcG9pbnQoc2l6ZSA9IDQpICtcbiAgc2NhbGVfY29sb3JfYnJld2VyKG5hbWUgPSBcIkN5bGluZGVyc1wiLCBwYWxldHRlID0gXCJTZXQyXCIpICtcbiAgc2NhbGVfZmlsbF9icmV3ZXIobmFtZSA9IFwiQ3lsaW5kZXJzXCIsIHBhbGV0dGUgPSBcIlNldDJcIikgK1xuICBzY2FsZV9zaGFwZV9tYW51YWwoXG4gICAgbmFtZSA9IFwiQ3lsaW5kZXJzXCIsXG4gICAgdmFsdWVzID0gYygxLCAyLCAzKSwgIyBDdXN0b21pemUgc2hhcGUgdmFsdWVzIGFzIG5lZWRlZFxuICAgIGxhYmVscyA9IGMoXCI0XCIsIFwiNlwiLCBcIjhcIilcbiAgKSJ9
+</script>
+</div>
 <p>This again did not give fill unfortunately. Asking for a different solution: <em>“the fill is not there, do you have another solution?”</em></p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             color = as.factor(cyl), 
-             shape = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(name = "Cylinders", palette = "Set2") +
-  scale_fill_manual(
-    name = "Cylinders",
-    values = c("4" = "red", "6" = "blue", "8" = "green") 
-  ) +
-  scale_shape_manual(
-    name = "Cylinders",
-    values = c(1, 2, 3), # Customize shape values as needed
-    labels = c("4", "6", "8")
-  )
-</code></pre>
+<div>
+<div id="webr-32" class="exercise-cell">
+
+</div>
+<script type="webr-32-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkgK1xuICBnZW9tX3BvaW50KHNpemUgPSA0KSArXG4gIHNjYWxlX2NvbG9yX2JyZXdlcihuYW1lID0gXCJDeWxpbmRlcnNcIiwgcGFsZXR0ZSA9IFwiU2V0MlwiKSArXG4gIHNjYWxlX2ZpbGxfbWFudWFsKFxuICAgIG5hbWUgPSBcIkN5bGluZGVyc1wiLFxuICAgIHZhbHVlcyA9IGMoXCI0XCIgPSBcInJlZFwiLCBcIjZcIiA9IFwiYmx1ZVwiLCBcIjhcIiA9IFwiZ3JlZW5cIikgXG4gICkgK1xuICBzY2FsZV9zaGFwZV9tYW51YWwoXG4gICAgbmFtZSA9IFwiQ3lsaW5kZXJzXCIsXG4gICAgdmFsdWVzID0gYygxLCAyLCAzKSwgIyBDdXN0b21pemUgc2hhcGUgdmFsdWVzIGFzIG5lZWRlZFxuICAgIGxhYmVscyA9IGMoXCI0XCIsIFwiNlwiLCBcIjhcIilcbiAgKSJ9
+</script>
+</div>
 <p>Also did not give me fill.</p>
 <p>Another attempt by chatGPT (still not working):</p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  mutate(cyl_shape_fill = as.factor(cyl)) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             shape = cyl_shape_fill, 
-             color = cyl_shape_fill)) +
-  geom_point(size = 4) +
-  scale_shape_manual(
-    name = "Cylinders",
-    values = c("4" = 21, "6" = 22, "8" = 23), 
-    labels = c("4", "6", "8")
-  ) +
-  scale_color_manual(
-    name = "Cylinders",
-    values = c("4" = "red", "6" = "blue", "8" = "green") 
-  )
-</code></pre>
+<div>
+<div id="webr-33" class="exercise-cell">
+
+</div>
+<script type="webr-33-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBtdXRhdGUoY3lsX3NoYXBlX2ZpbGwgPSBhcy5mYWN0b3IoY3lsKSkgJT4lXG4gIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsIFxuICAgICAgICAgICAgIHNoYXBlID0gY3lsX3NoYXBlX2ZpbGwsIFxuICAgICAgICAgICAgIGNvbG9yID0gY3lsX3NoYXBlX2ZpbGwpKSArXG4gIGdlb21fcG9pbnQoc2l6ZSA9IDQpICtcbiAgc2NhbGVfc2hhcGVfbWFudWFsKFxuICAgIG5hbWUgPSBcIkN5bGluZGVyc1wiLFxuICAgIHZhbHVlcyA9IGMoXCI0XCIgPSAyMSwgXCI2XCIgPSAyMiwgXCI4XCIgPSAyMyksIFxuICAgIGxhYmVscyA9IGMoXCI0XCIsIFwiNlwiLCBcIjhcIilcbiAgKSArXG4gIHNjYWxlX2NvbG9yX21hbnVhbChcbiAgICBuYW1lID0gXCJDeWxpbmRlcnNcIixcbiAgICB2YWx1ZXMgPSBjKFwiNFwiID0gXCJyZWRcIiwgXCI2XCIgPSBcImJsdWVcIiwgXCI4XCIgPSBcImdyZWVuXCIpIFxuICApIn0=
+</script>
+</div>
 <p>Another attempt by chatGPT (still not working):</p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             shape = as.factor(cyl), 
-             color = as.factor(cyl))) +
-  geom_point(size = 4) +
-  geom_point(aes(fill = as.factor(cyl)), size = 2, 
-             show.legend = FALSE) +
-  scale_color_brewer(name = "Cylinders", palette = "Set2") +
-  scale_fill_brewer(name = "Cylinders", palette = "Set2") +
-  scale_shape_manual(
-    name = "Cylinders",
-    values = c(1, 2, 3), # Customize shape values as needed
-    labels = c("4", "6", "8")
-  )
-</code></pre>
+<div>
+<div id="webr-34" class="exercise-cell">
+
+</div>
+<script type="webr-34-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpKSkgK1xuICBnZW9tX3BvaW50KHNpemUgPSA0KSArXG4gIGdlb21fcG9pbnQoYWVzKGZpbGwgPSBhcy5mYWN0b3IoY3lsKSksIHNpemUgPSAyLCBcbiAgICAgICAgICAgICBzaG93LmxlZ2VuZCA9IEZBTFNFKSArXG4gIHNjYWxlX2NvbG9yX2JyZXdlcihuYW1lID0gXCJDeWxpbmRlcnNcIiwgcGFsZXR0ZSA9IFwiU2V0MlwiKSArXG4gIHNjYWxlX2ZpbGxfYnJld2VyKG5hbWUgPSBcIkN5bGluZGVyc1wiLCBwYWxldHRlID0gXCJTZXQyXCIpICtcbiAgc2NhbGVfc2hhcGVfbWFudWFsKFxuICAgIG5hbWUgPSBcIkN5bGluZGVyc1wiLFxuICAgIHZhbHVlcyA9IGMoMSwgMiwgMyksICMgQ3VzdG9taXplIHNoYXBlIHZhbHVlcyBhcyBuZWVkZWRcbiAgICBsYWJlbHMgPSBjKFwiNFwiLCBcIjZcIiwgXCI4XCIpXG4gICkifQ==
+</script>
+</div>
 <p>Asking chatGPT to use <code>scale_shape</code> and <code>solid=TRUE</code> gives:</p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             color = as.factor(cyl), 
-             shape = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(name = "Cylinders", palette = "Set2") +
-  scale_shape(solid = TRUE,
-              name = "Cylinders",
-              breaks = c("4", "6", "8"),
-              labels = c("4", "6", "8"),
-              values = c(15, 16, 17),
-              guide = guide_legend(
-                override.aes = 
-                    list(fill = c("red", "blue", "green")))
-  )</code></pre>
+<div>
+<div id="webr-35" class="exercise-cell">
+
+</div>
+<script type="webr-35-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkgK1xuICBnZW9tX3BvaW50KHNpemUgPSA0KSArXG4gIHNjYWxlX2NvbG9yX2JyZXdlcihuYW1lID0gXCJDeWxpbmRlcnNcIiwgcGFsZXR0ZSA9IFwiU2V0MlwiKSArXG4gIHNjYWxlX3NoYXBlKHNvbGlkID0gVFJVRSxcbiAgICAgICAgICAgICAgbmFtZSA9IFwiQ3lsaW5kZXJzXCIsXG4gICAgICAgICAgICAgIGJyZWFrcyA9IGMoXCI0XCIsIFwiNlwiLCBcIjhcIiksXG4gICAgICAgICAgICAgIGxhYmVscyA9IGMoXCI0XCIsIFwiNlwiLCBcIjhcIiksXG4gICAgICAgICAgICAgIHZhbHVlcyA9IGMoMTUsIDE2LCAxNyksXG4gICAgICAgICAgICAgIGd1aWRlID0gZ3VpZGVfbGVnZW5kKFxuICAgICAgICAgICAgICAgIG92ZXJyaWRlLmFlcyA9IFxuICAgICAgICAgICAgICAgICAgICBsaXN0KGZpbGwgPSBjKFwicmVkXCIsIFwiYmx1ZVwiLCBcImdyZWVuXCIpKSlcbiAgKSJ9
+</script>
+</div>
 <p>…. but apparently chatGPT doesn’t know how to use <code>scale_shape</code> (in the first instance), because it <code>scale_shape</code> cannot take <code>values</code> as an argument. So when I reply with the following <em>“I get the following error: Error: unused argument (values = c(15, 16, 17))”</em>, chatGPT goes back to use the ’scale_fill_manual`.</p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             color = as.factor(cyl), 
-             shape = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(name = "Cylinders", palette = "Set2") +
-  scale_shape_manual(
-    name = "Cylinders",
-    breaks = c("4", "6", "8"),
-    labels = c("4", "6", "8"),
-    values = c(15, 16, 17)
-  ) +
-  scale_fill_manual(
-    name = "Cylinders",
-    breaks = c("4", "6", "8"),
-    labels = c("4", "6", "8"),
-    values = c("red", "blue", "green")
-  )</code></pre>
+<div>
+<div id="webr-36" class="exercise-cell">
+
+</div>
+<script type="webr-36-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpKSkgK1xuICBnZW9tX3BvaW50KHNpemUgPSA0KSArXG4gIHNjYWxlX2NvbG9yX2JyZXdlcihuYW1lID0gXCJDeWxpbmRlcnNcIiwgcGFsZXR0ZSA9IFwiU2V0MlwiKSArXG4gIHNjYWxlX3NoYXBlX21hbnVhbChcbiAgICBuYW1lID0gXCJDeWxpbmRlcnNcIixcbiAgICBicmVha3MgPSBjKFwiNFwiLCBcIjZcIiwgXCI4XCIpLFxuICAgIGxhYmVscyA9IGMoXCI0XCIsIFwiNlwiLCBcIjhcIiksXG4gICAgdmFsdWVzID0gYygxNSwgMTYsIDE3KVxuICApICtcbiAgc2NhbGVfZmlsbF9tYW51YWwoXG4gICAgbmFtZSA9IFwiQ3lsaW5kZXJzXCIsXG4gICAgYnJlYWtzID0gYyhcIjRcIiwgXCI2XCIsIFwiOFwiKSxcbiAgICBsYWJlbHMgPSBjKFwiNFwiLCBcIjZcIiwgXCI4XCIpLFxuICAgIHZhbHVlcyA9IGMoXCJyZWRcIiwgXCJibHVlXCIsIFwiZ3JlZW5cIilcbiAgKSJ9
+</script>
+</div>
 <p>AND FINALLY we have a nice and simple fill with one legend…… but also lots of unnecessary code. So after a few exchanges to make the code more concise this is what came out of it:</p>
-<pre class="{webr-r}"><code>mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             shape = as.factor(cyl), 
-             color = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(palette = "Set2", 
-                    name = "Cylinders") +
-  scale_shape_manual(name = "Cylinders", 
-                    values = c("4" = 15, 
-                        "6" = 16, 
-                        "8" = 17)) +
-  scale_fill_brewer(palette = "Set2", 
-                    name = "Cylinders")
-</code></pre>
+<div>
+<div id="webr-37" class="exercise-cell">
+
+</div>
+<script type="webr-37-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibXRjYXJzICU+JVxuICBzZWxlY3QobXBnLCBjeWwsIGRpc3ApICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBtcGcsIHkgPSBkaXNwLCBcbiAgICAgICAgICAgICBzaGFwZSA9IGFzLmZhY3RvcihjeWwpLCBcbiAgICAgICAgICAgICBjb2xvciA9IGFzLmZhY3RvcihjeWwpKSkgK1xuICBnZW9tX3BvaW50KHNpemUgPSA0KSArXG4gIHNjYWxlX2NvbG9yX2JyZXdlcihwYWxldHRlID0gXCJTZXQyXCIsIFxuICAgICAgICAgICAgICAgICAgICBuYW1lID0gXCJDeWxpbmRlcnNcIikgK1xuICBzY2FsZV9zaGFwZV9tYW51YWwobmFtZSA9IFwiQ3lsaW5kZXJzXCIsIFxuICAgICAgICAgICAgICAgICAgICB2YWx1ZXMgPSBjKFwiNFwiID0gMTUsIFxuICAgICAgICAgICAgICAgICAgICAgICAgXCI2XCIgPSAxNiwgXG4gICAgICAgICAgICAgICAgICAgICAgICBcIjhcIiA9IDE3KSkgK1xuICBzY2FsZV9maWxsX2JyZXdlcihwYWxldHRlID0gXCJTZXQyXCIsIFxuICAgICAgICAgICAgICAgICAgICBuYW1lID0gXCJDeWxpbmRlcnNcIikifQ==
+</script>
+</div>
 <p>Affter asking to use <code>scale_shape</code> instead of <code>scale_shape_manual</code>, chatGPT generates:</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             shape = as.factor(cyl), 
-             color = as.factor(cyl))) +
-  geom_point(size = 4, stroke = 1) +
-  scale_color_brewer(palette = "Set2", name = "Cylinders") +
-  scale_shape(solid = TRUE, name = "Cylinders")
-</code></pre>
+<div>
+<div id="webr-38" class="exercise-cell">
+
+</div>
+<script type="webr-38-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lXG4gIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsIFxuICAgICAgICAgICAgIHNoYXBlID0gYXMuZmFjdG9yKGN5bCksIFxuICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCkpKSArXG4gIGdlb21fcG9pbnQoc2l6ZSA9IDQsIHN0cm9rZSA9IDEpICtcbiAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDJcIiwgbmFtZSA9IFwiQ3lsaW5kZXJzXCIpICtcbiAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLCBuYW1lID0gXCJDeWxpbmRlcnNcIikifQ==
+</script>
+</div>
 <p>This works nicely, but chatGPT introduces <code>stroke = 1</code>, which is not needed here, so again we have unnecessary code. So after I asked <em>“can I leave out the stroke argument?”</em> we get the easiest solution and exactly the same solution as I came up with myself <strong>without chatGPT</strong>.</p>
-<pre class="{webr-r}"><code>
-mtcars %&gt;%
-  select(mpg, cyl, disp) %&gt;%
-  ggplot(aes(x = mpg, y = disp, 
-             shape = as.factor(cyl), 
-             color = as.factor(cyl))) +
-  geom_point(size = 4) +
-  scale_color_brewer(palette = "Set2", name = "Cylinders") +
-  scale_shape(solid = TRUE, name = "Cylinders")
-  </code></pre>
+<div>
+<div id="webr-39" class="exercise-cell">
+
+</div>
+<script type="webr-39-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiXG5tdGNhcnMgJT4lXG4gIHNlbGVjdChtcGcsIGN5bCwgZGlzcCkgJT4lXG4gIGdncGxvdChhZXMoeCA9IG1wZywgeSA9IGRpc3AsIFxuICAgICAgICAgICAgIHNoYXBlID0gYXMuZmFjdG9yKGN5bCksIFxuICAgICAgICAgICAgIGNvbG9yID0gYXMuZmFjdG9yKGN5bCkpKSArXG4gIGdlb21fcG9pbnQoc2l6ZSA9IDQpICtcbiAgc2NhbGVfY29sb3JfYnJld2VyKHBhbGV0dGUgPSBcIlNldDJcIiwgbmFtZSA9IFwiQ3lsaW5kZXJzXCIpICtcbiAgc2NhbGVfc2hhcGUoc29saWQgPSBUUlVFLCBuYW1lID0gXCJDeWxpbmRlcnNcIilcbiAgIn0=
+</script>
+</div>
 <p>Please note, that when building the ggplot example, I did use google (…off course) to get some solutions, I liked the <code>scale_shape</code> and <code>solid=TRUE</code> solution that I found, because it made the code so concise and I don’t like to type in <code>values</code> and <code>breaks</code> manually.</p>
 <p>ChatGPT use in science and coing is just dipping the toe in the water. ChatGPT is likely to better not be used as knowledge database but instead as <strong>“reasoning or infering agents”</strong> <a href="https://www.nature.com/articles/s41591-023-02594-z" class="uri">https://www.nature.com/articles/s41591-023-02594-z</a>. ChatGPT can produce false information, also described as <strong>“hallucinations”</strong> <a href="https://www.nature.com/articles/d41586-023-00816-5" class="uri">https://www.nature.com/articles/d41586-023-00816-5</a>, which makes it difficult to use it for getting knowledge and facts. That said, it can be used to gain knowledge and learn better coding skills. Here is a nice <em>quick tips</em> paper from PLOS computational biology on how to <em>“harness the power of chatGPT”</em> <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011319" class="uri">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011319</a>.</p>
 </div>
@@ -962,10 +827,38 @@ mtcars %&gt;%
 </div>
 
 
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjIvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsInRpZHl2ZXJzZSJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzk7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM5ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zOSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM4ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM3ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zNyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzY7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM2ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zNiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM1ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzM0ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMxID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMzA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMzAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMzAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjk7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI5ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yOSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI4ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI3ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjY7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI2ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI1ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzI0ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIxID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMjAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0yMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8yMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMjAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTk7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE5ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xOSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTg7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE4ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE3ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTY7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE2ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE1ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzE0ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEzID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV85ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl85LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfODtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItOC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTgtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici03IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNyA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici03LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzcgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV82ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl82LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici00LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzQgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8zLCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIsIENoYW5uZWxUeXBlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gVXNlIFBvc3RNZXNzYWdlIGNoYW5uZWwgZm9yIGFzeW5jIGNvbW11bmljYXRpb25cbiAgLy8gV2UgZG8gbm90IGV4cGVjdCB0byB0YWtlIG5lc3RlZCBwcm9tcHQgaW5wdXQgaW4gUXVhcnRvIExpdmUgY2VsbHNcbiAgZGF0YS5vcHRpb25zLmNoYW5uZWxUeXBlID0gQ2hhbm5lbFR5cGUuUG9zdE1lc3NhZ2U7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICB0cnkge1xuICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICBpZiAoIWUubWVzc2FnZS5pbmNsdWRlcyhcIkZTIGVycm9yXCIpKSB7XG4gICAgICAgICAgICB0aHJvdyBlO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn1dfQ==
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
 </section>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

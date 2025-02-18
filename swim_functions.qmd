@@ -11,9 +11,9 @@ editor:
 
 First, let's see what a `function` is in R. In the previous section, we used functions that changed our data, eg. `filter`, `select` and `clean_names`. Functions are just a bunch of code lines using any code and other functions you want to accomplish a task. Here are some formal definitions:
 
-> Functions are “self contained” modules of code that accomplish a specific task. Functions usually take in some sort of data structure (value, vector, dataframe etc.), process it, and return a result. [link](https://hbctraining.github.io/Intro-to-R/lessons/03_introR-functions-and-arguments.html)
+> Functions are “self contained” modules of code that accomplish a specific task. Functions usually take in some sort of data structure (value, vector, dataframe etc.), process it, and return a result. [link](https://hbctraining.github.io/Intro-to-R/lessons/03_introR-functions-and-arguments.html){target="_blank"}
 
-> A function in R is an object containing multiple interrelated statements that are run together in a predefined order every time the function is called. [link](https://www.dataquest.io/blog/write-functions-in-r/)
+> A function in R is an object containing multiple interrelated statements that are run together in a predefined order every time the function is called. [link](https://www.dataquest.io/blog/write-functions-in-r/){target="_blank"}
 
 Functions take `arguments`, these are used as input for your function.
 

@@ -8,7 +8,7 @@ editor:
 
 ## Learn and code
 
-First, let's make a simple scatter plot. We'll use a famous dataset that is used in R a lot for educational purposes. This is the `mtcars` dataset. It stands for _"Motor Trend Car Road Tests"_. See [parameter overview](https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html) and [documentation](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/mtcars) for info about the `mtcars` dataset. It is one of many datasets available from base R or tidyverse packages, so we can always call it without having to load it.
+First, let's make a simple scatter plot. We'll use a famous dataset that is used in R a lot for educational purposes. This is the `mtcars` dataset. It stands for _"Motor Trend Car Road Tests"_. See [parameter overview](https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html){target="_blank"} and [documentation](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/mtcars){target="_blank"} for info about the `mtcars` dataset. It is one of many datasets available from base R or tidyverse packages, so we can always call it without having to load it.
 
 First, we will inspect the dataset. For this we will load the tidyverse:
 
@@ -220,7 +220,7 @@ mtcars %>%
         theme_bw(base_size = 20)
 ```
 
-Now we have generated a nice visualisation of our data using `ggplot`. Please note that `ggplot` uses layers and we added each time a different layer of information to the ggplot. If you want you can go wild with `ggplot.` Please find a nice [overview](https://www.cedricscherer.com/2019/12/30/best-tidytuesday-2019/) of visualisations using ggplot, tidy and R from Cedric Scherer. Also the underlying R code is available for those plots.
+Now we have generated a nice visualisation of our data using `ggplot`. Please note that `ggplot` uses layers and we added each time a different layer of information to the ggplot. If you want you can go wild with `ggplot.` Please find a nice [overview](https://www.cedricscherer.com/2019/12/30/best-tidytuesday-2019/){target="_blank"} of visualisations using ggplot, tidy and R from Cedric Scherer. Also the underlying R code is available for those plots.
 
 ## Exercises
 

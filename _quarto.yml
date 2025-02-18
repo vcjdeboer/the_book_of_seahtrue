@@ -4,7 +4,7 @@ project:
 book:
   title: "The book of seahtrue"
   author: "Vincent de Boer"
-  date: "12/16/2024"
+  date: "02/18/2025"
 
   chapters:
     - index.qmd

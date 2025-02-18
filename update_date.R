@@ -12,3 +12,4 @@ yaml <- gsub("date: \".*\"", paste0("date: \"", today, "\""), yaml)
 
 # Write the updated file back
 writeLines(yaml, "_quarto.yml")
+

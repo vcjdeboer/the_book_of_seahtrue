@@ -155,7 +155,7 @@ download.file(
   paste0(
     root_srcfile,
     repository_srcfile,
-    "20191219 SciRep PBMCs donor A.xlsx"), 
+    "20191219_SciRep_PBMCs_donor_A.xlsx"), 
   "VB.xlsx")
 
 #define the function

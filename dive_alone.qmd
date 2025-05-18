@@ -59,7 +59,7 @@ library(seahtrue)
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>% 
-  seahtrue::sketch_plate
+  seahtrue::sketch_plate()
 
 
 ```

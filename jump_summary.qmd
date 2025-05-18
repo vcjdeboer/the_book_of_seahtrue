@@ -6,13 +6,13 @@ title: "Summary"
 
 ### Ditching point-and-click
 
-- The benefits of using R over point-and-click software for data analysis in biological and biomedical sciences are that: 
-  - it is open-source,
-  - it has a wide and diverse community with a huge number of resources
-  - it is relatively easy to learn, and 
-  - it offers very well suited workflows for doing reproducible and responsible data analysis
-- The tidyverse offers advantages over base R. It offers an intuitive way of coding with functional names and tidy data handling and coding in mind
-- R in the browser offers easy access to R without installing software
+-   The benefits of using R over point-and-click software for data analysis in biological and biomedical sciences are that:
+    -   it is open-source,
+    -   it has a wide and diverse community with a huge number of resources
+    -   it is relatively easy to learn, and
+    -   it offers very well suited workflows for doing reproducible and responsible data analysis
+-   The tidyverse offers advantages over base R. It offers an intuitive way of coding with functional names and tidy data handling and coding in mind
+-   R in the browser offers easy access to R without installing software
 
 ### Plotting `mtcars`
 
@@ -53,10 +53,10 @@ title: "Summary"
 
 ## External resources
 
-- Tutorials
-  - [R for reproducible scientific analysis](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro.html#introduction-to-r) is a great introductory material. It is free, easy to follow and **quick to learn and apply**. You can skip the very first section on RStudio if you want.
-  - [The starter guide for transitioning your Python projects to R](https://towardsdatascience.com/the-starter-guide-for-transitioning-your-python-projects-to-r-8de4122b04ad) can be very useful to get quickstarted in R if you are familiar with Python.
-  - [R packaging](https://carpentries-incubator.github.io/lesson-R-packaging/) shows you how to write your own R packages.
-- Longer reads
-  - [R for data science](https://r4ds.had.co.nz/) is a really good book about R, with a focus on tidyverse. It is available for free.
-  - [Advanced R](https://adv-r.hadley.nz/) is another pretty good book for those who want to go even deeper into the language. Also available for free.
+-   Tutorials
+    -   [R for reproducible scientific analysis](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro.html#introduction-to-r) is a great introductory material. It is free, easy to follow and **quick to learn and apply**. You can skip the very first section on RStudio if you want.
+    -   [The starter guide for transitioning your Python projects to R](https://towardsdatascience.com/the-starter-guide-for-transitioning-your-python-projects-to-r-8de4122b04ad) can be very useful to get quickstarted in R if you are familiar with Python.
+    -   [R packaging](https://carpentries-incubator.github.io/lesson-R-packaging/) shows you how to write your own R packages.
+-   Longer reads
+    -   [R for data science](https://r4ds.had.co.nz/) is a really good book about R, with a focus on tidyverse. It is available for free.
+    -   [Advanced R](https://adv-r.hadley.nz/) is another pretty good book for those who want to go even deeper into the language. Also available for free.

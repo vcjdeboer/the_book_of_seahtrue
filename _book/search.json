@@ -328,7 +328,7 @@
     "href": "dive_alone.html",
     "title": "9  Seahorse Analysis",
     "section": "",
-    "text": "9.1 Plate map\nTo dive a bit deeper into a single seahtrue experiment, we will first generate an overview of what the experimental set-up was.\nLet’s load the data first\nNext, we make a theme that we can use for the heatmap\nThen we make a nice default heatmap with the geom_tile function.\nThe default ggplot colors are quite colorfull, but might hurt your eyes… If we want colors that are different than the default ggplot colors, and we want the legend to be nicely in order we need to add some additional code.\nAnother option would be to manually arrange the factors in a way that suits you best.",
+    "text": "9.1 Plate map\nTo dive a bit deeper into a single seahtrue experiment, we will first generate an overview of what the experimental set-up was.\nLet’s load the data first",
     "crumbs": [
       "Advanced Seahtrue - Diving deeper",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Seahorse Analysis</span>"
@@ -387,6 +387,50 @@
     "crumbs": [
       "Advanced Seahtrue - Diving deeper",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Multiple experiments</span>"
+    ]
+  },
+  {
+    "objectID": "dive_alone.html#plate-map",
+    "href": "dive_alone.html#plate-map",
+    "title": "9  Seahorse Analysis",
+    "section": "9.2 Plate map",
+    "text": "9.2 Plate map\nTo dive a bit deeper into a single seahtrue experiment, we will first generate an overview of what the experimental set-up was.\nExplore the experimental set-up. Remember that a Seahorse experiment is a 96-well plate based experiment, so we will see 96 wells in the plate map.\n\n\n\n\n\n\n\n\n\n\n\n\nExercise x3\n\n\n\nIn the plate map, you see that the corners are colored dark brown The background wells do not contain cells. What is the purpose of these background wells?\n\n\n\n\n\n\n\n\nSolution to Exercise x3\n\n\n\n\n\nThere is drift in O2 and pH signals even when there is no sample (cells) in a well. This signal should be substracted from the wells that do contain samples.\n\n\n\n\n\n\n\n\n\nExercise x4\n\n\n\nWhat do the numbers 50.000 to 300.000 in the legend of the plate map?\n\n\n\n\n\n\n\n\nSolution to Exercise x4\n\n\n\n\n\nThese are the number of cells that have been plated in each well, so 50.000 cells/well to 300.000 cells/well\n\n\n\n\n\n\n\n\n\nExercise x5\n\n\n\nWhat is the reason why we performed an experiment like this?\n\n\n\n\n\n\n\n\nSolution to Exercise x5\n\n\n\n\n\nIn this way, we can check the linearity of the signals and determine the best plating density for our following experiments where we want to compare different conditions or interventions.",
+    "crumbs": [
+      "Advanced Seahtrue - Diving deeper",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Seahorse Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "dive_alone.html#oxygen-consumption-rate-ocr",
+    "href": "dive_alone.html#oxygen-consumption-rate-ocr",
+    "title": "9  Seahorse Analysis",
+    "section": "9.3 Oxygen consumption rate (OCR)",
+    "text": "9.3 Oxygen consumption rate (OCR)\nNow we will plot the OCRs for this experiment.\n\n\n\n\n\n\n\n\n\n\n\n\nExercise x6\n\n\n\nIf we assume that the basal OCR should not be lower than 20 pmol/min (below this value we reach the detection limit), which cell densities are suitable for a Seahorse experiment in this case.\n\n\n\n\n\n\n\n\nSolution to Exercise x6\n\n\n\n\n\nfrom 150.000 cells/well\n\n\n\n\n\n\n\n\n\nExercise x7\n\n\n\nNow check out the parameters that we can set for the sketch_rate() function by using the below code:\n\n\n\n\n\n\nplot the ECAR using this sketch_rate() functions. What do you observe after monensin is injected in the ECAR plot? Look up online how monensin acts on cells why it is doing this with ECAR. What did we observe in OCR? Can you explain that?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolution to Exercise x7\n\n\n\n\n\n\n\n\n\n\n\nWe see that after monensin injection, ECAR increases. This is because glycolysis is increased because cell membrane transporters are activated that increase ATP demand. OCR does not change much, because the mitochondrial activity is allready blocked by AM/rot",
+    "crumbs": [
+      "Advanced Seahtrue - Diving deeper",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Seahorse Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "dive_alone.html#data",
+    "href": "dive_alone.html#data",
+    "title": "9  Seahorse Analysis",
+    "section": "",
+    "text": "Janssen et al. (2021) Scientific Reports\n\n\n\n\n\n\n\nExercise x1\n\n\n\nLook up in the paper: - what type of cells have been used? - what compounds were injected during the assays?\n\n\n\n\n\n\n\n\nSolution to Exercise x1\n\n\n\n\n\nFor most of the experiments PBMCs have been used. For some experiments RAW264.7 cells were used or monocytes. The dataset we use in this tutorial was an experiment with PBMCs.\nWe used injections of FCCP, AM/rot, and monensin. Also Hoechst was included, but this was only used for nuclei staining\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nExercise x2\n\n\n\nExplore the data that we just loaded.\n\n\n\n\n\n\nWhat is the structure of seahtrue_output_donor_A?\n\n\n\n\n\n\n\n\n\n\n\n\nAnd what is the structure of the rate_data and raw_data tibbles?\n\n\n\n\n\n\n\n\nSolution to Exercise x2\n\n\n\n\n\nThe data is a nested tibble. The nested rate_data tibble contains the ocr and ecar data, with for each well the measurements and group annotation and the OCR_wave_bc and ECAR_wave_bc data columns “…._bc” in the columns names means the data is allready background corrected (bc)). The raw_data contains the O2 and pH readings in the experiment, those are used to calculate the OCR and ECAR).",
+    "crumbs": [
+      "Advanced Seahtrue - Diving deeper",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Seahorse Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "dive_alone.html#functional-omics-with-seahorse-analysis---atp-interpretations",
+    "href": "dive_alone.html#functional-omics-with-seahorse-analysis---atp-interpretations",
+    "title": "9  Seahorse Analysis",
+    "section": "9.5 Functional omics with Seahorse analysis - ATP interpretations",
+    "text": "9.5 Functional omics with Seahorse analysis - ATP interpretations\nNext, we will continue with the transformation of OCR and ECAR to ATP units. The calculations are based on the Mookerjee et al paper in J Biol Chem:\n\nMookerjee et al. (2017) J Biol Chem\n\nThe calculations are performed under the hood in the calculate_space() function of the seahtrue package.\nFor these excercises we will work with a similar dataset as the seahtrue_output_donor_A, but now from a different individual. This is seahtrue_output_donor_C. Since there is a difference in the Seahorse tracjectory this is a nice example to learn how to interpret seahorse experiments.\nFirst, load the new data.\n\n\n\n\n\n\n\n\n\n\n\n\nNow lets calculate the atp space for both donors and combine the data for plotting:\n\n\n\n\n\n\n\n\n\n\n\n\nExercise x9\n\n\n\nVerify that the correct measurements were put as arguments for the calculate_space() function\n\n\n\n\n\n\n\n\nSolution to Exercise x9\n\n\n\n\n\nSince we do not take the average of the three measurements for each phase, because we think that the cells reach a steady state after injection after a certain time interval, we take one measurement for each phase. In this experiment, we injected fccp, AM/rot and monension consecutively. The fccp injection typically give the highest value allready after one measurement so we take measurement 4 (m4). for the others we take the third measurement in the phase (m3, m9 and m12)\nparam_set_ocr = c(init_ocr = “m3”, fccp_ocr = “m4”, amrot_ocr = “m9”, mon_ocr = “m12”),\n\n\n\nNow plot the trajectory and compare the two trajectories.\n\n\n\n\n\n\n\n\n\n\n\n\nExercise x10\n\n\n\nNow that we generated the trajectory through ATP space, explain what you observe. How does the trajectory change for each individual? What is the biggest difference between donor A and C\n\n\n\n\n\n\n\n\nSolution to Exercise x10\n\n\n\n\n\nplease discuss with one of your lecturers\n\n\n\nNext, we will plot the ATP space. For this we will use the plot_bioenergetic_space() function.\n\n\n\n\n\n\n\n\n\n\n\n\nExercise x11\n\n\n\nExplain the difference between the two spaces between donor A and B.\n\n\n\n\n\n\n\n\nSolution to Exercise x11\n\n\n\n\n\nplease discuss with one of your lecturers\n\n\n\nThe following exercise is a bit more advanced, it requires some R skills, but gives insights in the relevance of the bioenergetic space.\n\n\n\n\n\n\nExercise ADVANCED x12\n\n\n\nWe have another dataset where we isolated T cells from an individual and stimulated the cells with CD3/CD28 (= IC). Also, we injected a number of chemical compounds. Please focus for now on the “IC + 1.5 uM BAM15” and “1.5 uM BAM15” group. Instead of the uncoupler FCCP we now used BAM15 instead which is more gentle on the cell membrane.\nKeep the fccp_ocr and fccp_ecar nomenclature for your param_sets. The function does not recognize bam15_ocr or bam15_ecar.\nFind out which measurements you should use to calculate the space.\nFilter out well C10. This is a technical outlier.\nUse “agilent” as the atp conversion model.\nPlot the ATP space for the activated and non-activated T cells. What do you observe.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolution to Exercise ADVANCED x12\n\n\n\n\n\nWe want to see the difference between activate T cells and not activated, so we should take the measurement 9 where the cells were activated or not (at measurement three both groups are still the same!).",
+    "crumbs": [
+      "Advanced Seahtrue - Diving deeper",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Seahorse Analysis</span>"
     ]
   }
 ]

@@ -17,19 +17,20 @@ For now we will first have a look at how the output looks like. We load the thre
 
 library(tidyverse)
 
-#set file source
-root_srcfile <- 
-  "https://raw.githubusercontent.com/vcjdeboer/"
-repository_srcfile <-
-  "seahtrue/main/inst/extdata/"
+# Raw path on GitHub
+url <- paste0(
+  "https://raw.githubusercontent.com/vcjdeboer/seahtrue/develop-gerwin/inst/extdata/",
+  "xf_3.rda"
+)
 
+# Save it locally
 download.file(
-  paste0(
-    root_srcfile,
-    repository_srcfile,
-    "xf_3.rda"), 
-  "xf_3.rda")
+  url,
+  destfile = "xf_3.rda",
+  mode = "wb"
+)
 
+# Load it into the R environment
 load("xf_3.rda")
 
 xf_3

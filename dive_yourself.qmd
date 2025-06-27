@@ -1,0 +1,228 @@
+---
+title: "Download files and analyze"
+editor:
+  mode: source
+webr:
+  packages: [
+    "seahtrue",
+    "cli",
+    "janitor",
+    "logger",
+    "ggridges",
+    "tidyverse",
+  ]
+  repos: [
+    "https://vcjdeboer.github.io/seahtrue/",
+    "https://repo.r-wasm.org"
+  ]
+---
+
+
+```{webr}
+print("WebR is working!")
+```
+
+
+## Files Available on GitHub
+
+The following `.xlsx` files are available in the [extdata folder](https://github.com/vcjdeboer/seahtrue/tree/develop-gerwin/inst/extdata):
+
+```{=html}
+<ul id="github-file-list">Loading…</ul>
+
+<script>
+const fileList = document.getElementById("github-file-list");
+const apiUrl = "https://api.github.com/repos/vcjdeboer/seahtrue/contents/inst/extdata?ref=develop-gerwin";
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    fileList.innerHTML = "";
+    const xlsxFiles = data.filter(file => file.name.endsWith(".xlsx"));
+
+    if (xlsxFiles.length === 0) {
+      fileList.innerHTML = "<li>No .xlsx files found.</li>";
+      return;
+    }
+
+    xlsxFiles.forEach(file => {
+      const li = document.createElement("li");
+
+      // Display plain filename
+      const nameSpan = document.createElement("span");
+      nameSpan.textContent = file.name;
+      nameSpan.style.fontFamily = "monospace";
+      li.appendChild(nameSpan);
+
+      // Add copy button
+      const copyBtn = document.createElement("button");
+      copyBtn.textContent = "📋 Copy";
+      copyBtn.style.marginLeft = "10px";
+      copyBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(file.name);
+          copyBtn.textContent = "✅ Copied!";
+          setTimeout(() => copyBtn.textContent = "📋 Copy", 1500);
+        } catch (err) {
+          console.error("Copy failed", err);
+          copyBtn.textContent = "❌ Failed";
+        }
+      };
+      li.appendChild(copyBtn);
+
+      fileList.appendChild(li);
+    });
+  })
+  .catch(error => {
+    console.error("Failed to load GitHub file list:", error);
+    fileList.innerHTML = "<li>❌ Failed to load file list.</li>";
+  });
+</script>
+```
+
+
+```{webr}
+# 🔧 USER: Set the exact file name here (must match GitHub!)
+filename <- "20200110_SciRep_PBMCs_donor_C.xlsx"
+
+# 📂 GitHub folder (keep unchanged unless moving files)
+github_folder <- paste0(
+  "https://raw.githubusercontent.com/vcjdeboer/seahtrue/develop-gerwin/inst/extdata/"
+)
+
+# 🔗 Construct full download URL
+url <- paste0(github_folder, filename)
+
+# 💾 Download file into WebR virtual filesystem
+download.file(
+  url, 
+  destfile = filename,
+  mode = "wb"
+)
+
+# 🧪 Load the file using seahtrue
+seahtrue_output <- filename |>
+  seahtrue::revive_xfplate()
+
+# 👀 Inspect structure
+seahtrue_output |> 
+  dplyr::glimpse()
+
+
+```
+
+## Plot the plate layout
+
+
+```{webr}
+
+seahtrue_output %>% 
+  pluck("raw_data", 1) %>% 
+  seahtrue::sketch_plate(reorder_legend = TRUE)
+
+```
+
+
+## Plot the rate data
+
+```{webr}
+
+seahtrue_output %>% 
+  purrr::pluck("rate_data", 1) |>
+  sketch_rate(
+         param = "OCR",
+         normalize = FALSE,
+         take_group_mean = TRUE,
+         reorder_legend = TRUE
+     )
+
+```
+
+## Plot the raw data histogram
+
+```{webr}
+
+seahtrue_output %>% 
+  sketch_assimilate_raw(param = "O2_mmHg")
+
+seahtrue_output %>% 
+  sketch_assimilate_raw(param = "pH")
+
+```
+## Plot the measurement rate data
+
+
+```{webr}
+
+seahtrue_output %>% 
+         sketch_assimilate_rate(
+             param = "OCR",
+             my_measurements = c(3, 4, 9, 12)
+       )
+
+```
+
+
+## Plot the space plot
+
+```{webr}
+# first check out the exact group names
+
+seahtrue_output |>
+  pluck("rate_data", 1) |>
+  pull(group) |> unique()
+
+```
+
+```{webr}
+# default parameter assignement for a mito stress test
+
+param_set_ocr <- c(
+  init_ocr = "m3", 
+  om_ocr = "m6", 
+  fccp_ocr = "m7",
+  amrot_ocr = "m12")
+
+param_set_ecar <- c(
+  init_ocr = "m3", 
+  om_ocr = "m6", 
+  fccp_ocr = "m7",
+  amrot_ocr = "m12")
+
+```
+
+```{webr}
+
+
+# 🔧 STEP 1: Set the groups to include (max 4 recommended)
+selected_groups <- c("200.000", "300.000")
+
+# 🔧 STEP 2: Provide injection parameters (keep naming consistent)
+param_set_ocr <- c(
+  init_ocr = "m3", 
+  fccp_ocr = "m4", 
+  amrot_ocr = "m9", 
+  mon_ocr = "m12"
+)
+
+param_set_ecar <- c(
+  init_ecar = "m3", 
+  fccp_ecar = "m4", 
+  amrot_ecar = "m9", 
+  mon_ecar = "m12"
+)
+
+# 🧪 STEP 3: Create the space plot input data
+df_space_user <- seahtrue_output |>
+  pluck("rate_data", 1) |>
+  filter(group %in% selected_groups) |>
+  seahtrue::calculate_space(
+    param_set_ocr = param_set_ocr,
+    param_set_ecar = param_set_ecar
+  ) 
+# 📊 STEP 4: Plot the space plot
+seahtrue::plot_bioenergetic_space(df_space_user)
+
+
+```
+

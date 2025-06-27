@@ -4,7 +4,7 @@ project:
 book:
   title: "The book of seahtrue"
   author: "Vincent de Boer"
-  date: "02/18/2025"
+  date: "06/27/2025"
 
   chapters:
     - index.qmd
@@ -24,6 +24,7 @@ book:
       chapters:
       - dive_alone.qmd
       - dive_together.qmd
+      - dive_yourself.qmd
 
 
   sidebar:

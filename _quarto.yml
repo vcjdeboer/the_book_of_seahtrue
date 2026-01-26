@@ -50,7 +50,7 @@ editor: visual
 execute:
   engine: knitr
 
-webr:
+live:
   repos:
     - https://vcjdeboer.github.io/seahtrue
     - https://repo.r-wasm.org

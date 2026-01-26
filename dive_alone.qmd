@@ -1,9 +1,6 @@
 ---
 title: "Seahorse Analysis"
 
-webr:
-  packages: ['tidyverse']
-  
 editor:
   mode: source
 ---

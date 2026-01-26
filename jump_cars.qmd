@@ -1,7 +1,6 @@
 ---
 title: "Plotting cars"
-webr:
-  packages: ['tidyverse']
+
 editor: 
   mode: source  
 ---

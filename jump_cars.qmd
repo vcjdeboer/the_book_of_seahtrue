@@ -5,27 +5,30 @@ editor:
   mode: source  
 ---
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
 ## Learn and code
 
 First, let's make a simple scatter plot. We'll use a famous dataset that is used in R a lot for educational purposes. This is the `mtcars` dataset. It stands for _"Motor Trend Car Road Tests"_. See [parameter overview](https://rstudio-pubs-static.s3.amazonaws.com/61800_faea93548c6b49cc91cd0c5ef5059894.html){target="_blank"} and [documentation](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/mtcars){target="_blank"} for info about the `mtcars` dataset. It is one of many datasets available from base R or tidyverse packages, so we can always call it without having to load it.
 
 First, we will inspect the dataset. For this we will load the tidyverse:
 
-``` {webr-r}
+``` {webr}
 
 library(tidyverse)
 ```
 
 Once tidyverse is loaded via the `library` call, it is available in your current session in your browser, so you do not have to load it each time. Let's have a look at the full dataset:
 
-``` {webr-r}
+``` {webr}
 
 mtcars
 ```
 
 or
 
-``` {webr-r}
+``` {webr}
 
 #if you get an error here, 
 # please load the library call to tidyverse
@@ -34,21 +37,21 @@ mtcars %>% glimpse()
 
 or
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% head()
 ```
 
 or
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% tail()
 ```
 
 Let's select a small part of the data using `select` from the `dplyr` package:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, disp)
@@ -57,7 +60,7 @@ mtcars %>%
 
 Next, make a simple plot with the miles per gallon (`mpg`) and displacement parameters (`disp`) in the `mtcars` dataset.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, disp) %>%
@@ -70,7 +73,7 @@ This is a very basic plot, without much formatting. Let's make it prettier!
 
 Add color and bring in a third parameter:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     #added cyl to the selection here
@@ -85,7 +88,7 @@ mtcars %>%
 
 Here we need to have a look at data-types. The `cyl` parameter is numerical. `ggplot` automatically assumes we want a continuous scale for this. Instead the `cyl` is more of a categorical data type (there are either 4, 6 or 8 cylinders in each car) so we can explicitly make the `cyl` parameter categorical like this:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -97,7 +100,7 @@ mtcars %>%
 
 If you want to have different colors you can use one of the many color palettes available:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -112,7 +115,7 @@ mtcars %>%
 
 Apart from color you can change the shape of the datapoints:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -132,7 +135,7 @@ mtcars %>%
 
 Let's change titles:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -151,7 +154,7 @@ mtcars %>%
 
 Change the plotting theme and base size of the elements:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -171,7 +174,7 @@ mtcars %>%
 
 Change the scaling of the axes. It is good practice to plot graphs from zero:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -195,7 +198,7 @@ mtcars %>%
 
 Now the datapoints at the maxima of the axis are not completely visible so it would be nice that we have some more space:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -230,7 +233,7 @@ Now we have generated a nice visualisation of our data using `ggplot`. Please no
 
 Give the points in the ggplot some transparency (or opacity), so that individual points are better visible. TIP: use the `alpha` argument it should be a number from 0 to 1.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -263,7 +266,7 @@ mtcars %>%
 
 Please note that the alpha we added is not part of an aesthetics (`aes`), meaning that the value of the alpha is not linked with a parameter in our data.
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp, 
@@ -295,7 +298,7 @@ mtcars %>%
 
 Add a layer that will generate a smooth linear regression line that shows the relation between `mpg` and `disp`. Use the `stat_smooth` command for this.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -322,7 +325,7 @@ mtcars %>%
 
 Please make sure that the ggplot is not separated into groups. If the data is grouped by `color` or `shape` a different regression line for each group will be generated.
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp))+
@@ -350,7 +353,7 @@ mtcars %>%
 
 Use the `facet_wrap` command to make three separate plots for each cylinder.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -376,7 +379,7 @@ mtcars %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 3
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp))+
@@ -403,7 +406,7 @@ Below is some code that is not working properly, because of coding semantics mis
 ::: callout-important
 #### Fix error 1
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -416,7 +419,7 @@ mtcars %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Error 1
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp, #the error was here
@@ -430,7 +433,7 @@ Commas are often forgotten, but easily fixed. Within brackets arguments are sepa
 ::: callout-important
 #### Fix error 2
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -443,7 +446,7 @@ mtcars %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Error 2
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp, 
@@ -457,7 +460,7 @@ mtcars %>%
 ::: callout-important
 #### Fix error 3
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -470,7 +473,7 @@ mtcars %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Error 3
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp,
@@ -486,7 +489,7 @@ Make sure that the end of a layer or line of code is not followed up with a `+` 
 
 Although R doesn't show you an error message, the code does not give you what you want. The plot should show the `cyl` parameter in different shapes, just like there are three different colors for each level of the `cyl` parameter.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -504,7 +507,7 @@ mtcars %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Error 4
 
-``` {webr-r}
+``` {webr}
 mtcars %>% 
     select(mpg, cyl, disp) %>%
     ggplot(aes(x = mpg, y = disp,
@@ -525,7 +528,7 @@ The `shape` argument should be included in the aesthetics (`aes`) part of the gg
 
 Since chatGPT can also solve basic programming problems <https://doi.org/10.1371/journal.pcbi.1011511>, I tried solving Error 4 also with chatGPT. In my chatGPT session, the following solution was given:
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -549,7 +552,7 @@ Next I said *"but now the shapes don't have a fill"* and chatGPT replied:
 
 *"I see your concern. If you want to have both color and fill for the shapes, you can achieve this by mapping fill within the aes() call and using scale_fill_brewer() for the fill scale. Here's the modified code to achieve that:"*
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -568,7 +571,7 @@ mtcars %>%
 
 This again did not give fill unfortunately. Asking for a different solution: *"the fill is not there, do you have another solution?"*
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -592,7 +595,7 @@ Also did not give me fill.
 
 Another attempt by chatGPT (still not working):
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   mutate(cyl_shape_fill = as.factor(cyl)) %>%
@@ -614,7 +617,7 @@ mtcars %>%
 
 Another attempt by chatGPT (still not working):
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -635,7 +638,7 @@ mtcars %>%
 
 Asking chatGPT to use `scale_shape` and `solid=TRUE` gives:
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -656,7 +659,7 @@ mtcars %>%
 
 .... but apparently chatGPT doesn't know how to use `scale_shape` (in the first instance), because it `scale_shape` cannot take `values` as an argument. So when I reply with the following *"I get the following error: Error: unused argument (values = c(15, 16, 17))"*, chatGPT goes back to use the 'scale_fill_manual`.
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -680,7 +683,7 @@ mtcars %>%
 
 AND FINALLY we have a nice and simple fill with one legend...... but also lots of unnecessary code. So after a few exchanges to make the code more concise this is what came out of it:
 
-``` {webr-r}
+``` {webr}
 mtcars %>%
   select(mpg, cyl, disp) %>%
   ggplot(aes(x = mpg, y = disp, 
@@ -700,7 +703,7 @@ mtcars %>%
 
 Affter asking to use `scale_shape` instead of `scale_shape_manual`, chatGPT generates:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>%
   select(mpg, cyl, disp) %>%
@@ -715,7 +718,7 @@ mtcars %>%
 
 This works nicely, but chatGPT introduces `stroke = 1`, which is not needed here, so again we have unnecessary code. So after I asked *"can I leave out the stroke argument?"* we get the easiest solution and exactly the same solution as I came up with myself **without chatGPT**.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>%
   select(mpg, cyl, disp) %>%

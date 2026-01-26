@@ -6,11 +6,14 @@ editor:
   mode: source  
 ---
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
 Now, lets plot some Seahorse data. For this we need to import some of it into this session .The data is available from [github](https://github.com/vcjdeboer/seahtrue/tree/develop-gerwin/inst/extdata). 
 
 It is data from PBMCs where we followed OCR and ECAR using Extracellular Flux analysis with the XFe96 over time and during that time we injected after three measurement phases FCCP, and after six measurement phases we injected Antimycin/Rotenone (AM/Rot). Much more context can be found in Scientific Reports [Janssen et al.](https://www.nature.com/articles/s41598-021-81217-4){target="_blank"}.
 
-``` {webr-r}
+``` {webr}
 library(tidyverse)
 
 #set file source
@@ -37,13 +40,13 @@ As you can see from the `glimpse`, the data table that we have now (called a `ti
 
 I prefer to use lower case column names without any spaces, so for these column names we have to turn them into lower case first. We use some easy functions from the `janitor` package for this.
 
-``` {webr-r}
+``` {webr}
 xf %>% janitor::clean_names()
 ```
 
 Next, we can start plotting data using `ggplot.` Let's introduce the `filter` command from `dplyr`. Whereas `select` selects columns, `filter` selects rows. So let's filter the rows for the group which is labeled "200.000" (200.000 cells/per well) and the "Background" group.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -76,7 +79,7 @@ c(1,2,3,4,5) %in% 1
 
 ```
 
-``` {webr-r}
+``` {webr}
 #Try the 1 = 1 here as well
 
 1 = 1
@@ -87,7 +90,7 @@ c(1,2,3,4,5) %in% 1
 # == is used for comparison
 ```
 
-``` {webr-r}
+``` {webr}
 
 #say that we have the following vector 
 #( = groups in experiment)
@@ -119,7 +122,7 @@ Thus the `group %in% c("200.000", "Background")` statement in the filter functio
 
 Now that we know how to filter we can use the filtered data to make the ggplot.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -131,7 +134,7 @@ xf %>%
 
 That plot is not very informative. Let's make it prettier. First, add a line plot:
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -148,7 +151,7 @@ xf %>%
 
 Next, change colors:
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -164,7 +167,7 @@ xf %>%
 
 Change theme and text size:
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -181,7 +184,7 @@ xf %>%
 
 Add titles:
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -211,7 +214,7 @@ For using plot labels personal R projects, consider using `ggrepel`. Unfortunate
 :::
 
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -253,7 +256,7 @@ Although we now labeled lines that are at the minimum and maximum OCR, this is o
 
 In the above ggplot commands, we included the `geom_text`, but we only used a subset of the full data for this geom. We use the `.` (dot) operator to get the original data (so in our case the filtered data that went into the ggplot), and piped that into another two filters. Basically we do the following, but then within one layer of the ggplot:
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -277,7 +280,7 @@ Let's do some more layout adjustments. Although the `theme_bw` gives a basic plo
 
 For example, if we want to change the text size of the axis title (or leave it blank), we give arguments to the `axis.title` options. Also please note the `rel(1.2)` argument which means `relative 1.2 times higher than base_size`. I think it is good practice to use the `rel` here instead of absolute numbers.
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group %in% c("200.000", "Background")) %>% 
@@ -298,7 +301,7 @@ Change the rel `1.2` to `0.5` in the above code and see what happens.
 
 Next, we change the grid lines:
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group %in% c("200.000", "Background")) %>% 
@@ -318,7 +321,7 @@ xf %>%
 
 Next, we change the orientation of the x axis labels.
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group %in% c("200.000", "Background")) %>%
@@ -347,7 +350,7 @@ xf %>%
 
 Add three vertical lines to the plot. You can use the `geom_vline` command with xintercepts set at 15, 33 and 48; so that the the line is approximately at the injection time point. Also give it a shade of grey, eg. `grey40`.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -371,7 +374,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 1
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group %in% c("200.000", "Background")) %>% 
@@ -395,7 +398,7 @@ xf %>%
 
 Now add the injection labels. Use the `annotate` command and \*TODO: something seems to be missing here\*
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -424,7 +427,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 2
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group %in% c("200.000", "Background")) %>% 
@@ -462,7 +465,7 @@ Use the `facet_wrap` command to plot all groups (except background) in separate 
 
 Next, add the `facet_wrap` command to the ggplot. I prefer to do that always at the bottom, so that I can easily see if a plot is wrapped.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -488,7 +491,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 3
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -517,7 +520,7 @@ In comes `forcats`, you can re-level and reorder the crap out of your data in th
 
 Please note that `fct_reorder` first argument is the parameter that you plot or need, and the second argument is the parameter that is used for sorting the data. In our case now that is the same, both are "group", but we also need to add something else. If we would do it like this there will be no difference from when ggplot takes facet_wrap only takes `~group`. Thus we can make the second argument into a number by using `as.double`.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -549,7 +552,7 @@ Also, try what happens in the above code if you:
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 4
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -575,7 +578,7 @@ xf %>%
 
 Now that the `facet_wrap` is sorted nicely, we would also like to have the legend sorted nicely. Use the same `fct_reorder` trick to reorder the color legend.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -603,7 +606,7 @@ If you didn't already change the title of the legend, do that as well. You can s
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 5
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -630,7 +633,7 @@ xf %>%
 
 Please change the `facet_wrap` command so that the y-axis is not fixed for all groups. Make the output so that each individual plot has its own y-axis scale.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%
@@ -656,7 +659,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 6
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -689,7 +692,7 @@ Now, it is up to you to build a whole ggplot using the XF data. Instead of plott
 3.  we should convert the group names to numbers
 4.  we can also add the mean of all wells for each group by using: `stat_summary()`
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names()
@@ -701,7 +704,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 7
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -733,7 +736,7 @@ xf %>%
 
 The previous plot showed the data from individual wells as well as the median for that group. You can also calculate the `median` before plotting using the `dplyr` `summarize` command. You can find `summarize` info here: <https://dplyr.tidyverse.org/reference/summarise.html>
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names()
@@ -745,7 +748,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 8
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -766,7 +769,7 @@ xf %>%
 
 We can also perform a linear regression on the maximal capacity at different densities. For this we can use the `geom_smooth` command. The arguments should be `method = "lm"` and `formula = y~x`.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names()
@@ -778,7 +781,7 @@ xf %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 9
 
-``` {webr-r}
+``` {webr}
 xf %>% 
   janitor::clean_names() %>%
   filter(group != "Background") %>% 
@@ -815,7 +818,7 @@ Observe also what the difference is when only using the data from rows A and H. 
 
 Next, you can decide yourself what you want to plot. Have a `glimpse` at the data and think of another important visualisation that you want to make using all the tools that you have learned so far, or the tools that you found on the internet.
 
-``` {webr-r}
+``` {webr}
 
 xf %>% 
   janitor::clean_names() %>%

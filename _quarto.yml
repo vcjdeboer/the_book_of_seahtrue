@@ -40,8 +40,17 @@ format:
     theme: cosmo
     link-external-icon: true
     link-external-newwindow: true
-
-
+    webr:
+      packages:
+        - seahtrue
+        - tidyverse
+        - cli
+        - janitor
+        - logger
+        - ggridges
+      repos:
+        - https://vcjdeboer.github.io/seahtrue/
+        - https://repo.r-wasm.org/
   pdf:
     documentclass: scrreprt
 
@@ -50,16 +59,6 @@ editor: visual
 execute:
   engine: knitr
 
-live:
-  repos:
-    - https://vcjdeboer.github.io/seahtrue
-    - https://repo.r-wasm.org
-  packages:
-    - seahtrue
-    - cli
-    - janitor
-    - logger
-    - ggridges
 
 
 

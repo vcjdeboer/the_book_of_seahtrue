@@ -5,6 +5,9 @@ editor:
   mode: source  
 ---
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
 ## The essentials
 
 Before you jump into the water it can be of benefit when you know more about the water. What is the temperature? Is it really cold or just nice and warm? How high is the jump? Do you need to jump first 5 meters from a diving board or can you already feel the water with your toes?
@@ -32,7 +35,7 @@ All functions in R and tidyverse are accurately documented. All its arguments ar
 Writing your code benefits from proper readability. Just like we layout our texts, manuscripts and excel data files, we also need a good layout for our code.
 
 
-``` {webr-r}
+``` {webr}
 library(ggplot2)
 
 # NOT VERY READABLE (but runnable )
@@ -57,7 +60,7 @@ Other good practices are:
 
 So here is an example on what not to do and its corrections
 
-``` {webr-r}
+``` {webr}
 library(dplyr)
 #NOT GOOD
 iris %>% 
@@ -85,7 +88,7 @@ iris %>%
 
 There are two ways of calling functions in R, the most straightforward and easy one is just to call it with its name. This works only when you run a function from base R. When you want a function from another package, you can either first load the package with `library(your_favorite_package)` and then call your function with `my_favorite_function(my_argument)`. Another, preferred way, is to always explicitly mention the package from which the function comes from. It can happen that two different packages implement a function with the same name, leading to confusion. In that case, you need to be careful with the `library` loading, because then the function might be masked by another function with the same name from another package
 
-``` {webr-r}
+``` {webr}
 
 #option 1
 library(janitor)
@@ -117,7 +120,7 @@ I took some of these example directly or indirectly from:
 
 The most common way of assigning in R is the `<-` symbol. Although the `=` works in the same way, it is reserved by R users for other things. I tend to use it for assigning numbers to constants, and it is used in function arguments 
 
-``` {webr-r}
+``` {webr}
 
 #assignment
 x <- 1
@@ -137,7 +140,7 @@ print(paste0("my x = :", 1))
 
 A `vector` in R is a collection of items (elements) of the same kind (types). A `list` is a collection of items that can also have different types. We make a vector with `c()` and a list with `list`. The `c` in `c()` apparently stands for `combine` [link](https://stackoverflow.com/questions/11488820/why-use-c-to-define-vector)
 
-``` {webr-r}
+``` {webr}
 
 #vectors
 x <-  c(1, 2, 3)
@@ -148,7 +151,7 @@ y
   
 ```
 
-``` {webr-r}
+``` {webr}
 
 #lists
 x <-  list(1, 2, 3)
@@ -161,7 +164,7 @@ y
 
 If you try to build a vector with elements of different types, R will try to adapt all of them to a single type. You can see that when you specify a vector with numbers and characters eg. `c(1, 2, "1", "2)`. It forces the vector to be of `character` type. While it may look handy that R does this for us, it is a dangerous feature that might lead to wrong inputs going unnoticed.
 
-``` {webr-r}
+``` {webr}
 
 #other vector semantics
 x <- 1:10 
@@ -196,7 +199,7 @@ c(x, z)
 
 Lists form the basis of all other data than vectors. Dataframes are collections of related data with rows and columns and unique columns names and row names (or row numbers). `data.frame` is actually a wrapper around the `list` method.`Tibbles` are the tidyverse equivalent of `dataframes` with some more handy properties over dataframes. A 'list' can have names items or not.
 
-``` {webr-r}
+``` {webr}
 
 #a list without named items
 my_list <- list(1:10, letters[1:10], LETTERS[1:10])
@@ -231,7 +234,7 @@ R language is different from other programming languages, and when starting out 
 
 ### ~ (the "tilde")
 
-``` {webr-r}
+``` {webr}
 
 #the primary use case is to separate the left hand side
 #with the right hand side in a formula
@@ -266,7 +269,7 @@ mtcars %>%
 
 Apart from the simple arithmetic addition, `+` is also used in the ggplot functions. It adds the multiple layers to each ggplot
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -283,7 +286,7 @@ mtcars %>%
 
 The `%>%` is used to forward an object to another function or expression. It was first introduced in the `magrittr` package and is now also introduced in base R as the `|>` pipe, which are now identical. See [blogpost](http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/) for more info.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% 
     select(mpg, cyl, disp) %>%
@@ -296,7 +299,7 @@ mtcars %>%
 
 The `==` is the equal to operator. It is different than `=` which is used only for assignment.
 
-``` {webr-r}
+``` {webr}
 
 #the equal to is validating whether the left hand side
 #is the same as the right hand side and its output is TRUE or FALSE
@@ -324,7 +327,7 @@ A `ggplot` consists of:
 - faceting
 
 
-``` {webr-r}
+``` {webr}
 
 #ggplot basics with one geometric object "geom_point" 
 #and several aesthetics
@@ -341,7 +344,7 @@ A `ggplot` consists of:
 
 This is handy to check and filter specific elements from a vector
 
-``` {webr-r}
+``` {webr}
 
 my_groups <- c("50.000", "100.000", "150.000")
 
@@ -378,7 +381,7 @@ It happens that your code is not right away typed in perfectly, so you will get 
 
 Let's take a built-in R dataset `USArrests`. We want to visualize how the relative number of murders in the state Massachusetts relates to the other states with the highest urban population in those state. In the dataset, the `murder` column represents the `number of murders per 100.000 residents`
 
-``` {webr-r}
+``` {webr}
 
 USArrests 
 
@@ -394,7 +397,7 @@ glimpse(USArrests)
 
 Make a plot that addresses the above dataviz problem.
 
-``` {webr-r}
+``` {webr}
 
 USArrests #%>% 
   #......
@@ -435,7 +438,7 @@ Include all these aspects step by step.
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise x
 
-``` {webr-r}
+``` {webr}
 
 #webr::install("forcats")
 

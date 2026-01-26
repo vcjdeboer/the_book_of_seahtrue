@@ -6,6 +6,9 @@ editor:
 
 ---
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
 ## Functions
 
 First, let's see what a `function` is in R. In the previous section, we used functions that changed our data, eg. `filter`, `select` and `clean_names`. Functions are just a bunch of code lines using any code and other functions you want to accomplish a task. Here are some formal definitions:
@@ -16,7 +19,7 @@ First, let's see what a `function` is in R. In the previous section, we used fun
 
 Functions take `arguments`, these are used as input for your function.
 
-``` {webr-r}
+``` {webr}
 library(tidyverse)
 
 #make the function 
@@ -41,7 +44,7 @@ Please note that it is good practice to use verbs in function names and address 
 
 The `change_mtcars_cyl_to_x` function in the above code is a nonsensical function, because you never want to change a column to one specific value. Let alone a specific column named `cyl`. Also, you don't have to write a whole separate function for this, you can also directly use the `mutate` function from `dplyr`. Write the code without using the `change_mtcars_cyl_to_x` function, but achieve the same result.
 
-``` {webr-r}
+``` {webr}
 
 # use mtcars and mutate from dplyr
 ```
@@ -50,7 +53,7 @@ The `change_mtcars_cyl_to_x` function in the above code is a nonsensical functio
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 1
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>%
   mutate(cyl = 8)
@@ -59,7 +62,7 @@ mtcars %>%
 
 Please note that you can change the data in a column to anything you want. R is very very flexible in datatypes (compared to other languages). So if you would do this:
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>%
   mutate(cyl = "eight")
@@ -70,7 +73,7 @@ that is also fine.
 
 The data types are given when you `glimpse` the data. 
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>% glimpse()
 
@@ -80,7 +83,7 @@ You see that all columns are `<dbl>` which stands for `double`, which is a numer
 
 When you replace the `cyl` column data with `"eight"`, which is of the `character` type, the data type will change.
 
-``` {webr-r}
+``` {webr}
 
 mtcars %>%
   mutate(cyl = "eight") %>%
@@ -95,7 +98,7 @@ This is all fine in R. **Important to note** though is that a column can have on
 
 Now let's extend the function a bit to have two arguments:
 
-``` {webr-r}
+``` {webr}
 
 #make the function
 change_df_cyl_to_x <- function(df, x){
@@ -140,7 +143,7 @@ The argument `fileName` and its location is important. If we work with data inpu
 Using webr/wasm we do a similar thing, we download the file to our local drives. On my computer when I download a file it goes into the `/home/web_user/` directory. Apparently this is my working directory in my webr/wasm sessions. Since it is the working directory, everything that is in there is directly accessible with only the filename. You don't need a full path name like `C:\Users\MyName\Desktop\R\projects\blabla\datafolder\data\`. So for the `get_xf_raw` function to work we first download the file into our session working directory and then we call the `get_xf_raw` function.
 
 
-``` {webr-r}
+``` {webr}
 library(tidyverse)
 
 #set file source
@@ -316,7 +319,7 @@ In the next section we will explore the output of the `run_seahtrue` function.
 
 The `rename_columns` function could have also been written using `clean_names` from the `janitor` package. This would have been likely faster to implement. Replace a `clean_names` code that does the same as the `rename_columns` function
 
-``` {webr-r}
+``` {webr}
 
 # 
 ```
@@ -325,7 +328,7 @@ The `rename_columns` function could have also been written using `clean_names` f
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 2
 
-``` {webr-r}
+``` {webr}
 
 
 
@@ -342,7 +345,7 @@ The `rename_columns` function could have also been written using `clean_names` f
 
 Do the same for the `convert_timestamp` function. Use the `lubridate` package to write a simpler code
 
-``` {webr-r}
+``` {webr}
 
 # 
 ```
@@ -351,7 +354,7 @@ Do the same for the `convert_timestamp` function. Use the `lubridate` package to
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 3
 
-``` {webr-r}
+``` {webr}
 
 
 

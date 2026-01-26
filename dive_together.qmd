@@ -6,13 +6,16 @@ editor:
 
 ---
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
 ## Gimme more plates
 
 The reading and processing that `seahtrue` uses, together with the nested tibble output, has another benefit. It allows for collecting and organizing multiple experiments into one nested tibble. We can do that by loading multiple xlsx files into our working directory, making a file list of those excel file names and mapping the `run_seahtrue` function against the file list. 
 
 For now we will first have a look at how the output looks like. We load the three experiment output from github.
 
-``` {webr-r}
+``` {webr}
 
 library(tidyverse)
 
@@ -40,7 +43,7 @@ xf_3
 You can see we have one experiment per row of the tibble . They are labeled with the `plate_id`, `file_path`, and `date` in the first three columns. Since it is in one tibble, we can now `pluck` for example all `raw_data` from the complete tibble:
 
 
-``` {webr-r}
+``` {webr}
 
 xf_3 %>% 
   select(plate_id, raw_data) %>% 
@@ -53,7 +56,7 @@ You see we now have a tibble of almost 2 million rows and 22 columns, nicely and
 
 Now we can plot for example the distribution of emission values for each experiment. We use the `ggridges` package for this.
 
-``` {webr-r}
+``` {webr}
 
 webr::install("ggridges")
 
@@ -76,7 +79,7 @@ With only a couple of lines of code we go from `raw_data` to real insights in yo
 
 Let's explore this right tail of the `50.000` group in more detail.
 
-``` {webr-r}
+``` {webr}
 
 library(ggridges)
 
@@ -99,7 +102,7 @@ xf_3 %>%
 So what are these high O2_mmHg values. We can find out by looking at the data for the individuals wells. By filtering for the first plate we can see the O2_mmHg in more detail. By using a short unique string as input for the `str_detect` we only have to type a couple of characters, which saves us some time. Now we make a simple scatter plot.
 
 
-``` {webr-r}
+``` {webr}
 library(RColorBrewer)
 xf_3 %>% 
   select(plate_id, raw_data) %>% 
@@ -121,7 +124,7 @@ xf_3 %>%
 
 Indeed, there are two wells that have high `O2_mmHg`. Because of the many colors it is difficult to see which wells they are. Now do some ggplot trickery to label the two wells with higher O2.
 
-``` {webr-r}
+``` {webr}
   
 xf_3 %>% 
   select(plate_id, raw_data) %>% 
@@ -150,7 +153,7 @@ xf_3 %>%
 
 Make the same scatter plot for the other two plates for the `50.000` group, and observe if there are wells with abnormally high O2.
 
-``` {webr-r}
+``` {webr}
 
 xf_3 %>% 
   select(plate_id, raw_data) %>% 
@@ -165,7 +168,7 @@ xf_3 %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 1
 
-``` {webr-r}
+``` {webr}
 
 #solution for experiment 2
 xf_3 %>% 
@@ -193,7 +196,7 @@ xf_3 %>%
 ```
 
 
-``` {webr-r}
+``` {webr}
 
 #solution for experiment 3
 xf_3 %>% 

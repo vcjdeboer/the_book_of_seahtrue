@@ -5,8 +5,10 @@ editor:
   mode: source
 ---
 
-```{webr-r}
-print("webr-r is working!")
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{webr}
+print("webr is working!")
 ```
 
 
@@ -38,7 +40,7 @@ We used injections of FCCP, AM/rot, and monensin. Also Hoechst was included, but
 
 Let's load the data first. We use the `revive_xfplate()` function form the seahtrue package and the excel file that is included with the package.
 
-```{webr-r}
+```{webr}
 
 library(tidyverse)
 
@@ -57,7 +59,7 @@ seahtrue_output_donor_A <-
 
 Explore the data that we just loaded.
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   glimpse()
@@ -67,14 +69,14 @@ seahtrue_output_donor_A %>%
 
 What is the structure of `seahtrue_output_donor_A`?
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   pluck("rate_data", 1) %>% 
   glimpse()
 ```
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>% 
@@ -100,7 +102,7 @@ To dive a bit deeper into a single `seahtrue` experiment, we will first generate
 
 Explore the experimental set-up. Remember that a Seahorse experiment is a 96-well plate based experiment, so we will see 96 wells in the plate map.
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   pluck("raw_data", 1) %>% 
@@ -162,7 +164,7 @@ In this way, we can check the linearity of the signals and determine the best pl
 
 Now we will plot the OCRs for this experiment.
 
-```{webr-r}
+```{webr}
 
 #before running this, make the seahtrue_output_donor_A
 #is assigned in the above code
@@ -199,7 +201,7 @@ from 150.000 cells/well
 
 Now check out the parameters that we can set for the `sketch_rate()` function by using the below code:
 
-```{webr-r}
+```{webr}
 
 ?seahtrue::sketch_rate()
 
@@ -207,7 +209,7 @@ Now check out the parameters that we can set for the `sketch_rate()` function by
 
 plot the ECAR using this `sketch_rate()` functions. What do you observe after monensin is injected in the ECAR plot? Look up online how monensin acts on cells why it is doing this with ECAR. What did we observe in OCR? Can you explain that?
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   purrr::pluck("rate_data", 1) #.....
@@ -221,7 +223,7 @@ seahtrue_output_donor_A %>%
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise x7
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   purrr::pluck("rate_data", 1) |>
@@ -243,7 +245,7 @@ We see that after monensin injection, ECAR increases. This is because glycolysis
 
 Pluck the `injection_info` table from the `seahtrue_output_donor_A` dataset to see what how the injections were defined in the experimental set-up before running the seahorse.
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   pluck("injection_info",1)
@@ -280,7 +282,7 @@ Let's now put that into R code. We call the type of experiment we did in this da
 
 We also injected monensin, which can maximize ECAR, but we don't need it for OCR calculations.
 
-```{webr-r}
+```{webr}
 
 # first define which timepoints are what
 param_set_maxcap_ocr <- c(init_ocr = "m3",
@@ -308,7 +310,7 @@ Now for each well we have the parameters related to the phases that we defined i
 
 Next we want to calculate the respiration parameters and indices.
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_A %>% 
   pluck("rate_data",1) %>% 
@@ -333,9 +335,9 @@ seahtrue_output_donor_A %>%
 
 With this data, we can plot our typical basal and maximal bar/scatter plots that we see in papers, presentations and theses.
 
-```{webr-r}
+```{webr}
 
-webr-r::install("ggdist")
+webr::install("ggdist")
 
 param_set_maxcap_ocr <- c(init_ocr = "m3",
                           fccp_ocr = "m4",
@@ -395,7 +397,7 @@ seahtrue_output_donor_A %>%
 
 The plot above shows `maximal ocr`. Now make your own plot with 1) `basal_ocr` and 2) all groups except background. Make sure to order the group legend tidyly and have reable x-axis labels.
 
-```{webr-r}
+```{webr}
 
 #use the code block above and change that code
 
@@ -406,12 +408,12 @@ The plot above shows `maximal ocr`. Now make your own plot with 1) `basal_ocr` a
 ::: {.callout-caution collapse="true"}
 #### Solution to Exercise 8
 
-```{webr-r}
+```{webr}
 
 #solution 1 and 2 together
 #lines with changes marked with #VB
 
-webr-r::install("ggdist")
+webr::install("ggdist")
 
 param_set_maxcap_ocr <- c(init_ocr = "m3",
                           fccp_ocr = "m4",
@@ -496,7 +498,7 @@ For these excercises we will work with a similar dataset as the `seahtrue_output
 
 First, load the new data.
 
-```{webr-r}
+```{webr}
 
 library(tidyverse)
 
@@ -520,7 +522,7 @@ seahtrue_output_donor_C <-
 
 ```
 
-```{webr-r}
+```{webr}
 
 seahtrue_output_donor_C
 
@@ -528,7 +530,7 @@ seahtrue_output_donor_C
 
 Now lets calculate the atp space for both donors and combine the data for plotting:
 
-```{webr-r}
+```{webr}
 
 df_space_C <- 
   #first pluck the rate_data
@@ -609,7 +611,7 @@ param_set_ocr = c(init_ocr = "m3",
 Now plot the trajectory and compare the two trajectories.
 
 
-```{webr-r}
+```{webr}
 
 my_palette<- c("#1f78b4","#33a02c")
 
@@ -637,7 +639,7 @@ please discuss with one of your lecturers
 
 Next, we will plot the ATP space. For this we will use the `plot_bioenergetic_space()` function. The space plot shows the total allowed ATP generation at the condition that the cells are in. The dot is the position in the space in the initial (basal) phase.
 
-```{webr-r}
+```{webr}
 
 my_palette<- c("#1f78b4","#33a02c")
 
@@ -687,7 +689,7 @@ Plot the ATP space for the activated and non-activated T cells.
 
 
 
-```{webr-r}
+```{webr}
 #load the data
 # raw path on github
 url <- paste0(
@@ -717,7 +719,7 @@ df_t_cell_activation <-
 
 We want to see the difference between activate T cells and not activated, so we should take the measurement 9 where the cells were activated or not (at measurement three both groups are still the same!).
 
-```{webr-r}
+```{webr}
 
 #use this param sets
 my_param_set_ocr =  c(init_ocr = "m9", om_ocr = "m12", 

@@ -51,7 +51,15 @@ execute:
   engine: knitr
 
 webr:
-  packages: ['base']
+  repos:
+    - https://vcjdeboer.github.io/seahtrue
+    - https://repo.r-wasm.org
+  packages:
+    - seahtrue
+    - cli
+    - janitor
+    - logger
+    - ggridges
 
 
 

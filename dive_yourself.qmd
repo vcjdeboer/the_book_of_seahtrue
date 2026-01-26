@@ -18,8 +18,8 @@ webr:
 ---
 
 
-```{webr}
-print("WebR is working!")
+```{webr-r}
+print("webr-r is working!")
 ```
 
 
@@ -81,7 +81,7 @@ fetch(apiUrl)
 ```
 
 
-```{webr}
+```{webr-r}
 # 🔧 USER: Set the exact file name here (must match GitHub!)
 filename <- "20200110_SciRep_PBMCs_donor_C.xlsx"
 
@@ -93,7 +93,7 @@ github_folder <- paste0(
 # 🔗 Construct full download URL
 url <- paste0(github_folder, filename)
 
-# 💾 Download file into WebR virtual filesystem
+# 💾 Download file into webr-r virtual filesystem
 download.file(
   url, 
   destfile = filename,
@@ -114,7 +114,7 @@ seahtrue_output |>
 ## Plot the plate layout
 
 
-```{webr}
+```{webr-r}
 
 seahtrue_output %>% 
   pluck("raw_data", 1) %>% 
@@ -125,7 +125,7 @@ seahtrue_output %>%
 
 ## Plot the rate data
 
-```{webr}
+```{webr-r}
 
 seahtrue_output %>% 
   purrr::pluck("rate_data", 1) |>
@@ -140,7 +140,7 @@ seahtrue_output %>%
 
 ## Plot the raw data histogram
 
-```{webr}
+```{webr-r}
 
 seahtrue_output %>% 
   sketch_assimilate_raw(param = "O2_mmHg")
@@ -152,7 +152,7 @@ seahtrue_output %>%
 ## Plot the measurement rate data
 
 
-```{webr}
+```{webr-r}
 
 seahtrue_output %>% 
          sketch_assimilate_rate(
@@ -165,7 +165,7 @@ seahtrue_output %>%
 
 ## Plot the space plot
 
-```{webr}
+```{webr-r}
 # first check out the exact group names
 
 seahtrue_output |>
@@ -174,7 +174,7 @@ seahtrue_output |>
 
 ```
 
-```{webr}
+```{webr-r}
 # default parameter assignement for a mito stress test
 
 param_set_ocr <- c(
@@ -191,7 +191,7 @@ param_set_ecar <- c(
 
 ```
 
-```{webr}
+```{webr-r}
 
 
 # 🔧 STEP 1: Set the groups to include (max 4 recommended)

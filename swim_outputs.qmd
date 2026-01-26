@@ -1,7 +1,6 @@
 ---
 title: "Seahtrue outputs"
-webr:
-  packages: ['tidyverse']
+
 editor: 
   mode: source  
 

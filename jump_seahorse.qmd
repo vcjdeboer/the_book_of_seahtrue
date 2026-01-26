@@ -1,7 +1,6 @@
 ---
 title: "Plotting seahorse"
-webr:
-  packages: ['tidyverse', 'janitor']
+
   
 editor: 
   mode: source  

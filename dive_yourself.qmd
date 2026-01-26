@@ -2,19 +2,7 @@
 title: "Download files and analyze"
 editor:
   mode: source
-webr:
-  packages: [
-    "seahtrue",
-    "cli",
-    "janitor",
-    "logger",
-    "ggridges",
-    "tidyverse",
-  ]
-  repos: [
-    "https://vcjdeboer.github.io/seahtrue/",
-    "https://repo.r-wasm.org"
-  ]
+
 ---
 
 

@@ -336,57 +336,73 @@ seahtrue_output_donor_A %>%
 With this data, we can plot our typical basal and maximal bar/scatter plots that we see in papers, presentations and theses.
 
 ```{webr}
+param_set_maxcap_ocr <- c(
+  init_ocr = "m3",
+  fccp_ocr = "m4",
+  amrot_ocr = "m9",
+  mon_ocr = "m12"
+)
 
-webr::install("ggdist")
-
-param_set_maxcap_ocr <- c(init_ocr = "m3",
-                          fccp_ocr = "m4",
-                          amrot_ocr = "m9",
-                          mon_ocr = "m12"
-                         )
-
-seahtrue_output_donor_A %>% 
-  pluck("rate_data",1) %>% 
+plot_df <-
+  seahtrue_output_donor_A %>%
+  pluck("rate_data", 1) %>%
   select(well, measurement, group, ocr = OCR_wave_bc) %>%
-  pivot_wider(names_from = measurement, 
-              names_prefix = "m", 
-              values_from = ocr) %>%
+  pivot_wider(
+    names_from = measurement,
+    names_prefix = "m",
+    values_from = ocr
+  ) %>%
   rename(all_of(param_set_maxcap_ocr)) %>%
-  select(contains(c("well","group", "ocr"))) %>%
-  #piped here to the mutate
-  mutate(non_mito_ocr = amrot_ocr,
-         basal_ocr = init_ocr - non_mito_ocr,
-         max_ocr = fccp_ocr - amrot_ocr,
-         spare_ocr = max_ocr - basal_ocr,
-         spare_ocr_index = (spare_ocr / max_ocr)*100,
-         basal_ocr_index = (basal_ocr/max_ocr)*100) %>%
+  select(well, group, init_ocr, fccp_ocr, amrot_ocr, mon_ocr) %>%
+  mutate(
+    non_mito_ocr = amrot_ocr,
+    basal_ocr = init_ocr - non_mito_ocr,
+    max_ocr = fccp_ocr - amrot_ocr,
+    spare_ocr = max_ocr - basal_ocr,
+    spare_ocr_index = (spare_ocr / max_ocr) * 100,
+    basal_ocr_index = (basal_ocr / max_ocr) * 100
+  ) %>%
   filter(group %in% c("150.000", "250.000")) %>%
-  ggplot(aes(x = group, y = max_ocr, color = group))+
-    geom_bar(data = . %>% 
-                 summarize(median_max_ocr = median(max_ocr), 
-                           .by = group),
-               mapping = aes(
-                 x = forcats::fct_reorder(
-                                    group, 
-                                    parse_number(group)),
-                 y = median_max_ocr,
-                  fill = group), 
-            stat="identity", 
-            alpha=0.4,
-            width=0.2)+
-    ggdist::geom_weave() +
-    ggdist::stat_pointinterval()+
-    colorspace::scale_colour_discrete_divergingx(
-                                    palette = "Geyser",
-                                    rev = FALSE)+
-    colorspace::scale_fill_discrete_divergingx(
-                                    palette = "Geyser", 
-                                    rev = FALSE)+
-    labs(subtitle = "Maximal OCR",
-         x = "",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 18)
-  
+  mutate(group = forcats::fct_reorder(group, readr::parse_number(group)))
+
+summary_df <-
+  plot_df %>%
+  summarize(
+    median_max_ocr = median(max_ocr, na.rm = TRUE),
+    q25 = quantile(max_ocr, 0.25, na.rm = TRUE),
+    q75 = quantile(max_ocr, 0.75, na.rm = TRUE),
+    .by = group
+  )
+
+ggplot(plot_df, aes(x = group, y = max_ocr)) +
+  # median "bar" (thin column)
+  geom_col(
+    data = summary_df,
+    aes(y = median_max_ocr, fill = group),
+    width = 0.2,
+    alpha = 0.4
+  ) +
+  # show all wells (jitter instead of weave)
+  geom_jitter(
+    aes(color = group),
+    width = 0.08,
+    height = 0,
+    alpha = 0.8
+  ) +
+  # median ± IQR interval (as a clean interval substitute)
+  geom_pointrange(
+    data = summary_df,
+    aes(y = median_max_ocr, ymin = q25, ymax = q75, color = group),
+    linewidth = 0.6
+  ) +
+  colorspace::scale_colour_discrete_divergingx(palette = "Geyser", rev = FALSE) +
+  colorspace::scale_fill_discrete_divergingx(palette = "Geyser", rev = FALSE) +
+  labs(
+    subtitle = "Maximal OCR",
+    x = "",
+    y = "OCR (pmol/min)"
+  ) +
+  theme_bw(base_size = 18)
   
 
 
@@ -409,11 +425,8 @@ The plot above shows `maximal ocr`. Now make your own plot with 1) `basal_ocr` a
 #### Solution to Exercise 8
 
 ```{webr}
-
 #solution 1 and 2 together
 #lines with changes marked with #VB
-
-webr::install("ggdist")
 
 param_set_maxcap_ocr <- c(init_ocr = "m3",
                           fccp_ocr = "m4",
@@ -422,10 +435,11 @@ param_set_maxcap_ocr <- c(init_ocr = "m3",
                          )
 
 group_order <- seahtrue_output_donor_A %>% #VB
-    pluck("rate_data",1) %>%
-    pull(group) %>% unique()
+  pluck("rate_data",1) %>%
+  pull(group) %>% unique()
 
-seahtrue_output_donor_A %>% 
+plot_df <- 
+  seahtrue_output_donor_A %>% 
   pluck("rate_data",1) %>% 
   select(well, measurement, group, ocr = OCR_wave_bc) %>%
   pivot_wider(names_from = measurement, 
@@ -441,48 +455,58 @@ seahtrue_output_donor_A %>%
          spare_ocr_index = (spare_ocr / max_ocr)*100,
          basal_ocr_index = (basal_ocr/max_ocr)*100) %>%
   filter(group!= c("Background")) %>% #VB
-  ggplot(aes(x = group, y = basal_ocr, color = group))+ #VB
-    geom_bar(data = . %>% 
-                 summarize(
-                  median_basal_ocr = median(basal_ocr), #VB
-                  .by = group),
-             mapping = aes(
-                 x = forcats::fct_reorder(
-                                    group, 
-                                    parse_number(group)),
-                 y = median_basal_ocr, #VB
-                 fill = group), 
-                stat="identity", 
-                alpha=0.4,
-                width=0.4)+ #VB
-    ggdist::geom_weave() +
-    ggdist::stat_pointinterval()+
-    colorspace::scale_colour_discrete_divergingx(
-                                    palette = "Geyser",
-                                    rev = FALSE,
-                                    breaks = 
-                                      group_order
-                                    )+
-    colorspace::scale_fill_discrete_divergingx(
-                                    palette = "Geyser", 
-                                    rev = FALSE,
-                                    breaks = 
-                                      group_order
-                                      )+
-    labs(subtitle = "Basal OCR", #VB
-         x = "",
-         y = "OCR (pmol/min)")+
-    theme_bw(base_size = 18)+
-    theme( #VB
-      axis.text.x = element_text(
-        angle = 45, 
-        vjust = 1, # vertical alignment
-        hjust = 1, # horizontal alignment
-        size = rel(1.2))
-    )
+  mutate(group = forcats::fct_reorder(group, readr::parse_number(group)))
 
+summary_df <- 
+  plot_df %>% 
+  summarize(
+    median_basal_ocr = median(basal_ocr), #VB
+    q25 = quantile(basal_ocr, 0.25),
+    q75 = quantile(basal_ocr, 0.75),
+    .by = group
+  )
 
+ggplot(plot_df, aes(x = group, y = basal_ocr, color = group)) + #VB
+  geom_bar(data = summary_df,
+           mapping = aes(
+             x = group,
+             y = median_basal_ocr, #VB
+             fill = group), 
+           stat="identity", 
+           alpha=0.4,
+           width=0.4)+ #VB
 
+  # replacement for ggdist::geom_weave()  #VB
+  geom_jitter(width = 0.08, height = 0, alpha = 0.8) +  #VB
+
+  # replacement for ggdist::stat_pointinterval()  #VB
+  geom_pointrange(
+    data = summary_df,
+    aes(y = median_basal_ocr, ymin = q25, ymax = q75),
+    linewidth = 0.6
+  ) + #VB
+
+  colorspace::scale_colour_discrete_divergingx(
+    palette = "Geyser",
+    rev = FALSE,
+    breaks = group_order
+  )+
+  colorspace::scale_fill_discrete_divergingx(
+    palette = "Geyser", 
+    rev = FALSE,
+    breaks = group_order
+  )+
+  labs(subtitle = "Basal OCR", #VB
+       x = "",
+       y = "OCR (pmol/min)")+
+  theme_bw(base_size = 18)+
+  theme( #VB
+    axis.text.x = element_text(
+      angle = 45, 
+      vjust = 1, # vertical alignment
+      hjust = 1, # horizontal alignment
+      size = rel(1.2))
+  )
 ```
 :::
 

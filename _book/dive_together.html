@@ -410,6 +410,53 @@ W10=
 </section>
 
 </main> <!-- /main -->
+<!--
+  seahorse-api-include.html
+  
+  Include this in your Quarto book to enable the Seahorse API for LLM integration.
+  
+  Usage in _quarto.yml:
+    format:
+      live-html:
+        include-after-body: seahorse-api-include.html
+  
+  Or in a specific .qmd file:
+    ```{=html}
+    {{< include seahorse-api-include.html >}}
+    ```
+-->
+
+<!-- Load the Seahorse API -->
+<script src="seahorse-api.js"></script>
+
+<script>
+// Auto-initialize when the page is ready
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Wait a bit for WebR to initialize, then create upload widget on specific pages
+  setTimeout(function() {
+    // Only create widget on pages that have code cells (analysis pages)
+    const hasCodeCells = document.querySelector('.cell') !== null;
+    const isAnalysisPage = window.location.pathname.includes('dive_yourself') || 
+                          window.location.pathname.includes('analyze');
+    
+    if (hasCodeCells) {
+      // Create upload widget at the top of the main content
+      if (window.seahorseAPI && window.seahorseAPI.createUploadWidget) {
+        window.seahorseAPI.createUploadWidget();
+      }
+    }
+  }, 1000);
+  
+  // Log ready status for LLM detection
+  console.log('[Seahorse] API include loaded. Waiting for WebR initialization...');
+  
+  // Listen for API ready event
+  window.addEventListener('seahorseAPIReady', function(e) {
+    console.log('[Seahorse] API ready:', e.detail);
+  });
+});
+</script>
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W119
 </script>

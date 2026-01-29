@@ -5,7 +5,6 @@ book:
   title: "The book of seahtrue"
   author: "Vincent de Boer"
   date: "06/27/2025"
-
   chapters:
     - index.qmd
     - part: jump.qmd
@@ -25,8 +24,6 @@ book:
       - dive_alone.qmd
       - dive_together.qmd
       - dive_yourself.qmd
-
-
   sidebar:
     search: true
     tools:
@@ -40,6 +37,10 @@ format:
     theme: cosmo
     link-external-icon: true
     link-external-newwindow: true
+    # ========================================
+    # ADD THIS LINE for LLM API integration
+    # ========================================
+    include-after-body: seahorse-api-include.html
     webr:
       packages:
         - seahtrue
@@ -58,9 +59,3 @@ editor: visual
 
 execute:
   engine: knitr
-
-
-
-
-
-
